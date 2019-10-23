@@ -1,0 +1,16 @@
+ private void btnGoLogin_Click( object sender, EventArgs e )
+        {
+            // Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Owner
+            //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.unsubscribe_all_();// unsubscribe_all_
+            //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance();// renew the frmLogin
+Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Visible = false;
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().uscTimbro.Enabled = false;
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().lblStatus.Text = "";// reset
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtUser.Text = "";
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtPwd.Text = "";
+            //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Focus();
+            //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtUser.Focus();
+            //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().ShowDialog();// re-show the original Login; exec suspended here.
+            this.Close();// frmError
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Show();// re-show the original Login; exec suspended here.
+        }// btnGoLogin_Click

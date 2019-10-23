@@ -1,0 +1,107 @@
+
+test GridView, Cacher, Pager; compatibilita' due griglie-----------------
+SelfPostBack, AutoPostBack-----------------------------------------------
+backup----------------------------------------(V)
+JavaScript------------------------------------(V)
+
+
+
+
+defaultbutton="PageLengthManager1$btnRowsInPage"
+
+
+
+    //    _AutoreLoad
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!VerificaLasciapassare.CanLogOn(
+                this.Session,
+                this.Request.UserHostAddress
+                )
+            )
+        {
+            this.Session["indexOfAllSectors"] = null;// be sure to clean.
+            this.Response.Redirect("../errore.aspx");
+        }// else il lasciapassare e' valido -> get in.
+        //
+        // PostBack or not, refresh in Session, the present addres of the DynamicPortion method, which has
+        // to be called from PagerDbView. Such address changes at every round-trip( tested).
+        CacherDbView.DynamicPortionPtr dynamicPortionPtr = new CacherDbView.DynamicPortionPtr(
+            this.prepareLavagnaDynamicPortion);
+        this.Session["DynamicPortionPtr"] = dynamicPortionPtr;
+        //
+        /*
+         * NB. page state check.-----------------------------------------------------------------
+         * 
+         */
+        PageStateChecker.PageStateChecker_SERVICE(
+            "zonaRiservata_autoreLoad"
+            , this.Request
+            , this.IsPostBack
+            , this.Session
+        );
+        //----------------------------------------------- END  page state check.-----------------
+        if (
+            !this.IsPostBack//----------------------------------------------------false
+            && !(bool)(this.Session["IsReEntrant"])//-----------------------------false
+            )
+        {// first absolute entrance
+            //
+            ComboManager.populate_Combo_ddlMateria_for_LOAD(//---primo popolamento.
+                this.ddlMaterie,
+                0 // "null" or <0, for no preselection. Instead to preselect choose the ordinal; 0 for "choose your Sector", which performs no query.
+                , out indexOfAllSectors
+            );
+            this.Session["indexOfAllSectors"] = indexOfAllSectors;// NB.---cache across postbacks.-----
+            this.Session["comboSectors_selectedValue"] = 0;// NB.---cache across postbacks.-----
+            //
+            this.loadMaterie(0);// means: populate comboMaterie on Page_Load (with no pre-selection).
+        }
+        else if (
+            !this.IsPostBack//----------------------------------------------------false
+            && (bool)(this.Session["IsReEntrant"])//------------------------------true
+            )
+        {// coming from html-numbers of pager
+            // needed combo-refresh, but re-select combo-Value from Session  --------
+            //
+            int int_comboSectors_selectedValue = (int)(this.Session["comboSectors_selectedValue"]);// NB.---cache across postbacks.-----
+            ComboManager.populate_Combo_ddlMateria_for_LOAD(//---primo popolamento.
+                this.ddlMaterie,
+                int_comboSectors_selectedValue // "null" or <0, for no preselection. Instead to preselect choose the ordinal; 0 for "choose your Sector".
+                , out indexOfAllSectors
+            );
+            this.Session["indexOfAllSectors"] = indexOfAllSectors;// NB.---cache across postbacks.-----
+            //
+            // pager will load the new-chunk, based on a get-param.
+            object obj_CacherDbView = this.Session["CacherDbView"];
+            if (null != obj_CacherDbView)
+            {
+                ((CacherDbView)obj_CacherDbView).Pager_EntryPoint(
+                    this.Session
+                    , this.Request
+                    , this.grdDatiPaginati
+                    , this.pnlPageNumber
+                );
+            }
+            else
+            {
+                loadMaterie(int_comboSectors_selectedValue); //  needed combo-refresh, but re-select combo-Value from Session  --------
+            }
+        }
+        else if (
+            this.IsPostBack//------------------------------------------------------true
+            && !(bool)(this.Session["IsReEntrant"])//------------------------------false
+            )
+        {
+            // don't: throw new System.Exception(" impossible case: if IsReEntrant at least one entry occurred. ");
+        }
+        else if (
+            this.IsPostBack//------------------------------------------------------true
+            && (bool)(this.Session["IsReEntrant"])//-------------------------------true
+            )
+        {// coming from combo-index-changed.
+            // no combo-refresh.
+            // drop the current view and create the new one, by delegate ddlMaterieRefreshQuery.
+        }// no "else" possible: case mapping is complete.
+    }// end Page_Load_AutoreLoad
+
