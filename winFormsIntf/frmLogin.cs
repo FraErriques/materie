@@ -77,13 +77,14 @@ namespace winFormsIntf
                 //
                 LogSinkFs.Wrappers.LogWrappers.SectionClose();
                 LogSinkDb.Wrappers.LogWrappers.SectionClose();
-                // TODO this.Response.Redirect("~/zonaRiservata/queryDocumento.aspx");
-                this.lblStatus.Text = "Login corretta.";
+                // accessed by Login.
+                this.lblStatus.Text = "Login corretta.";// "this" is acting on firstBlood; from inside instance can avoid the Singleton syntax.
                 this.lblStatus.BackColor = System.Drawing.Color.LightGreen;
-                // TODO enable menu
+                // NB enable menu, to let the recognized guy operate.
                 this.uscTimbro.Enabled = true;
                 this.uscTimbro.Visible = true;
-                this.uscTimbro.laterThanCtor();
+                this.uscTimbro.laterThanCtor();// evaluate permission and regulate the menus.
+                this.pnlLoginControls.Enabled = false;// disable after login, to forbid changing user without an explicit Logout().
             }
             else// if 0<loginResult -> get error msg.
             {//--out
@@ -104,10 +105,9 @@ namespace winFormsIntf
                 //
                 LogSinkFs.Wrappers.LogWrappers.SectionClose();
                 LogSinkDb.Wrappers.LogWrappers.SectionClose();
-                // TODO this.Response.Redirect("~/errore.aspx");
-                this.lblStatus.Text = "Errore Login negata.";
+                this.lblStatus.Text = "Errore : Login negata.";// "this" is acting on firstBlood; from inside instance can avoid the Singleton syntax.
                 this.lblStatus.BackColor = System.Drawing.Color.Red;
-                // TODO disable menu
+                // NB disable menu
                 this.uscTimbro.Enabled = false;
             }
         }// end btnLogin_Click()

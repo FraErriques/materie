@@ -32,12 +32,14 @@
             this.txtPwd = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.pnlLoginControls = new System.Windows.Forms.Panel();
             this.uscTimbro = new winFormsIntf.Timbro();
+            this.pnlLoginControls.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtUser
             // 
-            this.txtUser.Location = new System.Drawing.Point(288, 126);
+            this.txtUser.Location = new System.Drawing.Point(66, 21);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(100, 20);
             this.txtUser.TabIndex = 0;
@@ -46,7 +48,7 @@
             // 
             // txtPwd
             // 
-            this.txtPwd.Location = new System.Drawing.Point(288, 152);
+            this.txtPwd.Location = new System.Drawing.Point(66, 60);
             this.txtPwd.Name = "txtPwd";
             this.txtPwd.PasswordChar = '*';
             this.txtPwd.Size = new System.Drawing.Size(100, 20);
@@ -56,7 +58,7 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(313, 197);
+            this.btnLogin.Location = new System.Drawing.Point(91, 100);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 23);
             this.btnLogin.TabIndex = 2;
@@ -73,6 +75,16 @@
             this.lblStatus.TabIndex = 4;
             this.lblStatus.Text = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             // 
+            // pnlLoginControls
+            // 
+            this.pnlLoginControls.Controls.Add(this.txtUser);
+            this.pnlLoginControls.Controls.Add(this.txtPwd);
+            this.pnlLoginControls.Controls.Add(this.btnLogin);
+            this.pnlLoginControls.Location = new System.Drawing.Point(431, 62);
+            this.pnlLoginControls.Name = "pnlLoginControls";
+            this.pnlLoginControls.Size = new System.Drawing.Size(233, 167);
+            this.pnlLoginControls.TabIndex = 5;
+            // 
             // uscTimbro
             // 
             this.uscTimbro.Location = new System.Drawing.Point(12, 2);
@@ -86,15 +98,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(868, 273);
+            this.Controls.Add(this.pnlLoginControls);
             this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.btnLogin);
-            this.Controls.Add(this.txtPwd);
-            this.Controls.Add(this.txtUser);
             this.Controls.Add(this.uscTimbro);
             this.MaximumSize = new System.Drawing.Size(876, 300);
             this.MinimumSize = new System.Drawing.Size(876, 300);
             this.Name = "frmLogin";
             this.Text = "Login";
+            this.pnlLoginControls.ResumeLayout(false);
+            this.pnlLoginControls.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -107,5 +119,6 @@
         public System.Windows.Forms.TextBox txtPwd;
         private System.Windows.Forms.Button btnLogin;
         public System.Windows.Forms.Label lblStatus;
+        public System.Windows.Forms.Panel pnlLoginControls;
     }
 }

@@ -31,6 +31,8 @@ namespace winFormsIntf
             this.laterThanCtor();
         }// Timbro_Load
 
+
+
         public void laterThanCtor()
         {
             Entity_materie.BusinessEntities.Permesso.Patente patente = null;
@@ -43,17 +45,19 @@ namespace winFormsIntf
                         (Entity_materie.BusinessEntities.Permesso.Patente)
                     Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"];
                     if (null == patente)
-                    { throw new System.Exception("current useer is NOT logged in : ALLARM ! "); }
+                    {
+                        return; // NB. do not throw here. It will return on page with an enabled menu.
+                    }
                 }
                 catch (System.Exception ex)
                 {
                     frmError unloggedUserError = new frmError(new System.Exception("current useer is NOT logged in : ALLARM ! "
-                        + ex.Message + ex.InnerException.Message));
+                        + ex.Message));
                 }
-            }// if Parent!=Login
+            }// if (null!=this.Parent )
             // else LoginForm cannot have a user already logged in.
             if (null != patente)
-            {
+            {// classification taken literally, from the db.
                 ///     1	Administrator
                 ///     2	writer
                 ///     3	reader
@@ -79,12 +83,12 @@ namespace winFormsIntf
                         }
                 }// switch
             }// null != patente
-            else
+            else// means that the Timbro.cs is ready to set up the menu
             {
                 this.mnuTimbro.Enabled = true;
                 this.mnuTimbro.Visible = true;
             }
-
+            //
             if (this.Parent.GetType() == typeof(winFormsIntf.frmAutoreLoad))
             {
                 //this.autoreLoadToolStripMenuItem.Enabled = false;
@@ -209,14 +213,15 @@ namespace winFormsIntf
 
         private void goToErrorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("Debbugging Session"
-                , new System.Exception("Artificial Error generated.")));
+            windowWarehouse[] activeInstances = new windowWarehouse[9];
+            activeInstances[0] = new windowWarehouse(Common.Template_Singleton.TSingleton<winFormsIntf.frmAutoreLoad>.instance());
+            activeInstances[1] = new windowWarehouse(Common.Template_Singleton.TSingleton<winFormsIntf.frmDocumentoLoad>.instance());
+
+
+            winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("Debbugging Session: (AutoreLoad)=" + activeInstances[0].checkCurrentTypeActualConsistency().ToString()+
+"  (DocumentoLoad)=" + activeInstances[1].checkCurrentTypeActualConsistency().ToString()  ));
             ErrorForm.ShowDialog();// block on Error Form
         }
-
-
-
-
 
 
     }// class

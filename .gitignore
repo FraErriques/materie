@@ -6,6 +6,7 @@ obj/
 Debug/
 Release/
 .vs/
+winFormsIntf/banco/
 
 
 #let's continue with file cathegories
@@ -21,3 +22,4 @@ Release/
 *.cahe
 *.props
 *.targets
+mintty.exe.stackdump

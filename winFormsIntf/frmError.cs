@@ -26,7 +26,11 @@ namespace winFormsIntf
             //
             if (null != ex)
             {
-                this.txtStatus.Text = ex.Message + "-Inner: " + ex.InnerException.Message;
+                this.txtStatus.Text = ex.Message;
+                if (null != ex.InnerException)
+                {
+                    this.txtStatus.Text += "-Inner: " + ex.InnerException.Message;
+                }// else skip.
                 this.txtStatus.Enabled = false;
             }// else an empty exception has been provided.
         }// Ctor
@@ -42,6 +46,7 @@ Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Visible =
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().lblStatus.Text = "";// reset
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtPwd.Text = "";
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtUser.Text = "";// ? order ?
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().pnlLoginControls.Enabled = true;
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Focus();
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtUser.Focus();
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().ShowDialog();// re-show the original Login; exec suspended here.

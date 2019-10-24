@@ -6,13 +6,17 @@ using System.Windows.Forms;
 
 namespace winFormsIntf
 {
-    
+
+
+
+
 
     static class Program
     {
         //public static System.Collections.Hashtable Session = null; both substituted by appropriate Singletons
         //public static System.Windows.Forms.Form firstBlood = null;
         public static System.Collections.Stack formStack = new System.Collections.Stack();
+
 
 
         /// <summary>
@@ -23,6 +27,7 @@ namespace winFormsIntf
         {// the first two instructions are required from the Framework, to be executed before the other ones.
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            //
             // the following statement both makes "new" of the HashTable and sets the "lasciapassare" to null.
             Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"] = null;// not yet loggedIn
             // try and locate the frmLogin.

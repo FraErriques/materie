@@ -8,3 +8,6 @@ dm.id, dm.doc
 from materie.dbo.docMulti dm
 where id>343
 order by dm.id desc
+
+select * from materie.dbo.utente
+select * from materie.dbo.permesso_LOOKUP
