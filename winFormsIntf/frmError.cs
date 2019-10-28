@@ -18,7 +18,10 @@ namespace winFormsIntf
             InitializeComponent();
             //
             this.txtStatus.Enabled = false;
+            this.uscTimbro.Enabled = false;
         }// Ctor
+
+
 
         public frmError( System.Exception ex)
         {
@@ -32,8 +35,15 @@ namespace winFormsIntf
                     this.txtStatus.Text += "-Inner: " + ex.InnerException.Message;
                 }// else skip.
                 this.txtStatus.Enabled = false;
+                this.uscTimbro.Enabled = false;
             }// else an empty exception has been provided.
         }// Ctor
+
+
+
+
+
+
 
 
         private void btnGoLogin_Click( object sender, EventArgs e )
@@ -41,12 +51,15 @@ namespace winFormsIntf
             // Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Owner
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.unsubscribe_all_();// unsubscribe_all_
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance();// renew the frmLogin
-Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Visible = false;
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Visible = false;
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().uscTimbro.Enabled = false;
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().lblStatus.Text = "";// reset
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtPwd.Text = "";
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtUser.Text = "";// ? order ?
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().pnlLoginControls.Enabled = true;
+            //
+            this.uscTimbro.emptyWinList();// kill all windows.
+            //
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Focus();
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtUser.Focus();
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().ShowDialog();// re-show the original Login; exec suspended here.

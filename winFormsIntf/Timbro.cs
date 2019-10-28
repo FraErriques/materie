@@ -23,6 +23,8 @@ namespace winFormsIntf
             // Systemm::initGraph
             InitializeComponent();
             // laterThanCtor(); not yet ready, the this.Parent field.
+            // NB. if (typeof( winFormsIntf.Timbro) == this.GetType() )// NB. typeof() is an operator on types while GetType is a method on instances.
+            //{} as in the previous example, their return value is compatible since in both cases it's of type "System.Type".
         }// Ctor
 
 
@@ -89,34 +91,7 @@ namespace winFormsIntf
                 this.mnuTimbro.Visible = true;
             }
             //
-            if (this.Parent.GetType() == typeof(winFormsIntf.frmAutoreLoad))
-            {
-                //this.autoreLoadToolStripMenuItem.Enabled = false;
-                //this.documentoLToolStripMenuItem.Enabled = false;
-                //this.mappaToolStripMenuItem.Enabled = true;
-                //this.insertMateriaToolStripMenuItem.Enabled = true;
-                //this.insertAutoreToolStripMenuItem.Enabled = true;
-                //this.logToolStripMenuItem.Enabled = true;
-                //this.primesToolStripMenuItem.Enabled = true;
-                //this.changePwdToolStripMenuItem.Enabled = true;
-                //this.logoutToolStripMenuItem.Enabled = true;
-                //this.closeAppToolStripMenuItem.Enabled = true;
-                //this.goToErrorToolStripMenuItem.Enabled = true;
-            }
-            else if (this.Parent.GetType() == typeof(winFormsIntf.frmDocumentoLoad))
-            {
-                //this.autoreLoadToolStripMenuItem.Enabled = false;
-                //this.documentoLToolStripMenuItem.Enabled = false;
-                //this.mappaToolStripMenuItem.Enabled = true;
-                //this.insertMateriaToolStripMenuItem.Enabled = true;
-                //this.insertAutoreToolStripMenuItem.Enabled = true;
-                //this.logToolStripMenuItem.Enabled = true;
-                //this.primesToolStripMenuItem.Enabled = true;
-                //this.changePwdToolStripMenuItem.Enabled = true;
-                //this.logoutToolStripMenuItem.Enabled = true;
-                //this.closeAppToolStripMenuItem.Enabled = true;
-                //this.goToErrorToolStripMenuItem.Enabled = true;
-            }
+            // Note:...else if (this.Parent.GetType() == typeof(winFormsIntf.frmDocumentoLoad))
         }// laterThanCtor
 
 
@@ -141,54 +116,28 @@ namespace winFormsIntf
 
         private void autoreLoadToolStripMenuItem_Click( object sender, EventArgs e )
         {
-            if( this.Parent.GetType()==typeof(winFormsIntf.frmAutoreLoad) ) 
-            {//do nothing. Just de-activate menu, since we're already in page.
-            }
-            else
-            {
-                Program.formStack.Push(new frmAutoreLoad());
-                ((System.Windows.Forms.Form)(Program.formStack.Peek())).ShowDialog();
-                //winFormsIntf.frmAutoreLoad frmAutoreLoad_inst = new frmAutoreLoad();//Program.Session, Program.firstBlood);
+
+                Program.formList.Add( new frmAutoreLoad()); // .formStack.Push(
+                ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
                 //frmAutoreLoad_inst.ShowDialog();// this MODAL action suspends the execution;
                 // the following lines will be executed only on closure of frmAutoreLoad_inst (asynchronous execution).
                 ////instead
                 //frmAutoreLoad_inst.Show();// this closes everything synchronously.
                 //// this way the execution continues.
                 //this.Close();NB. don't do that. This closes the main form, on closure of a slave one.
-                //this.Dispose();
-            }
-        }
+        }// autoreLoadToolStripMenuItem_Click
 
         private void documentoLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.Parent.GetType() == typeof(winFormsIntf.frmDocumentoLoad))
-            {//do nothing. Just de-activate menu, since we're already in page.
-            }
-            else
-            {
-                Program.formStack.Push(new frmDocumentoLoad());
-                ((System.Windows.Forms.Form)(Program.formStack.Peek())).ShowDialog();
-                //winFormsIntf.frmDocumentoLoad frmDocumentoLoad_inst = new frmDocumentoLoad();// Program.Session, Program.firstBlood );
-                //frmDocumentoLoad_inst.ShowDialog();// this MODAL action suspends the execution; meaning that each successive 
-                // instruction from here, requires the closure of the winForm activated in the previous line.
-            }
-        }// autoreLoadToolStripMenuItem_Click
+            Program.formList.Add(new frmDocumentoLoad()); // .formStack.Push(
+            ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
+        }// documentoLToolStripMenuItem_Click
 
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            while ( 0 < Program.formStack.Count )
-            {
-                System.Windows.Forms.Form tmpForm = (System.Windows.Forms.Form)(Program.formStack.Pop());
-                tmpForm.Dispose();
-            }
-            //System.Windows.Forms.Form owner = Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Owner;
-            //System.Windows.Forms.Form[] ownedForms = Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().OwnedForms;
-            //for (int c = ownedForms.GetLength(0) - 1; c >= 0; c--)
-            //{
-            //    ownedForms[c].Dispose();
-            //}
-            // TODO
+            this.emptyWinList();// kill all windows.
+            //
             Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"] = null;// no more loggedIn
             // check login status
             bool isLoggedIn =
@@ -205,21 +154,41 @@ namespace winFormsIntf
         }// Logout
 
 
+ 
+
+
+        public void emptyWinList()
+        {
+            for (int c = Program.formList.Count; c > 0; c--)
+            {
+                if (null != Program.formList[c - 1])
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[c - 1])).Dispose();
+                    Program.formList[c - 1] = null;//gc
+                    Program.formList.RemoveAt(c - 1);// remove the empty slot
+                }// skip null entries; pass to a fixed-size_Array end reset the index.
+            }
+        }// emptyWinList()
+
+
+
         private void closeAppToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // mweans Program.firstBlood.Dispose();
+            this.emptyWinList();// kill all windows.
+            // the following means Program.firstBlood.Dispose() i.e. kill the frmLogin, which was the first one.
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Dispose();
         }// closeAppToolStripMenuItem_Click
 
+
+
         private void goToErrorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            windowWarehouse[] activeInstances = new windowWarehouse[9];
+            windowWarehouse[] activeInstances = new windowWarehouse[9];// TODO ?
             activeInstances[0] = new windowWarehouse(Common.Template_Singleton.TSingleton<winFormsIntf.frmAutoreLoad>.instance());
             activeInstances[1] = new windowWarehouse(Common.Template_Singleton.TSingleton<winFormsIntf.frmDocumentoLoad>.instance());
-
-
             winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("Debbugging Session: (AutoreLoad)=" + activeInstances[0].checkCurrentTypeActualConsistency().ToString()+
 "  (DocumentoLoad)=" + activeInstances[1].checkCurrentTypeActualConsistency().ToString()  ));
+            //
             ErrorForm.ShowDialog();// block on Error Form
         }
 

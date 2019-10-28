@@ -15,14 +15,15 @@ namespace winFormsIntf
     {
         //public static System.Collections.Hashtable Session = null; both substituted by appropriate Singletons
         //public static System.Windows.Forms.Form firstBlood = null;
-        public static System.Collections.Stack formStack = new System.Collections.Stack();
+        public static System.Collections.ArrayList formList = new System.Collections.ArrayList();
+        //public static System.Collections.Stack formStack = new System.Collections.Stack();
 
 
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
+        [MTAThread]
         static void Main()
         {// the first two instructions are required from the Framework, to be executed before the other ones.
             Application.EnableVisualStyles();

@@ -10,7 +10,7 @@ namespace winFormsIntf
     {
         private Type currentWindowType;
         private int thisTypeInstanceAccumulator;
-        private const int thisTypeInstanceLimit = 2;
+        private int thisTypeInstanceLimit;// depends on typeof(currentWindowType)
         private enum openingMode
         {
             // invalid
@@ -21,28 +21,93 @@ namespace winFormsIntf
             // Exclusive_Modal
             Modal = 2
         }// enum
-        //
+        openingMode curWinOpeningMode;
+        
+        
+        // Ctor()
         public windowWarehouse(System.Windows.Forms.Form currentForm)
         {
             this.thisTypeInstanceAccumulator = 0;
             this.currentWindowType = currentForm.GetType();
+            //
+            //if( currentForm.GetType() is  frmAutoreLoad )
+            //
+            if( this.currentWindowType == typeof( frmAutoreLoad) )
+            {
+                this.thisTypeInstanceLimit = 2;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if (currentForm.GetType() == typeof(frmDocumentoLoad ))
+            {
+                this.thisTypeInstanceLimit = 5;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if (currentForm.GetType() == typeof(frmMateriaInsert ))
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (currentForm.GetType() == typeof(frmAutoreInsert ))
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (currentForm.GetType() == typeof(frmDocumentoInsert ))
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (currentForm.GetType() == typeof(frmError ))
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (currentForm.GetType() == typeof(frmLogin ))
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (currentForm.GetType() == typeof(frmLogViewer ))
+            {
+                this.thisTypeInstanceLimit = 2;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if (currentForm.GetType() == typeof(frmPrimes ))
+            {
+                this.thisTypeInstanceLimit = 2;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if (currentForm.GetType() == typeof(frmChangePwd ))
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (currentForm.GetType() == typeof(frmUpdateAbstract ))
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }// no cases remaining.
         }// Ctor()
+
 
         public int checkCurrentTypeActualConsistency()
         {
             this.thisTypeInstanceAccumulator = default(int);
-            //while (0 < Program.formStack.Count; )
-            for (int c=Program.formStack.Count; c>0; c--)
+            //
+            for (int c = 0; c < Program.formList.Count; c++)
             {
-                System.Windows.Forms.Form tmpForm = (System.Windows.Forms.Form)(Program.formStack.Peek());// TODO peek always reads the stack-top. Change into an array.
-                if (tmpForm.GetType() == this.currentWindowType)
+                if (null != Program.formList[c])
                 {
-                    this.thisTypeInstanceAccumulator++;
-                }// else skip forms which do not correspond in type.
-            }// for 
+                    if (((System.Windows.Forms.Form)(Program.formList[c])).GetType() == this.currentWindowType)
+                    {
+                        this.thisTypeInstanceAccumulator++;
+                    }// else skip forms which do not correspond in type.
+                }// skip null entries;  reset the index.
+            }// for
             // ready
             return this.thisTypeInstanceAccumulator;
         }// checkCurrentTypeActualConsistency
+
 
     }// class windowWarehouse
 

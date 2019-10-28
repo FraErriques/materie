@@ -30,11 +30,12 @@
         {
             this.txtStatus = new System.Windows.Forms.TextBox();
             this.btnGoLogin = new System.Windows.Forms.Button();
+            this.uscTimbro = new winFormsIntf.Timbro();
             this.SuspendLayout();
             // 
             // txtStatus
             // 
-            this.txtStatus.Location = new System.Drawing.Point(12, 56);
+            this.txtStatus.Location = new System.Drawing.Point(12, 148);
             this.txtStatus.Multiline = true;
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.Size = new System.Drawing.Size(438, 169);
@@ -42,7 +43,7 @@
             // 
             // btnGoLogin
             // 
-            this.btnGoLogin.Location = new System.Drawing.Point(12, 12);
+            this.btnGoLogin.Location = new System.Drawing.Point(12, 107);
             this.btnGoLogin.Name = "btnGoLogin";
             this.btnGoLogin.Size = new System.Drawing.Size(217, 23);
             this.btnGoLogin.TabIndex = 1;
@@ -50,11 +51,19 @@
             this.btnGoLogin.UseVisualStyleBackColor = true;
             this.btnGoLogin.Click += new System.EventHandler(this.btnGoLogin_Click);
             // 
+            // timbro1
+            // 
+            this.uscTimbro.Location = new System.Drawing.Point(12, 12);
+            this.uscTimbro.Name = "timbro1";
+            this.uscTimbro.Size = new System.Drawing.Size(857, 32);
+            this.uscTimbro.TabIndex = 2;
+            // 
             // frmError
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 237);
+            this.ClientSize = new System.Drawing.Size(898, 329);
+            this.Controls.Add(this.uscTimbro);
             this.Controls.Add(this.btnGoLogin);
             this.Controls.Add(this.txtStatus);
             this.Name = "frmError";
@@ -68,5 +77,6 @@
 
         private System.Windows.Forms.TextBox txtStatus;
         private System.Windows.Forms.Button btnGoLogin;
+        private Timbro uscTimbro;
     }
 }

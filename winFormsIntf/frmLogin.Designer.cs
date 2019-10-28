@@ -97,7 +97,7 @@
             this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(868, 273);
+            this.ClientSize = new System.Drawing.Size(860, 261);
             this.Controls.Add(this.pnlLoginControls);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.uscTimbro);
@@ -105,6 +105,7 @@
             this.MinimumSize = new System.Drawing.Size(876, 300);
             this.Name = "frmLogin";
             this.Text = "Login";
+            this.Leave += new System.EventHandler(this.frmLogin_Leave);
             this.pnlLoginControls.ResumeLayout(false);
             this.pnlLoginControls.PerformLayout();
             this.ResumeLayout(false);
