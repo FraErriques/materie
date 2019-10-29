@@ -97,6 +97,11 @@ namespace winFormsIntf
         }// grdDocumento_CellMouseDoubleClick
 
 
+        private void frmDocumentoLoad_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.uscTimbro.removeSpecifiedWin(this);
+        }
+
 
 
     }//class

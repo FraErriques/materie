@@ -46,6 +46,7 @@
             this.Controls.Add(this.uscTimbro);
             this.Name = "frmAutoreLoad";
             this.Text = "frmAutoreLoad";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAutoreLoad_FormClosed);
             this.ResumeLayout(false);
 
         }

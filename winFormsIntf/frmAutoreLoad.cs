@@ -32,5 +32,11 @@ namespace winFormsIntf
         }// Ctor()
 
 
+        private void frmAutoreLoad_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.uscTimbro.removeSpecifiedWin(this);
+        }
+
+
     }// class
 }// nmsp

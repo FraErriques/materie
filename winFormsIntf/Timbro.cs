@@ -188,6 +188,23 @@ namespace winFormsIntf
         }// emptyWinList()
 
 
+        public void removeSpecifiedWin( System.Windows.Forms.Form parFrm)
+        {
+            for (int c = Program.formList.Count; c > 0; c--)
+            {
+                if (null != Program.formList[c - 1])
+                {
+                    if (parFrm == (System.Windows.Forms.Form)(Program.formList[c - 1]))
+                    {
+                        ((System.Windows.Forms.Form)(Program.formList[c - 1])).Dispose();
+                        Program.formList[c - 1] = null;//gc
+                        Program.formList.RemoveAt(c - 1);// remove the empty slot
+                    }
+                }// skip null entries; pass to a fixed-size_Array end reset the index.
+            }
+        }// removeSpecifiedWin()
+
+
 
         private void closeAppToolStripMenuItem_Click(object sender, EventArgs e)
         {

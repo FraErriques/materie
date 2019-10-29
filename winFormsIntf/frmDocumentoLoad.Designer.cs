@@ -61,6 +61,7 @@
             this.Controls.Add(this.grdDocumento);
             this.Name = "frmDocumentoLoad";
             this.Text = "frmDocumentoLoad";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmDocumentoLoad_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.grdDocumento)).EndInit();
             this.ResumeLayout(false);
 
