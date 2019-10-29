@@ -116,9 +116,26 @@ namespace winFormsIntf
 
         private void autoreLoadToolStripMenuItem_Click( object sender, EventArgs e )
         {
-
-                Program.formList.Add( new frmAutoreLoad()); // .formStack.Push(
-                ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
+            if( Program.activeInstances[0].canOpenAnotherOne())
+            {
+                Program.formList.Add(new frmAutoreLoad());
+                if( Program.activeInstances[0].openingHowto() == windowWarehouse.openingMode.Modal)
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
+                }
+                else if (Program.activeInstances[0].openingHowto() == windowWarehouse.openingMode.NotModal)
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).Show();// show the last born.
+                }
+                else
+                {
+                    throw new System.Exception(" Invalid opening mode.");
+                }
+            }// if can open another win
+            else
+            {
+                MessageBox.Show(this, " No more instances of type AutoreLoad available. Close something of this type.", "Win Cardinality");
+            }// else can open no more win
                 //frmAutoreLoad_inst.ShowDialog();// this MODAL action suspends the execution;
                 // the following lines will be executed only on closure of frmAutoreLoad_inst (asynchronous execution).
                 ////instead
@@ -183,13 +200,43 @@ namespace winFormsIntf
 
         private void goToErrorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            windowWarehouse[] activeInstances = new windowWarehouse[9];// TODO ?
-            activeInstances[0] = new windowWarehouse(Common.Template_Singleton.TSingleton<winFormsIntf.frmAutoreLoad>.instance());
-            activeInstances[1] = new windowWarehouse(Common.Template_Singleton.TSingleton<winFormsIntf.frmDocumentoLoad>.instance());
-            winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("Debbugging Session: (AutoreLoad)=" + activeInstances[0].checkCurrentTypeActualConsistency().ToString()+
-"  (DocumentoLoad)=" + activeInstances[1].checkCurrentTypeActualConsistency().ToString()  ));
-            //
-            ErrorForm.ShowDialog();// block on Error Form
+            //windowWarehouse[] activeInstances = new windowWarehouse[9];// TODO ?
+            //activeInstances[0] = new windowWarehouse(Common.Template_Singleton.TSingleton<winFormsIntf.frmAutoreLoad>.instance());
+            //activeInstances[1] = new windowWarehouse(Common.Template_Singleton.TSingleton<winFormsIntf.frmDocumentoLoad>.instance());
+
+            //    //public enum CurrentWindowType
+            //    //{
+            //    //    // invalid
+            //    //    Invalid = 0
+            //    //    ///	effective opening modes
+            //    //    ,frmAutoreLoad          = 1
+            //    //    ,frmDocumentoLoad       = 2
+            //    //    ,frmMateriaInsert       = 3
+            //    //    ,frmAutoreInsert        = 4
+            //    //    ,frmDocumentoInsert     = 5
+            //    //    ,frmError               = 6
+            //    //    ,frmLogin               = 7
+            //    //    ,frmLogViewer           = 8
+            //    //    ,frmPrimes              = 9
+            //    //    ,frmChangePwd           = 10
+            //    //    ,frmUpdateAbstract      = 11
+            //    //}// enum
+            //...
+            winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("Debbugging Session: " + // )); //  + TODO
+                    " \r\n frmAutoreLoad       =" + Program.activeInstances[0].checkCurrentTypeActualConsistency().ToString()  +
+                    " \r\n frmDocumentoLoad    =" + Program.activeInstances[1].checkCurrentTypeActualConsistency().ToString() +
+                    " \r\n frmMateriaInsert    =" + Program.activeInstances[2].checkCurrentTypeActualConsistency().ToString() +
+                    " \r\n frmAutoreInsert     =" + Program.activeInstances[3].checkCurrentTypeActualConsistency().ToString() +
+                    " \r\n frmDocumentoInsert  =" + Program.activeInstances[4].checkCurrentTypeActualConsistency().ToString() +
+                    " \r\n frmError            =" + Program.activeInstances[5].checkCurrentTypeActualConsistency().ToString() +
+                    " \r\n frmLogin            =" + Program.activeInstances[6].checkCurrentTypeActualConsistency().ToString() +
+                    " \r\n frmLogViewer        =" + Program.activeInstances[7].checkCurrentTypeActualConsistency().ToString() +
+                    " \r\n frmPrimes           =" + Program.activeInstances[8].checkCurrentTypeActualConsistency().ToString() +
+                    " \r\n frmChangePwd        =" + Program.activeInstances[9].checkCurrentTypeActualConsistency().ToString() +
+                    " \r\n frmUpdateAbstract   =" + Program.activeInstances[10].checkCurrentTypeActualConsistency().ToString() 
+                ) );
+                //
+           ErrorForm.ShowDialog();// block on Error Form
         }
 
 

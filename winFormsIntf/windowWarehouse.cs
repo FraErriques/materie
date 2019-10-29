@@ -8,10 +8,27 @@ namespace winFormsIntf
 
     public class windowWarehouse
     {
-        private Type currentWindowType;
+        public enum CurrentWindowType
+        {
+            // invalid
+            Invalid = 0
+            ///	effective opening modes
+            ,frmAutoreLoad = 1
+            ,frmDocumentoLoad = 2
+            ,frmMateriaInsert = 3
+            ,frmAutoreInsert = 4
+            ,frmDocumentoInsert = 5
+            ,frmError = 6
+            ,frmLogin = 7
+            ,frmLogViewer = 8
+            ,frmPrimes = 9
+            ,frmChangePwd = 10
+            ,frmUpdateAbstract = 11
+        }// enum
+        private CurrentWindowType currentWindowType;
         private int thisTypeInstanceAccumulator;
         private int thisTypeInstanceLimit;// depends on typeof(currentWindowType)
-        private enum openingMode
+        public enum openingMode
         {
             // invalid
             Invalid = 0,
@@ -25,68 +42,70 @@ namespace winFormsIntf
         
         
         // Ctor()
-        public windowWarehouse(System.Windows.Forms.Form currentForm)
+        public windowWarehouse(CurrentWindowType currentType)
         {
             this.thisTypeInstanceAccumulator = 0;
-            this.currentWindowType = currentForm.GetType();
+            this.currentWindowType = currentType;
             //
-            //if( currentForm.GetType() is  frmAutoreLoad )
-            //
-            if( this.currentWindowType == typeof( frmAutoreLoad) )
+            if( this.currentWindowType == CurrentWindowType.frmAutoreLoad )
             {
                 this.thisTypeInstanceLimit = 2;
                 this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
             }
-            else if (currentForm.GetType() == typeof(frmDocumentoLoad ))
+            else if ( this.currentWindowType == CurrentWindowType.frmDocumentoLoad )
             {
                 this.thisTypeInstanceLimit = 5;
                 this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
             }
-            else if (currentForm.GetType() == typeof(frmMateriaInsert ))
+            else if ( this.currentWindowType == CurrentWindowType.frmMateriaInsert )
             {
                 this.thisTypeInstanceLimit = 1;
                 this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
             }
-            else if (currentForm.GetType() == typeof(frmAutoreInsert ))
+            else if ( this.currentWindowType == CurrentWindowType.frmAutoreInsert )
             {
                 this.thisTypeInstanceLimit = 1;
                 this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
             }
-            else if (currentForm.GetType() == typeof(frmDocumentoInsert ))
+            else if ( this.currentWindowType == CurrentWindowType.frmDocumentoInsert )
             {
                 this.thisTypeInstanceLimit = 1;
                 this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
             }
-            else if (currentForm.GetType() == typeof(frmError ))
+            else if ( this.currentWindowType == CurrentWindowType.frmError )
             {
                 this.thisTypeInstanceLimit = 1;
                 this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
             }
-            else if (currentForm.GetType() == typeof(frmLogin ))
+            else if ( this.currentWindowType == CurrentWindowType.frmLogin )
             {
                 this.thisTypeInstanceLimit = 1;
                 this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
             }
-            else if (currentForm.GetType() == typeof(frmLogViewer ))
+            else if ( this.currentWindowType == CurrentWindowType.frmLogViewer )
             {
                 this.thisTypeInstanceLimit = 2;
                 this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
             }
-            else if (currentForm.GetType() == typeof(frmPrimes ))
+            else if ( this.currentWindowType == CurrentWindowType.frmPrimes )
             {
                 this.thisTypeInstanceLimit = 2;
                 this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
             }
-            else if (currentForm.GetType() == typeof(frmChangePwd ))
+            else if ( this.currentWindowType == CurrentWindowType.frmChangePwd )
             {
                 this.thisTypeInstanceLimit = 1;
                 this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
             }
-            else if (currentForm.GetType() == typeof(frmUpdateAbstract ))
+            else if ( this.currentWindowType == CurrentWindowType.frmUpdateAbstract )
             {
                 this.thisTypeInstanceLimit = 1;
                 this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
             }// no cases remaining.
+            else
+            {
+                throw new System.Exception(" A not-allowed type was passed to this factory.");
+            }// else-if
         }// Ctor()
 
 
@@ -98,7 +117,10 @@ namespace winFormsIntf
             {
                 if (null != Program.formList[c])
                 {
-                    if (((System.Windows.Forms.Form)(Program.formList[c])).GetType() == this.currentWindowType)
+                    string nomeDaArrayList = ((System.Windows.Forms.Form)(Program.formList[c])).GetType().ToString();
+                    nomeDaArrayList = nomeDaArrayList.Remove(0, 13);// i.e. remove "winFormsIntf." from left
+                    string nomeDaThisCurrentWindowType = this.currentWindowType.ToString();
+                    if( nomeDaArrayList == nomeDaThisCurrentWindowType )
                     {
                         this.thisTypeInstanceAccumulator++;
                     }// else skip forms which do not correspond in type.
@@ -108,6 +130,21 @@ namespace winFormsIntf
             return this.thisTypeInstanceAccumulator;
         }// checkCurrentTypeActualConsistency
 
+
+        public bool canOpenAnotherOne()
+        {
+            this.checkCurrentTypeActualConsistency();// refresh the counter
+            if (this.thisTypeInstanceAccumulator < this.thisTypeInstanceLimit)
+            {
+                return true;
+            }// else..
+            return false;
+        }// canOpenAnotherOne
+
+        public openingMode openingHowto()
+        {
+            return this.curWinOpeningMode;
+        }// openingHowto
 
     }// class windowWarehouse
 
