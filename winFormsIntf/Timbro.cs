@@ -12,11 +12,13 @@ using System.Windows.Forms;
 namespace winFormsIntf
 {
 
-
+    /// <summary>
+    /// The main App-Guidance class: it's a user control, i.e. the homologous of a .ascx in Aspx. Each of the winForms share this control.
+    /// </summary>
     public partial class Timbro : UserControl
     {
-        
-        
+
+        # region Ctor&Interface
 
         public Timbro()
         {
@@ -98,6 +100,7 @@ namespace winFormsIntf
 
         private void writeMenusEnabled(bool hasToBeEnabled)
         {
+            // TODO insertDocumento: disable the btnValidateDoubleKey in AutoreLoad
             this.insertMateriaToolStripMenuItem.Enabled = hasToBeEnabled;
             this.insertAutoreToolStripMenuItem.Enabled = hasToBeEnabled;
         }// writeMenusEnabled
@@ -114,95 +117,11 @@ namespace winFormsIntf
         }// adminMenusEnabled
 
 
-        private void autoreLoadToolStripMenuItem_Click( object sender, EventArgs e )
-        {
-            if( Program.activeInstances[0].canOpenAnotherOne())
-            {
-                Program.formList.Add(new frmAutoreLoad());
-                if( Program.activeInstances[0].openingHowto() == windowWarehouse.openingMode.Modal)
-                {
-                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
-                }
-                else if (Program.activeInstances[0].openingHowto() == windowWarehouse.openingMode.NotModal)
-                {
-                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).Show();// show the last born.
-                }
-                else
-                {
-                    throw new System.Exception(" Invalid opening mode.");
-                }
-            }// if can open another win
-            else
-            {
-                MessageBox.Show(this, " No more instances of type AutoreLoad available. Close something of this type.", "Win Cardinality");
-            }// else can open no more win
-                //frmAutoreLoad_inst.ShowDialog();// this MODAL action suspends the execution;
-                // the following lines will be executed only on closure of frmAutoreLoad_inst (asynchronous execution).
-                ////instead
-                //frmAutoreLoad_inst.Show();// this closes everything synchronously.
-                //// this way the execution continues.
-                //this.Close();NB. don't do that. This closes the main form, on closure of a slave one.
-        }// autoreLoadToolStripMenuItem_Click
-
-        private void documentoLToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Program.formList.Add(new frmDocumentoLoad()); // .formStack.Push(
-            ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
-        }// documentoLToolStripMenuItem_Click
+        # endregion Ctor&Interface
 
 
-        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.emptyWinList();// kill all windows.
-            //
-            Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"] = null;// no more loggedIn
-            // check login status
-            bool isLoggedIn =
-                winFormsIntf.CheckLogin.isLoggedIn(
-                    (Entity_materie.BusinessEntities.Permesso.Patente)
-                    Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"]);
-            if (!isLoggedIn)
-            {
-                winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("user is not Logged In"
-                    , new System.Exception("Go to Login Form and access, in order to proceed.")));
-                ErrorForm.ShowDialog();// block on Error Form
-            }// else is LoggedIn -> CanContinue
-            //
-        }// Logout
+        #region adminMenus
 
-
- 
-
-
-        public void emptyWinList()
-        {
-            for (int c = Program.formList.Count; c > 0; c--)
-            {
-                if (null != Program.formList[c - 1])
-                {
-                    ((System.Windows.Forms.Form)(Program.formList[c - 1])).Dispose();
-                    Program.formList[c - 1] = null;//gc
-                    Program.formList.RemoveAt(c - 1);// remove the empty slot
-                }// skip null entries; pass to a fixed-size_Array end reset the index.
-            }
-        }// emptyWinList()
-
-
-        public void removeSpecifiedWin( System.Windows.Forms.Form parFrm)
-        {
-            for (int c = Program.formList.Count; c > 0; c--)
-            {
-                if (null != Program.formList[c - 1])
-                {
-                    if (parFrm == (System.Windows.Forms.Form)(Program.formList[c - 1]))
-                    {
-                        ((System.Windows.Forms.Form)(Program.formList[c - 1])).Dispose();
-                        Program.formList[c - 1] = null;//gc
-                        Program.formList.RemoveAt(c - 1);// remove the empty slot
-                    }
-                }// skip null entries; pass to a fixed-size_Array end reset the index.
-            }
-        }// removeSpecifiedWin()
 
 
 
@@ -240,7 +159,7 @@ namespace winFormsIntf
             //    //}// enum
             //...
             winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("Debbugging Session: " + // )); //  + TODO
-                    " \r\n frmAutoreLoad       =" + Program.activeInstances[0].checkCurrentTypeActualConsistency().ToString()  +
+                    " \r\n frmAutoreLoad       =" + Program.activeInstances[0].checkCurrentTypeActualConsistency().ToString() +
                     " \r\n frmDocumentoLoad    =" + Program.activeInstances[1].checkCurrentTypeActualConsistency().ToString() +
                     " \r\n frmMateriaInsert    =" + Program.activeInstances[2].checkCurrentTypeActualConsistency().ToString() +
                     " \r\n frmAutoreInsert     =" + Program.activeInstances[3].checkCurrentTypeActualConsistency().ToString() +
@@ -250,11 +169,185 @@ namespace winFormsIntf
                     " \r\n frmLogViewer        =" + Program.activeInstances[7].checkCurrentTypeActualConsistency().ToString() +
                     " \r\n frmPrimes           =" + Program.activeInstances[8].checkCurrentTypeActualConsistency().ToString() +
                     " \r\n frmChangePwd        =" + Program.activeInstances[9].checkCurrentTypeActualConsistency().ToString() +
-                    " \r\n frmUpdateAbstract   =" + Program.activeInstances[10].checkCurrentTypeActualConsistency().ToString() 
-                ) );
-                //
-           ErrorForm.ShowDialog();// block on Error Form
+                    " \r\n frmUpdateAbstract   =" + Program.activeInstances[10].checkCurrentTypeActualConsistency().ToString()
+                ));
+            //
+            ErrorForm.ShowDialog();// block on Error Form
         }
+
+
+
+        #endregion adminMenus
+
+
+        #region kernelModules
+
+        public void emptyWinList()
+        {
+            for (int c = Program.formList.Count; c > 0; c--)
+            {
+                if (null != Program.formList[c - 1])
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[c - 1])).Dispose();
+                    Program.formList[c - 1] = null;//gc
+                    Program.formList.RemoveAt(c - 1);// remove the empty slot
+                }// skip null entries; pass to a fixed-size_Array end reset the index.
+            }
+        }// emptyWinList()
+
+
+        public void removeSpecifiedWin(System.Windows.Forms.Form parFrm)
+        {
+            for (int c = Program.formList.Count; c > 0; c--)
+            {
+                if (null != Program.formList[c - 1])
+                {
+                    if (parFrm == (System.Windows.Forms.Form)(Program.formList[c - 1]))
+                    {
+                        ((System.Windows.Forms.Form)(Program.formList[c - 1])).Dispose();
+                        Program.formList[c - 1] = null;//gc
+                        Program.formList.RemoveAt(c - 1);// remove the empty slot
+                    }
+                }// skip null entries; pass to a fixed-size_Array end reset the index.
+            }
+        }// removeSpecifiedWin()
+
+
+        #endregion kernelModules
+
+
+
+
+        #region menuFormCreation
+
+        private void autoreLoadToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            if( Program.activeInstances[0].canOpenAnotherOne())
+            {
+                Program.formList.Add(new frmAutoreLoad());
+                if( Program.activeInstances[0].openingHowto() == windowWarehouse.openingMode.Modal)
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
+                }
+                else if (Program.activeInstances[0].openingHowto() == windowWarehouse.openingMode.NotModal)
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).Show();// show the last born.
+                }
+                else
+                {
+                    throw new System.Exception(" Invalid opening mode.");
+                }
+            }// if can open another win
+            else
+            {
+                MessageBox.Show(this, " No more instances of type AutoreLoad available. Close something of this type.", "Win Cardinality");
+            }// else can open no more win
+        }// autoreLoadToolStripMenuItem_Click
+
+
+        private void documentoLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Program.activeInstances[1].canOpenAnotherOne())
+            {
+                Program.formList.Add(new frmDocumentoLoad() );
+                if (Program.activeInstances[1].openingHowto() == windowWarehouse.openingMode.Modal)
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
+                }
+                else if (Program.activeInstances[1].openingHowto() == windowWarehouse.openingMode.NotModal)
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).Show();// show the last born.
+                }
+                else
+                {
+                    throw new System.Exception(" Invalid opening mode.");
+                }
+            }// if can open another win
+            else
+            {
+                MessageBox.Show(this, " No more instances of type DocumentoLoad available. Close something of this type.", "Win Cardinality");
+            }// else can open no more win
+        }// documentoLToolStripMenuItem_Click
+
+
+        private void mappaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void insertMateriaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void insertAutoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        /// <summary>
+        /// LogViewer : an interface for the LoggingDatabase used from Singleton_LogSinkDb_
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void logToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Program.activeInstances[7].canOpenAnotherOne())
+            {
+                Program.formList.Add(new frmLogViewer() );
+                if (Program.activeInstances[7].openingHowto() == windowWarehouse.openingMode.Modal)
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
+                }
+                else if (Program.activeInstances[7].openingHowto() == windowWarehouse.openingMode.NotModal)
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).Show();// show the last born.
+                }
+                else
+                {
+                    throw new System.Exception(" Invalid opening mode.");
+                }
+            }// if can open another win
+            else
+            {
+                MessageBox.Show(this, " No more instances of type DocumentoLoad available. Close something of this type.", "Win Cardinality");
+            }// else can open no more win
+        }// logToolStripMenuItem_Click
+
+
+
+        private void primesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void changePwdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.emptyWinList();// kill all windows.
+            //
+            Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"] = null;// no more loggedIn
+            // check login status
+            bool isLoggedIn =
+                winFormsIntf.CheckLogin.isLoggedIn(
+                    (Entity_materie.BusinessEntities.Permesso.Patente)
+                    Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"]);
+            if (!isLoggedIn)
+            {
+                winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("user is not Logged In"
+                    , new System.Exception("Go to Login Form and access, in order to proceed.")));
+                ErrorForm.ShowDialog();// block on Error Form
+            }// else is LoggedIn -> CanContinue
+            //
+        }// Logout
+
+        #endregion menuFormCreation
 
 
     }// class

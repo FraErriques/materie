@@ -28,11 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.uscTimbro = new winFormsIntf.Timbro();
+            this.grdLoggingDb = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.grdLoggingDb)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // uscTimbro
+            // 
+            this.uscTimbro.Location = new System.Drawing.Point(19, 14);
+            this.uscTimbro.Name = "uscTimbro";
+            this.uscTimbro.Size = new System.Drawing.Size(857, 32);
+            this.uscTimbro.TabIndex = 0;
+            // 
+            // grdLoggingDb
+            // 
+            this.grdLoggingDb.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdLoggingDb.Location = new System.Drawing.Point(19, 52);
+            this.grdLoggingDb.Name = "grdLoggingDb";
+            this.grdLoggingDb.Size = new System.Drawing.Size(857, 494);
+            this.grdLoggingDb.TabIndex = 1;
+            // 
+            // frmLogViewer
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(899, 581);
+            this.Controls.Add(this.grdLoggingDb);
+            this.Controls.Add(this.uscTimbro);
+            this.Name = "frmLogViewer";
             this.Text = "frmLogViewer";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAutoreLoad_FormClosed);
+            ((System.ComponentModel.ISupportInitialize)(this.grdLoggingDb)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private Timbro uscTimbro;
+        private System.Windows.Forms.DataGridView grdLoggingDb;
     }
 }
