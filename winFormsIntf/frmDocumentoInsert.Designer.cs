@@ -42,7 +42,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(915, 273);
+            this.ClientSize = new System.Drawing.Size(915, 932);
             this.Controls.Add(this.timbro1);
             this.Name = "frmDocumentoInsert";
             this.Text = "frmDocumentoInsert";

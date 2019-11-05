@@ -39,7 +39,7 @@ namespace winFormsIntf
 
 
         /// <summary>
-        /// The main entry point for the application.
+        /// The main entry point for the application. This class' static data will be used mostly as Singletons.
         /// </summary>
         [MTAThread]
         static void Main()

@@ -135,6 +135,11 @@ namespace winFormsIntf
             this.lblStatus.Text = "";// reset
         }// frmLogin_Leave
 
+        private void frmLogin_Load(object sender, EventArgs e)
+        {
+
+        }
+
 
     }// class
 }// nmsp

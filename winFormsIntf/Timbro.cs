@@ -133,17 +133,13 @@ namespace winFormsIntf
         }// closeAppToolStripMenuItem_Click
 
 
-
+        /// <summary>
+        /// the present usage of frmErrore is to check the cardinality of existing form instances of the various kinds.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void goToErrorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //windowWarehouse[] activeInstances = new windowWarehouse[9];// TODO ?
-            //activeInstances[0] = new windowWarehouse(Common.Template_Singleton.TSingleton<winFormsIntf.frmAutoreLoad>.instance());
-            //activeInstances[1] = new windowWarehouse(Common.Template_Singleton.TSingleton<winFormsIntf.frmDocumentoLoad>.instance());
-
-            //    //public enum CurrentWindowType
-            //    //{
-            //    //    // invalid
-            //    //    Invalid = 0
             //    //    ///	effective opening modes
             //    //    ,frmAutoreLoad          = 1
             //    //    ,frmDocumentoLoad       = 2
@@ -156,8 +152,7 @@ namespace winFormsIntf
             //    //    ,frmPrimes              = 9
             //    //    ,frmChangePwd           = 10
             //    //    ,frmUpdateAbstract      = 11
-            //    //}// enum
-            //...
+            //
             winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("Debbugging Session: " + // )); //  + TODO
                     " \r\n frmAutoreLoad       =" + Program.activeInstances[0].checkCurrentTypeActualConsistency().ToString() +
                     " \r\n frmDocumentoLoad    =" + Program.activeInstances[1].checkCurrentTypeActualConsistency().ToString() +
@@ -173,7 +168,7 @@ namespace winFormsIntf
                 ));
             //
             ErrorForm.ShowDialog();// block on Error Form
-        }
+        }// goToErrorToolStripMenuItem_Click
 
 
 
@@ -281,10 +276,34 @@ namespace winFormsIntf
         }
 
 
+        /// <summary>
+        /// NB. look at "NB change here #" markers, when adapting the code.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void insertAutoreToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
+            if (Program.activeInstances[3].canOpenAnotherOne())// NB change here #
+            {
+                Program.formList.Add(new frmAutoreInsert());// NB change here #
+                if (Program.activeInstances[3].openingHowto() == windowWarehouse.openingMode.Modal)// NB change here #
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
+                }
+                else if (Program.activeInstances[3].openingHowto() == windowWarehouse.openingMode.NotModal)// NB change here #
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).Show();// show the last born.
+                }
+                else
+                {
+                    throw new System.Exception(" Invalid opening mode.");
+                }
+            }// if can open another win
+            else
+            {
+                MessageBox.Show(this, " No more instances of type AutoreInsert available. Close something of this type.", "Win Cardinality");
+            }// else can open no more win
+        }// insertAutoreToolStripMenuItem_Click
 
 
         /// <summary>

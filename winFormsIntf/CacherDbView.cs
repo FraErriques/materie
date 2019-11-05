@@ -146,7 +146,7 @@ namespace winFormsIntf
         /// fra i quali viene fatto un "between", per estrarre la pagina.
         /// </param>
         /// <returns> the chunk-datatable </returns>
-        private System.Data.DataTable GetChunk(
+        public System.Data.DataTable GetChunk(
             System.Collections.Hashtable Session // System.Web.SessionState.HttpSessionState Session 
             ,int requiredPage
           )

@@ -48,7 +48,7 @@
             // 
             // txtPwd
             // 
-            this.txtPwd.Location = new System.Drawing.Point(66, 60);
+            this.txtPwd.Location = new System.Drawing.Point(66, 57);
             this.txtPwd.Name = "txtPwd";
             this.txtPwd.PasswordChar = '*';
             this.txtPwd.Size = new System.Drawing.Size(100, 20);
@@ -69,27 +69,28 @@
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(32, 237);
+            this.lblStatus.Location = new System.Drawing.Point(63, 138);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(187, 13);
+            this.lblStatus.Size = new System.Drawing.Size(31, 13);
             this.lblStatus.TabIndex = 4;
-            this.lblStatus.Text = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            this.lblStatus.Text = "aaaa";
             // 
             // pnlLoginControls
             // 
             this.pnlLoginControls.Controls.Add(this.txtUser);
+            this.pnlLoginControls.Controls.Add(this.lblStatus);
             this.pnlLoginControls.Controls.Add(this.txtPwd);
             this.pnlLoginControls.Controls.Add(this.btnLogin);
-            this.pnlLoginControls.Location = new System.Drawing.Point(431, 62);
+            this.pnlLoginControls.Location = new System.Drawing.Point(608, 40);
             this.pnlLoginControls.Name = "pnlLoginControls";
-            this.pnlLoginControls.Size = new System.Drawing.Size(233, 167);
+            this.pnlLoginControls.Size = new System.Drawing.Size(233, 166);
             this.pnlLoginControls.TabIndex = 5;
             // 
             // uscTimbro
             // 
             this.uscTimbro.Location = new System.Drawing.Point(12, 2);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(778, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(829, 32);
             this.uscTimbro.TabIndex = 3;
             // 
             // frmLogin
@@ -97,19 +98,17 @@
             this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(860, 261);
+            this.ClientSize = new System.Drawing.Size(877, 230);
             this.Controls.Add(this.pnlLoginControls);
-            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.uscTimbro);
-            this.MaximumSize = new System.Drawing.Size(876, 300);
-            this.MinimumSize = new System.Drawing.Size(876, 300);
+            this.MaximumSize = new System.Drawing.Size(950, 300);
+            this.MinimumSize = new System.Drawing.Size(876, 200);
             this.Name = "frmLogin";
             this.Text = "Login";
-            this.Leave += new System.EventHandler(this.frmLogin_Leave);
+            this.Load += new System.EventHandler(this.frmLogin_Load);
             this.pnlLoginControls.ResumeLayout(false);
             this.pnlLoginControls.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
