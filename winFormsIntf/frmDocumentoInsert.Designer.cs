@@ -28,30 +28,126 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.timbro1 = new winFormsIntf.Timbro();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnSearchFileSystem = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.lvwDocSelection = new System.Windows.Forms.ListView();
+            this.colDocPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lblDoubleKey = new System.Windows.Forms.Label();
+            this.lblEsito = new System.Windows.Forms.Label();
+            this.uscTimbro = new winFormsIntf.Timbro();
+            this.grbDocInsert = new System.Windows.Forms.GroupBox();
+            this.grbDocInsert.SuspendLayout();
             this.SuspendLayout();
             // 
-            // timbro1
+            // textBox1
             // 
-            this.timbro1.Location = new System.Drawing.Point(12, 12);
-            this.timbro1.Name = "timbro1";
-            this.timbro1.Size = new System.Drawing.Size(857, 32);
-            this.timbro1.TabIndex = 0;
+            this.textBox1.Location = new System.Drawing.Point(6, 21);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(356, 297);
+            this.textBox1.TabIndex = 1;
+            // 
+            // btnSearchFileSystem
+            // 
+            this.btnSearchFileSystem.Location = new System.Drawing.Point(393, 21);
+            this.btnSearchFileSystem.Name = "btnSearchFileSystem";
+            this.btnSearchFileSystem.Size = new System.Drawing.Size(267, 23);
+            this.btnSearchFileSystem.TabIndex = 2;
+            this.btnSearchFileSystem.Text = "Search FileSystem for documents to upload";
+            this.btnSearchFileSystem.UseVisualStyleBackColor = true;
+            this.btnSearchFileSystem.Click += new System.EventHandler(this.btnSearchFileSystem_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Multiselect = true;
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
+            // 
+            // lvwDocSelection
+            // 
+            this.lvwDocSelection.CheckBoxes = true;
+            this.lvwDocSelection.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colDocPath});
+            this.lvwDocSelection.Location = new System.Drawing.Point(393, 50);
+            this.lvwDocSelection.Name = "lvwDocSelection";
+            this.lvwDocSelection.Size = new System.Drawing.Size(366, 268);
+            this.lvwDocSelection.TabIndex = 3;
+            this.lvwDocSelection.UseCompatibleStateImageBehavior = false;
+            this.lvwDocSelection.View = System.Windows.Forms.View.Details;
+            // 
+            // colDocPath
+            // 
+            this.colDocPath.Text = "full path of Document";
+            this.colDocPath.Width = 960;
+            // 
+            // lblDoubleKey
+            // 
+            this.lblDoubleKey.AutoSize = true;
+            this.lblDoubleKey.Location = new System.Drawing.Point(300, 56);
+            this.lblDoubleKey.Name = "lblDoubleKey";
+            this.lblDoubleKey.Size = new System.Drawing.Size(110, 13);
+            this.lblDoubleKey.TabIndex = 4;
+            this.lblDoubleKey.Text = "DoubleKey translation";
+            // 
+            // lblEsito
+            // 
+            this.lblEsito.AutoSize = true;
+            this.lblEsito.Location = new System.Drawing.Point(15, 481);
+            this.lblEsito.Name = "lblEsito";
+            this.lblEsito.Size = new System.Drawing.Size(29, 13);
+            this.lblEsito.TabIndex = 5;
+            this.lblEsito.Text = "esito";
+            // 
+            // uscTimbro
+            // 
+            this.uscTimbro.Location = new System.Drawing.Point(12, 12);
+            this.uscTimbro.Name = "uscTimbro";
+            this.uscTimbro.Size = new System.Drawing.Size(857, 32);
+            this.uscTimbro.TabIndex = 0;
+            // 
+            // grbDocInsert
+            // 
+            this.grbDocInsert.Controls.Add(this.textBox1);
+            this.grbDocInsert.Controls.Add(this.lvwDocSelection);
+            this.grbDocInsert.Controls.Add(this.btnSearchFileSystem);
+            this.grbDocInsert.Location = new System.Drawing.Point(12, 84);
+            this.grbDocInsert.Name = "grbDocInsert";
+            this.grbDocInsert.Size = new System.Drawing.Size(808, 349);
+            this.grbDocInsert.TabIndex = 6;
+            this.grbDocInsert.TabStop = false;
+            this.grbDocInsert.Text = "Documento Insert";
             // 
             // frmDocumentoInsert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(915, 932);
-            this.Controls.Add(this.timbro1);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(138)))), ((int)(((byte)(0)))));
+            this.ClientSize = new System.Drawing.Size(915, 525);
+            this.Controls.Add(this.grbDocInsert);
+            this.Controls.Add(this.lblEsito);
+            this.Controls.Add(this.lblDoubleKey);
+            this.Controls.Add(this.uscTimbro);
             this.Name = "frmDocumentoInsert";
             this.Text = "frmDocumentoInsert";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmDocumentoInsert_FormClosed);
+            this.grbDocInsert.ResumeLayout(false);
+            this.grbDocInsert.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private Timbro timbro1;
+        private Timbro uscTimbro;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnSearchFileSystem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ListView lvwDocSelection;
+        private System.Windows.Forms.ColumnHeader colDocPath;
+        private System.Windows.Forms.Label lblDoubleKey;
+        private System.Windows.Forms.Label lblEsito;
+        private System.Windows.Forms.GroupBox grbDocInsert;
     }
 }

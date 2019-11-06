@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Windows.Forms;
 
 
@@ -40,8 +40,10 @@ namespace winFormsIntf
 
         /// <summary>
         /// The main entry point for the application. This class' static data will be used mostly as Singletons.
+        /// NB. due to winForms characteristics, the entry point(i.e. Main) has to be "STAThread". Complex bugs
+        /// come out when the MTAThread setting is used instead.
         /// </summary>
-        [MTAThread]
+        [STAThread]
         static void Main()
         {// the first two instructions are required from the Framework, to be executed before the other ones.
             Application.EnableVisualStyles();

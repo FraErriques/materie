@@ -44,8 +44,8 @@
             this.grdAutoriMateria = new System.Windows.Forms.DataGridView();
             this.lblChiaveMateria = new System.Windows.Forms.Label();
             this.lblChiaveAutore = new System.Windows.Forms.Label();
-            this.uscTimbro = new winFormsIntf.Timbro();
             this.grpDoubleKey = new System.Windows.Forms.GroupBox();
+            this.uscTimbro = new winFormsIntf.Timbro();
             ((System.ComponentModel.ISupportInitialize)(this.grdAutoriNominativoNote)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdAutoriMateria)).BeginInit();
             this.grpDoubleKey.SuspendLayout();
@@ -173,6 +173,7 @@
             this.grdAutoriMateria.Name = "grdAutoriMateria";
             this.grdAutoriMateria.Size = new System.Drawing.Size(508, 194);
             this.grdAutoriMateria.TabIndex = 19;
+            this.grdAutoriMateria.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdAutoriMateria_CellDoubleClick);
             // 
             // lblChiaveMateria
             // 
@@ -192,13 +193,6 @@
             this.lblChiaveAutore.TabIndex = 21;
             this.lblChiaveAutore.Text = " ID Autore per la chiave doppia ";
             // 
-            // uscTimbro
-            // 
-            this.uscTimbro.Location = new System.Drawing.Point(12, 12);
-            this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(857, 32);
-            this.uscTimbro.TabIndex = 0;
-            // 
             // grpDoubleKey
             // 
             this.grpDoubleKey.Controls.Add(this.txtChiaveAutore);
@@ -214,11 +208,18 @@
             this.grpDoubleKey.TabStop = false;
             this.grpDoubleKey.Text = "DoubleKey building and verification";
             // 
+            // uscTimbro
+            // 
+            this.uscTimbro.Location = new System.Drawing.Point(12, 12);
+            this.uscTimbro.Name = "uscTimbro";
+            this.uscTimbro.Size = new System.Drawing.Size(857, 32);
+            this.uscTimbro.TabIndex = 0;
+            // 
             // frmAutoreLoad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.BackColor = System.Drawing.Color.LightSkyBlue;
             this.ClientSize = new System.Drawing.Size(1004, 940);
             this.Controls.Add(this.grpDoubleKey);
             this.Controls.Add(this.grdAutoriMateria);

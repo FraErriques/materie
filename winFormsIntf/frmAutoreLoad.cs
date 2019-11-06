@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
+
 using System.Text;
 using System.Windows.Forms;
 
@@ -221,12 +221,15 @@ namespace winFormsIntf
             }
             if (resultAutore && resultMateria)// both
             {
-                // TODO this.Session["chiaveDoppiaMateria"] = idMateriaPrescelta;
-                // TODO this.Session["chiaveDoppiaAutore"] = idAutorePrescelto;
+                // NB. quanto segue this.Session["chiaveDoppiaMateria"] = idMateriaPrescelta;
+                // NB. this.Session["chiaveDoppiaAutore"] = idAutorePrescelto;
+                Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["chiaveDoppiaMateria"] = idMateriaPrescelta;
+                Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["chiaveDoppiaAutore"] = idAutorePrescelto;
                 this.lblStatus.Text = "DoubleKey validated.";
                 this.lblStatus.BackColor = System.Drawing.Color.Green;
                 //this.Session["DynamicPortionPtr"] = null;// be sure to clean.
                 //this.Response.Redirect("docMultiInsert.aspx");
+                this.goToDocumentoInsert();
             }
             else
             {
@@ -236,7 +239,35 @@ namespace winFormsIntf
                 //Doing "return" stays on the client and preserves the control content(i.e. textBox, etc.).
             }
         }// end method verifyDoubleKey()
-        
+
+
+        /// <summary>
+        /// this is the only accessPoint to the form DocumentoInsert. No menu-voice is present for it, since the
+        /// user has to build and validate a DoubleKey to access there.
+        /// </summary>
+        private void goToDocumentoInsert()
+        {
+            if (Program.activeInstances[4].canOpenAnotherOne())// NB change here #
+            {
+                Program.formList.Add(new frmDocumentoInsert() );// NB change here #
+                if (Program.activeInstances[4].openingHowto() == windowWarehouse.openingMode.Modal)// NB change here #
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
+                }
+                else if (Program.activeInstances[4].openingHowto() == windowWarehouse.openingMode.NotModal)// NB change here #
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).Show();// show the last born.
+                }
+                else
+                {
+                    throw new System.Exception(" Invalid opening mode.");
+                }
+            }// if can open another win
+            else
+            {
+                MessageBox.Show(this, " No more instances of type frmDocumentoInsert available. Close something of this type.", "Win Cardinality");
+            }// else can open no more win
+        }// goToDocumentoInsert()
 
 
         /// <summary>
@@ -416,17 +447,54 @@ namespace winFormsIntf
 
         private void grdAutoriNominativoNote_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            // TODO verificare che non sia stata clickata una cella diversa dallo ID-Autore.
             object theSender = sender;
             int row = e.RowIndex;
             int col = e.ColumnIndex;
-            object selectedItem = this.grdAutoriNominativoNote.Rows[e.RowIndex].Cells[e.ColumnIndex];
-            DataGridViewRow selRow = this.grdAutoriNominativoNote.Rows[e.RowIndex];
-            DataGridViewCell selCell = selRow.Cells[e.ColumnIndex];
-            string tmpSelectedAutoreId = selCell.Value.ToString();
-            int selectedAutoreId = int.Parse(tmpSelectedAutoreId);
-            this.txtChiaveAutore.Text = selectedAutoreId.ToString();
-            this.idOfSelected_Autore = selectedAutoreId;// save to put in session for page frmDocumentoInsert
+            if (col == 0)
+            {
+                object selectedItem = this.grdAutoriNominativoNote.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                DataGridViewRow selRow = this.grdAutoriNominativoNote.Rows[e.RowIndex];
+                DataGridViewCell selCell = selRow.Cells[e.ColumnIndex];
+                string tmpSelectedAutoreId = selCell.Value.ToString();
+                int selectedAutoreId = int.Parse(tmpSelectedAutoreId);
+                this.txtChiaveAutore.Text = selectedAutoreId.ToString();
+                this.idOfSelected_Autore = selectedAutoreId;// save to put in session for page frmDocumentoInsert
+                this.lblStatus.Text = "";
+                this.lblStatus.BackColor = System.Drawing.Color.Transparent;
+            }// else not a valid click
+            else
+            {
+                this.lblStatus.Text = "Only ID-Autore is double-clickable for selection.";
+                this.lblStatus.BackColor = System.Drawing.Color.Red;
+            }
         }// grdAutoriNominativoNote_CellDoubleClick
+
+        private void grdAutoriMateria_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // TODO verificare che non sia stata clickata una cella diversa dallo ID-materia.
+            // TODO mettere ID-Materia in txtMateriaID_DoubleKey
+            object theSender = sender;
+            int row = e.RowIndex;
+            int col = e.ColumnIndex;
+            if (col == 0)
+            {
+                object selectedItem = this.grdAutoriMateria.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                DataGridViewRow selRow = this.grdAutoriMateria.Rows[e.RowIndex];
+                DataGridViewCell selCell = selRow.Cells[e.ColumnIndex];
+                string tmpSelectedMateriaId = selCell.Value.ToString();
+                int selectedMateriaId = int.Parse(tmpSelectedMateriaId);
+                this.txtChiaveMateria.Text = selectedMateriaId.ToString();
+                this.idOfSelected_Materia = selectedMateriaId;// save to put in session for page frmDocumentoInsert
+                this.lblStatus.Text = "";
+                this.lblStatus.BackColor = System.Drawing.Color.Transparent;
+            }// else not a valid click
+            else
+            {
+                this.lblStatus.Text = "Only ID-Materia is double-clickable for selection.";
+                this.lblStatus.BackColor = System.Drawing.Color.Red;
+            }
+        }// grdAutoriMateria_CellDoubleClick
 
 
     }// class

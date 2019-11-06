@@ -38,6 +38,7 @@
                 <td align="center" valign="top" >
                 </td>
                 <td align="center" valign="top" >
+                    <asp:Label ID="lblDoubleKey" Text="" runat="server"></asp:Label>
                 </td>
                 <td align="center" valign="top" ></td>
             </tr>
@@ -59,10 +60,10 @@
                     <table>
                     <tr align="left" valign="top">
                         <td align="left" valign="top">
-                        <asp:Label ID="lblAbstract" runat="server"> Osservazioni caratterizzanti il documento</asp:Label>
+                        <u><b><asp:Label ID="lblAbstract" runat="server"> Osservazioni caratterizzanti il documento</asp:Label></b></u>
                         </td>
                         <td align="left" valign="top">
-                        <asp:Label ID="lblFileselection" runat="server"> Scegliere il documento sul disco del client, per inviarlo al server.</asp:Label>
+                        <u><b><asp:Label ID="lblFileselection" runat="server"> Scegliere il documento sul disco del client, per inviarlo al server.</asp:Label></b></u>
                         </td>
                     </tr>
                     <!-- -->
@@ -73,6 +74,8 @@
                         </td>
                         <td align="left" valign="top">
                             <p><input id="uploadFile" type="file" runat="server" /></p>
+                            <asp:Button ID="btnAllega" runat="server" Text=" Allegare il documento prescelto" Visible="true" 
+                                Enabled="true" onclick="btnAllega_Click" />
                         </td>
                     </tr>
                     <!-- -->
@@ -82,12 +85,8 @@
                         <td align="left" valign="top">
                         <p>
                             <asp:CheckBoxList ID="chkMultiDoc" runat="server" Visible="true" Enabled="true"></asp:CheckBoxList>        
-                            <p><asp:Button ID="btnAllega" runat="server" Text=" Allegare il documento prescelto" Visible="true" 
-                                Enabled="true" onclick="btnAllega_Click" /></p>
-                            <p><asp:Button ID="btnDocsFromWebToDb" runat="server" Text=" Inserire nella base dati" Visible="true" 
-                                Enabled="true" onclick="btnDocsFromWebToDb_Click" /></p>                            
-                            <p>
-                            </p>
+                            <asp:Button ID="btnDocsFromWebToDb" runat="server" Text=" Inserire nella base dati" Visible="true" 
+                                Enabled="true" onclick="btnDocsFromWebToDb_Click" />
                         </p>
                         </td>
                     </tr>

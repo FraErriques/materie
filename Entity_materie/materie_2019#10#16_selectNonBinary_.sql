@@ -11,3 +11,15 @@ order by dm.id desc
 
 select * from materie.dbo.utente
 select * from materie.dbo.permesso_LOOKUP
+
+select * from materie.dbo.materia_LOOKUP
+select * from materie.dbo.materia_LOOKUP order by nomeMateria asc
+--delete from materie.dbo.materia_LOOKUP where nomeMateria='Farlocco'
+
+--insert into materie.dbo.materia_LOOKUP(
+----
+--nomeMateria
+--)values(
+----
+--'Farlocco'
+--)

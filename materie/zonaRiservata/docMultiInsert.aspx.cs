@@ -12,17 +12,16 @@ using System.Web.UI.WebControls.WebParts;
 
 public partial class zonaRiservata_docMultiInsert : System.Web.UI.Page
 {
-    // from interface: <!-- <asp:DropDownList ID="ddlAutore" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlAutoreRefreshQuery"></asp:DropDownList>  -->
-    private int indexOfAllSectors; // it's one after the last id in the table.
-
-
-    private int int_ref_candidato_id = default(int);
-    private int int_ref_materia_id = default(int);
+    //private int indexOfAllSectors; // it's one after the last id in the table.
     public struct UploadElement
     {
         public string client_path;
         public string web_server_path;
     };
+    private int int_ref_autore_id = default(int);
+    private int int_ref_materia_id = default(int);
+    private string string_ref_autore_id;
+    private string string_ref_materia_id;
 
 
 
@@ -43,19 +42,19 @@ public partial class zonaRiservata_docMultiInsert : System.Web.UI.Page
         }// else il lasciapassare e' valido -> get in.
         //
         //-------------------------------------------------------------------NB. no more dependence on "candidato".
-        //object ref_candidato_id = this.Session["ref_candidato_id"];
-        //if (null == ref_candidato_id)
+        //object ref_autore_id = this.Session["ref_autore_id"];
+        //if (null == ref_autore_id)
         //{
-        //    throw new System.Exception("ref_candidato_id cannot be missing, in this page.");
+        //    throw new System.Exception("ref_autore_id cannot be missing, in this page.");
         //}// else continue.
         //try
         //{
-        //    this.int_ref_candidato_id = (int)ref_candidato_id;
+        //    this.int_ref_autore_id = (int)ref_autore_id;
         //}
         //catch (System.Exception ex)
         //{
         //    string dbg = ex.Message;
-        //    this.int_ref_candidato_id = -1;// Proxy will manage.
+        //    this.int_ref_autore_id = -1;// Proxy will manage.
         //}
         //
         /*
@@ -64,10 +63,17 @@ public partial class zonaRiservata_docMultiInsert : System.Web.UI.Page
          */
         try
         {
-            this.int_ref_candidato_id = (int)(this.Session["chiaveDoppiaAutore"]);
+            this.int_ref_autore_id = (int)(this.Session["chiaveDoppiaAutore"]);
             this.int_ref_materia_id = (int)(this.Session["chiaveDoppiaMateria"]);
+            //
             this.lblEsito.BackColor = System.Drawing.Color.Transparent;
             this.lblEsito.Text = "";
+            //
+            this.translateDoubleKey(); // call it to pass from IDs to names.
+            //
+            this.lblDoubleKey.BackColor = System.Drawing.Color.Transparent;
+            this.lblDoubleKey.Text = "chiaveDoppiaMateria==" + this.string_ref_materia_id + "  /---/  chiaveDoppiaAutore==" + this.string_ref_autore_id;
+            //
         }
         catch (System.Exception ex)
         {
@@ -152,6 +158,74 @@ public partial class zonaRiservata_docMultiInsert : System.Web.UI.Page
 
 
 
+    private void translateDoubleKey()
+    {
+        // NB : query db x traduzione chiave doppia, da ID a nomi.
+        int idMateriaPrescelta = 0;
+        int idAutorePrescelto = 0;
+        System.Data.DataSet ds;
+        try
+        {
+            idMateriaPrescelta = this.int_ref_materia_id;
+            idAutorePrescelto = this.int_ref_autore_id;
+            ds = Entity_materie.Proxies.usp_chiaveDoppia_LOAD_SERVICE.usp_chiaveDoppia_LOAD();
+            if (null == ds || 2 != ds.Tables.Count)
+            {
+                throw new System.Exception(" Error: chiaveDoppia errata per Materia-Autore.");
+            }// else continue.
+            int hmMaterie = ds.Tables[0].Rows.Count;// Tables[0]==Materia
+            int hmAutori = ds.Tables[1].Rows.Count; // Tables[1]==Autore
+            //
+            for (int c = 0; c < hmMaterie; c++)
+            {
+                int curMateria = ((int)(ds.Tables[0].Rows[c]["id"])); // Tables[0]==Materia
+                if (idMateriaPrescelta == curMateria)
+                {
+                    this.string_ref_materia_id = (string)(ds.Tables[0].Rows[c]["nomeMateria"]);
+                    break;
+                }// else continue searching for Materia
+            }// end for Materia
+            //
+            for (int c = 0; c < hmAutori; c++)
+            {
+                int curAutore = ((int)(ds.Tables[1].Rows[c]["id"]));// Tables[1]==Autore
+                if (idAutorePrescelto == curAutore)
+                {
+                    this.string_ref_autore_id = (string)(ds.Tables[1].Rows[c]["nominativo"]);
+                    break;
+                }// else continue searching for Autore
+            }// end for Autore
+        }// end try
+        catch (System.Exception ex)
+        {
+            string msg = ex.Message;
+            this.lblEsito.Text = " Exception while processing chiaveDoppia per Materia-Autore." + ex.Message;
+            this.lblEsito.BackColor = System.Drawing.Color.Red;
+            return; //on page
+        }
+        if(
+            null != this.string_ref_materia_id && ""!= this.string_ref_materia_id 
+            && null != this.string_ref_autore_id && ""!= this.string_ref_autore_id 
+            )// both
+        {
+            // TODO this.Session["chiaveDoppiaMateria"] = idMateriaPrescelta;
+            // TODO this.Session["chiaveDoppiaAutore"] = idAutorePrescelto;
+            this.lblEsito.Text = "DoubleKey validated.";
+            this.lblEsito.BackColor = System.Drawing.Color.Green;
+            //this.Session["DynamicPortionPtr"] = null;// be sure to clean.
+            //this.Response.Redirect("docMultiInsert.aspx");
+            //this.goToDocumentoInsert();
+        }
+        else
+        {
+            this.lblEsito.Text = " Error: chiaveDoppia errata per Materia-Autore.";
+            this.lblEsito.BackColor = System.Drawing.Color.Red;
+            return; //on page NB. do not do ResponseRedirect if you have to remain inPage.
+            //Doing "return" stays on the client and preserves the control content(i.e. textBox, etc.).
+        }
+    }// translateDoubleKey()
+
+
 
     ///// <summary>
     ///// NB.----- query on the db_index, NOT on the combo index!------
@@ -229,7 +303,7 @@ public partial class zonaRiservata_docMultiInsert : System.Web.UI.Page
     protected void btnDocsFromWebToDb_Click(object sender, EventArgs e)
     {
         string _abstract;
-        int ref_candidato_id;
+        int ref_autore_id;
         int ref_materia_id;
         string sourceName;
         bool result = true;// bool mask.
@@ -242,7 +316,7 @@ public partial class zonaRiservata_docMultiInsert : System.Web.UI.Page
             {
                 validForWriting = this.validationForWrite(
                     out _abstract,
-                    out ref_candidato_id,
+                    out ref_autore_id,
                     out ref_materia_id,
                     ref acc // the accumulator is used, as index, to acces an array in Session and incremented by the calee.
                     , out sourceName
@@ -250,12 +324,12 @@ public partial class zonaRiservata_docMultiInsert : System.Web.UI.Page
                 if (true == validForWriting)
                 {
                     Entity_materie.BusinessEntities.docMulti dm = new Entity_materie.BusinessEntities.docMulti(
-                        ref_candidato_id
+                        ref_autore_id
                         , ref_materia_id
                         );
                     int entityDbInsertionResult =
                         dm.FILE_from_FS_insertto_DB(
-                            ref_candidato_id,
+                            ref_autore_id,
                             ref_materia_id,
                             _abstract,
                             sourceName
@@ -348,7 +422,7 @@ public partial class zonaRiservata_docMultiInsert : System.Web.UI.Page
     private bool validationForWrite(
         //----parametri validazione---------
             out string _abstract,
-            out int ref_candidato_id,
+            out int ref_autore_id,
             out int ref_materia_id,
             ref int acc,// NB. "ref" and not "out" since it needs to be updated, not assigned from scratch.
             out string sourceName
@@ -369,9 +443,9 @@ public partial class zonaRiservata_docMultiInsert : System.Web.UI.Page
             result &= false;
         }
         //
-        ref_candidato_id = this.int_ref_candidato_id;
+        ref_autore_id = this.int_ref_autore_id;
         if (
-            0 < ref_candidato_id)
+            0 < ref_autore_id)
         {
             result &= true;
         }
