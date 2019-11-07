@@ -46,6 +46,7 @@
     <Compile Include="Cacher.cs" />
     <Compile Include="CacherDbView.cs" />
     <Compile Include="CheckLogin.cs" />
+    <Compile Include="DownLoader.cs" />
     <Compile Include="frmAutoreInsert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +121,7 @@
     <Compile Include="Timbro.Designer.cs">
       <DependentUpon>Timbro.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewNameDecorator.cs" />
     <Compile Include="windowWarehouse.cs" />
     <EmbeddedResource Include="frmAutoreInsert.resx">
       <DependentUpon>frmAutoreInsert.cs</DependentUpon>

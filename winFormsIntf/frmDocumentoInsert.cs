@@ -196,5 +196,239 @@ namespace winFormsIntf
         }// openFileDialog1_FileOk
 
 
+
+        #region multi_upload
+        //------------------------------------------------------------------------------------------------
+
+        //// porta singolo file in chechedList : sostituito dalla selezion multipla nella Dialog.
+        //protected void btnAllega_Click(object sender, EventArgs e)
+        //{
+            //string dbg = this.uploadFile.Value;
+            //if (null == this.Session["arlUploadPaths"])//----------TODO  dbg
+            //{
+            //    this.Session["arlUploadPaths"] = new ArrayList();
+            //}// else already built.
+            ////
+            //if (// add to chkList only valid items
+            //    null != dbg
+            //    && "" != dbg
+            //    )
+            //{
+            //    this.chkMultiDoc.Items.Add(new ListItem(dbg));
+            //    int presentCardinality = this.chkMultiDoc.Items.Count;
+            //    this.chkMultiDoc.Items[presentCardinality - 1].Selected = true;
+            //    // NB. the upload must be performed, before emptying the upload-html-control.
+            //    this.allegaSingoloFile();// on current selection; i.e. a scalar item. throws on empty selection.
+            //}// else skip an invalid selection.
+            //// ready
+        //}//
+
+
+        /// <summary>
+        /// btnSubmit is used to communicate the final decision of the user:
+        ///     after he reviews the check-list of the web_srv uploaded files, he finally
+        ///     confirms what to send to the db_srv( i.e. the checked ones only).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnDocsFromWebToDb_Click(object sender, EventArgs e)
+        {
+            string _abstract;
+            int ref_autore_id;
+            int ref_materia_id;
+//string sourceName;
+            bool result = true;// bool mask.
+            //
+            bool validForWriting = default(bool);// a not-valid-forWriting item does not affect the whole insertion.
+            //int acc = 0;
+            //
+            foreach (ListViewItem itemRow in lvwDocSelection.Items)
+            {
+                if (itemRow.Checked)
+                {
+                    for (int i = 0; i < itemRow.SubItems.Count; i++)
+                    {
+                        if (i > 0) { throw new System.Exception("docPath must have only one element ! Do debug."); }//else can continue.
+                        string fullPath = itemRow.SubItems[i].Text;
+//MessageBox.Show(fullPath);
+//this.allegaSingoloFile(fullPath );// on current selection; i.e. a scalar item. throws on empty selection.
+//UploadElement uploadElement = new UploadElement();// prepare data-structure,as desired by Entity_materie
+// Get the filename_only from client_fullpath.
+//string fileName_only = System.IO.Path.GetFileName(fullPath); // TODO ? serve
+//uploadElement.client_path = fullPath;
+                        validForWriting = this.validationForWrite(
+                            out _abstract,
+                            out ref_autore_id,
+                            out ref_materia_id
+                            //, ref acc // the accumulator is used, as index, to acces an array in Session and incremented by the calee.
+                            //, out sourceName
+                        );
+                        if (true == validForWriting)
+                        {
+                            Entity_materie.BusinessEntities.docMulti dm = new Entity_materie.BusinessEntities.docMulti(
+                                ref_autore_id
+                                , ref_materia_id
+                                );
+                            int entityDbInsertionResult =
+                                dm.FILE_from_FS_insertto_DB(
+                                    ref_autore_id,
+                                    ref_materia_id,
+                                    _abstract,
+                                    fullPath // TODO sourceName
+                                );
+                            result &= (0 < entityDbInsertionResult);// each insertion must return the lastGeneratedId, which>0.
+                        }// else NOTvalidForWriting -> skip item.
+                        result &= validForWriting;// update the result, to last insertion outcome.
+                    }// for each sub-element
+                }// else skip an item that has been un-checked, after uploading from client to web_srv.
+            }// foreach
+            // ready
+            if (!result)
+            {
+                LoggingToolsContainerNamespace.LoggingToolsContainer.DecideAndLog(
+                    null,// original exception type
+                    "Non e' stato possibile inserire il lavoro.",
+                    0);
+                //this.pnlInteractiveControls.Enabled = true;// let the user correct errors on page.
+                //this.divUpload.Enabled = true;// let the user correct errors on page.
+                this.grbDocInsert.Enabled = true;// let the user correct errors on page.
+                this.lblEsito.Text = "Non e' stato possibile inserire il lavoro.";
+                this.lblEsito.BackColor = System.Drawing.Color.Red;
+                return;// on page
+            }// if !result i.e. docMulti non inserito
+            else
+            {
+                LoggingToolsContainerNamespace.LoggingToolsContainer.DecideAndLog(
+                    null,// original exception type
+                    "Il lavoro e' stato inserito correttamente.",
+                    0);
+                //----navigate to "scadenziario", where the inserted phase is visible.
+                this.lblEsito.Text = "Il lavoro e' stato inserito correttamente.";
+                this.lblEsito.BackColor = System.Drawing.Color.Green;
+        //this.Session["errore"] = null;// gc  TODO
+        //this.Session["arlUploadPaths"] = null;// gc
+        //this.Session["ref_candidato_id"] = null;// gc --- NB.
+        // this.Response.Redirect("candidatoLoad.aspx");  TODO  stay in page with lblStatus & freeze
+            }// else  i.e. ok docMulti inserito.
+        }//---end submit()
+
+
+
+
+        ///// <summary>
+        ///// upload a single token( file) from an attachment-list( check-list).
+        ///// </summary>
+        ///// <param name="theFileToBeUploaded"></param>
+        //protected void allegaSingoloFile( string fullPath)
+        //{
+        //    UploadElement uploadElement = new UploadElement();// TODO store
+        //    // Get the filename_only from client_fullpath.
+        //    string fileName_only = System.IO.Path.GetFileName( fullPath); // this.uploadFile.PostedFile.FileName);
+        //    uploadElement.client_path = fullPath; // this.uploadFile.PostedFile.FileName;
+        //    ////
+        //    ConfigurationLayer.ConfigurationService cs = new
+        //        ConfigurationLayer.ConfigurationService("FileTransferTempPath/fullpath");
+        //    string serverPath = cs.GetStringValue("path");
+        //    // NB. adapt in App.config to the server file system.
+        //    // add ending part.
+        //    serverPath += "\\upload";
+        //    //
+        //    // Ensure the folder exists
+        //    if (!System.IO.Directory.Exists(serverPath))
+        //    {
+        //        System.IO.Directory.CreateDirectory(serverPath);
+        //    }// else already present on the web server file system.
+        //    //// Save the file to the folder, on the web-server.
+        //    string fullPath_onWebServer = System.IO.Path.Combine(serverPath, fileName_only);
+        //    uploadElement.web_server_path = fullPath_onWebServer;// TODO dbg.
+        //    //if (null == this.Session["arlUploadPaths"])
+        //    //{
+        //    //    throw new System.Exception("TODO call btnAllega() first!");
+        //    //}// else ok.
+        //    //((System.Collections.ArrayList)(this.Session["arlUploadPaths"])).Add(uploadElement);
+        //    //// ready
+        //    //this.uploadFile.PostedFile.SaveAs(fullPath_onWebServer);//--NB.---crucial system call: from client do web-srv.
+        //}// end uploadButton_Click()
+
+
+
+
+        //------------------------------------------------------------------------------------------------
+        #endregion multi_upload
+
+
+
+
+        private bool validationForWrite(
+            //----parametri validazione---------
+                out string _abstract,// get the content of TextBox
+                out int ref_autore_id, // get the content of DoubleKey
+                out int ref_materia_id // get the content of DoubleKey
+            )
+        {
+            bool result = true;// used as bitmask with & operator.
+            //
+            _abstract = this.textBox1.Text; // TODO names
+            if (
+                null != _abstract
+                && "" != _abstract
+                )
+            {
+                result &= true;
+            }
+            else
+            {
+                result &= false;
+            }
+            //
+            ref_autore_id = this.int_ref_autore_id;
+            if (
+                0 < ref_autore_id)
+            {
+                result &= true;
+            }
+            else
+            {
+                result &= false;
+            }
+            //
+            ref_materia_id = this.int_ref_materia_id;
+            if (
+                0 < ref_materia_id)
+            {
+                result &= true;
+            }
+            else
+            {
+                result &= false;
+            }
+            /*
+             * NB. the acc index is incremented, AFTER array-access, and returned to the caller, 
+             * which manages the loop.
+             */
+            // TODO sourceName = ((UploadElement)((System.Collections.ArrayList)(this.Session["arlUploadPaths"]))[acc++]).web_server_path; //sourceName
+            //sourceName = "TODO";
+            //if (
+            //    null != sourceName
+            //    && "" != sourceName
+            //    )
+            //{
+            //    result &= true;
+            //}
+            //else
+            //{
+            //    result &= false;
+            //}
+            //
+            // ready
+            return result;
+        }// end validationForWrite.
+
+        private void btnFromFsToDb_Click(object sender, EventArgs e)
+        {
+            this.btnDocsFromWebToDb_Click(sender, e);// TODO : only one delegate
+        }
+
+
     }// class
 }// nmsp

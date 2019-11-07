@@ -35,8 +35,9 @@
             this.colDocPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblDoubleKey = new System.Windows.Forms.Label();
             this.lblEsito = new System.Windows.Forms.Label();
-            this.uscTimbro = new winFormsIntf.Timbro();
             this.grbDocInsert = new System.Windows.Forms.GroupBox();
+            this.btnFromFsToDb = new System.Windows.Forms.Button();
+            this.uscTimbro = new winFormsIntf.Timbro();
             this.grbDocInsert.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,11 +94,34 @@
             // lblEsito
             // 
             this.lblEsito.AutoSize = true;
-            this.lblEsito.Location = new System.Drawing.Point(15, 481);
+            this.lblEsito.Location = new System.Drawing.Point(15, 485);
             this.lblEsito.Name = "lblEsito";
             this.lblEsito.Size = new System.Drawing.Size(29, 13);
             this.lblEsito.TabIndex = 5;
             this.lblEsito.Text = "esito";
+            // 
+            // grbDocInsert
+            // 
+            this.grbDocInsert.Controls.Add(this.btnFromFsToDb);
+            this.grbDocInsert.Controls.Add(this.textBox1);
+            this.grbDocInsert.Controls.Add(this.lvwDocSelection);
+            this.grbDocInsert.Controls.Add(this.btnSearchFileSystem);
+            this.grbDocInsert.Location = new System.Drawing.Point(12, 84);
+            this.grbDocInsert.Name = "grbDocInsert";
+            this.grbDocInsert.Size = new System.Drawing.Size(808, 380);
+            this.grbDocInsert.TabIndex = 6;
+            this.grbDocInsert.TabStop = false;
+            this.grbDocInsert.Text = "Documento Insert";
+            // 
+            // btnFromFsToDb
+            // 
+            this.btnFromFsToDb.Location = new System.Drawing.Point(615, 335);
+            this.btnFromFsToDb.Name = "btnFromFsToDb";
+            this.btnFromFsToDb.Size = new System.Drawing.Size(144, 23);
+            this.btnFromFsToDb.TabIndex = 4;
+            this.btnFromFsToDb.Text = "Upload from FileSystem to Db";
+            this.btnFromFsToDb.UseVisualStyleBackColor = true;
+            this.btnFromFsToDb.Click += new System.EventHandler(this.btnFromFsToDb_Click);
             // 
             // uscTimbro
             // 
@@ -106,24 +130,12 @@
             this.uscTimbro.Size = new System.Drawing.Size(857, 32);
             this.uscTimbro.TabIndex = 0;
             // 
-            // grbDocInsert
-            // 
-            this.grbDocInsert.Controls.Add(this.textBox1);
-            this.grbDocInsert.Controls.Add(this.lvwDocSelection);
-            this.grbDocInsert.Controls.Add(this.btnSearchFileSystem);
-            this.grbDocInsert.Location = new System.Drawing.Point(12, 84);
-            this.grbDocInsert.Name = "grbDocInsert";
-            this.grbDocInsert.Size = new System.Drawing.Size(808, 349);
-            this.grbDocInsert.TabIndex = 6;
-            this.grbDocInsert.TabStop = false;
-            this.grbDocInsert.Text = "Documento Insert";
-            // 
             // frmDocumentoInsert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(138)))), ((int)(((byte)(0)))));
-            this.ClientSize = new System.Drawing.Size(915, 525);
+            this.ClientSize = new System.Drawing.Size(915, 526);
             this.Controls.Add(this.grbDocInsert);
             this.Controls.Add(this.lblEsito);
             this.Controls.Add(this.lblDoubleKey);
@@ -149,5 +161,6 @@
         private System.Windows.Forms.Label lblDoubleKey;
         private System.Windows.Forms.Label lblEsito;
         private System.Windows.Forms.GroupBox grbDocInsert;
+        private System.Windows.Forms.Button btnFromFsToDb;
     }
 }

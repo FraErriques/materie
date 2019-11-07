@@ -23,3 +23,13 @@ select * from materie.dbo.materia_LOOKUP order by nomeMateria asc
 ----
 --'Farlocco'
 --)
+
+select * from materie.dbo.materia_LOOKUP
+select * from materie.dbo.autore 
+
+select MAX(id) from materie.dbo.docMulti
+select * from materie.dbo.docMulti where id=512
+
+select TOP 14 * -- id,insertion_time
+from materie.dbo.docMulti
+order by id desc

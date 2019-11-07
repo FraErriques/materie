@@ -55,10 +55,14 @@ namespace winFormsIntf
             this.listView1.Items.Add("listView1_terzo");
             this.listView1.Items.Add("listView1_quarto");
             this.listView1.Items.Add("listView1_quinto");
-            string baseString = "listView1_testoLungoDiBase/sssssssssssss/ddddddddddddddd/fffffffffffff/";
+            //string baseString = "listView1_testoLungoDiBase/sssssssssssss/ddddddddddddddd/fffffffffffff/";
             for (int c = 0; c < 100; c++)
             {
-                this.listView1.Items.Add(baseString + c.ToString() + ".txt");
+                string[] ss = new string[2];
+                ss[0] = c.ToString();
+                ss[1] = "__second_field_" + c.ToString();
+                ListViewItem tmp = new ListViewItem( ss );
+                this.listView1.Items.Add( tmp );
             }
             //bool selIndexes = this.listView1.SelectedIndices.Contains(1);// ? 
             //
