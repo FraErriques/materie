@@ -100,6 +100,7 @@
             this.grdAutoriNominativoNote.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdAutoriNominativoNote.Location = new System.Drawing.Point(29, 590);
             this.grdAutoriNominativoNote.Name = "grdAutoriNominativoNote";
+            this.grdAutoriNominativoNote.ReadOnly = true;
             this.grdAutoriNominativoNote.Size = new System.Drawing.Size(909, 163);
             this.grdAutoriNominativoNote.TabIndex = 11;
             this.grdAutoriNominativoNote.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdAutoriNominativoNote_CellDoubleClick);
@@ -169,8 +170,10 @@
             // grdAutoriMateria
             // 
             this.grdAutoriMateria.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdAutoriMateria.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.grdAutoriMateria.Location = new System.Drawing.Point(430, 143);
             this.grdAutoriMateria.Name = "grdAutoriMateria";
+            this.grdAutoriMateria.ReadOnly = true;
             this.grdAutoriMateria.Size = new System.Drawing.Size(508, 194);
             this.grdAutoriMateria.TabIndex = 19;
             this.grdAutoriMateria.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdAutoriMateria_CellDoubleClick);

@@ -299,8 +299,8 @@ namespace winFormsIntf
                 int_sector = this.ddlMaterie.SelectedIndex;  //int.Parse( // .SelectedItem . Value);
                 Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["comboSectors_selectedValue"] = int_sector;
                 //this.Session["comboSectors_selectedValue"] = int_sector;// NB.---cache across postbacks.-----
-                this.indexOfAll_Materie = 
-                    (int)(Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["comboSectors_selectedValue"]);
+                //this.indexOfAll_Materie = 
+                //    (int)(Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["comboSectors_selectedValue"]);
             }
             catch (System.Exception ex)
             {
@@ -373,7 +373,8 @@ namespace winFormsIntf
                 this.ddlMaterie.Items.Add(
                         "Tutte le Materie"//--select without "where-tail" -----
                 );
-                indexOfAllSectors = max_identity + 1;//--------NB.------report combo_cardinality to the caller.-------
+                //indexOfAllSectors = max_identity + 1;//--------NB.------report combo_cardinality to the caller.-------
+                this.indexOfAll_Materie = indexOfAllSectors = dtMateria.Rows.Count + 2;//+2 because we add "scegli Materia" e "Tutte le Materie".
             }// else skip.
             //-------------- END popolamento Stati Lavorazione----------------------------------
             int int_selectedElement = default(int);
@@ -445,30 +446,34 @@ namespace winFormsIntf
 
 
 
+        enum tblAutoriColumns
+        {//NB. enums cannot be declared into methods.
+            Invalid = -1
+            ,RowNumber = 0
+            ,idAutore = 1
+        }// NB. modify, in case of record layout modification.
+
         private void grdAutoriNominativoNote_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            // TODO verificare che non sia stata clickata una cella diversa dallo ID-Autore.
-            object theSender = sender;
-            int row = e.RowIndex;
-            int col = e.ColumnIndex;
-            if (col == 0)
+            try// inside here there's an int.Parse that throws.
             {
-                object selectedItem = this.grdAutoriNominativoNote.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                DataGridViewRow selRow = this.grdAutoriNominativoNote.Rows[e.RowIndex];
-                DataGridViewCell selCell = selRow.Cells[e.ColumnIndex];
-                string tmpSelectedAutoreId = selCell.Value.ToString();
-                int selectedAutoreId = int.Parse(tmpSelectedAutoreId);
-                this.txtChiaveAutore.Text = selectedAutoreId.ToString();
-                this.idOfSelected_Autore = selectedAutoreId;// save to put in session for page frmDocumentoInsert
-                this.lblStatus.Text = "";
+                DataGridViewRow selRowDirect = this.grdAutoriNominativoNote.Rows[e.RowIndex];
+                DataGridViewCell selCellDirect = selRowDirect.Cells[(int)(winFormsIntf.frmAutoreLoad.tblAutoriColumns.idAutore)];//compulsory.
+                string tmpSelectedAutoreIdDirect = selCellDirect.Value.ToString();
+                int selectedAutoreIdDirect = int.Parse(tmpSelectedAutoreIdDirect);// throws
+                //
+                this.txtChiaveAutore.Text = selectedAutoreIdDirect.ToString();// report the selected DoubleKey portion.
+                this.idOfSelected_Autore = selectedAutoreIdDirect;// save to put in session for page frmDocumentoInsert
+                this.lblStatus.Text = "";// everything went ok.
                 this.lblStatus.BackColor = System.Drawing.Color.Transparent;
-            }// else not a valid click
-            else
+            }// try
+            catch( System.Exception ex)
             {
-                this.lblStatus.Text = "Only ID-Autore is double-clickable for selection.";
+                this.lblStatus.Text = "trouble: " + ex.Message;
                 this.lblStatus.BackColor = System.Drawing.Color.Red;
             }
         }// grdAutoriNominativoNote_CellDoubleClick
+
 
         private void grdAutoriMateria_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
