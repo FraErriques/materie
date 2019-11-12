@@ -65,7 +65,10 @@ namespace winFormsIntf
 
         private void grdDocumento_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-
+            // TODO what's the difference between _CellMouseDoubleClick and _CellDoubleClick ??
+            // Answers: CellDoubleClick and CellClick are events that fire from the left mouse button, as well as "clicks" that 
+            // come from tabbing to an item and hitting the spacebar, etc. ... 
+            // CellMouseDoubleClick fires only when the LEFT button is double clicked.
         }// grdDocumento_CellMouseDoubleClick
 
 
@@ -74,14 +77,17 @@ namespace winFormsIntf
             this.uscTimbro.removeSpecifiedWin(this);
         }
 
+
+        /// <summary>
+        /// selezione della cella ID-Documento a scopo di consultazione.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grdDocumento_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            // TODO verificare che non sia stata clickata una cella diversa dallo ID-materia.
-            // TODO mettere ID-Materia in txtMateriaID_DoubleKey
-            object theSender = sender;
             int row = e.RowIndex;
             int col = e.ColumnIndex;
-            if (col == 1)
+            if (col == 1)// NB. verificare che non sia stata clickata una cella diversa dallo ID-materia.
             {
                 object selectedItem = this.grdDocumento.Rows[e.RowIndex].Cells[e.ColumnIndex];
                 DataGridViewRow selRow = this.grdDocumento.Rows[e.RowIndex];
@@ -95,6 +101,7 @@ namespace winFormsIntf
                 Downloader.DownloadButton_Click(selectedDocId, out extractionPath);
                 this.openFileDialog1.InitialDirectory = extractionPath;
                 this.lblExtractedDoc.Text = "Doc is : " + extractionPath;
+                this.lblExtractedDoc.BackColor = System.Drawing.Color.LimeGreen;
                 this.openFileDialog1.ShowDialog();
             }// else not a valid click
             else
@@ -178,42 +185,20 @@ namespace winFormsIntf
             //
             //----here ends the query-tail building code and starts the query execution.
             //
-            //System.Web.UI.WebControls.TextBox txtRowsInPage = null;
-            int int_txtRowsInPage = default(int);
-            try
-            {
-                //txtRowsInPage =
-                //    (System.Web.UI.WebControls.TextBox)(this.PageLengthManager1.FindControl("txtRowsInPage"));
-                //int_txtRowsInPage = int.Parse(txtRowsInPage.Text);
-                int_txtRowsInPage = int.MaxValue;// no paging, but a scrollBar on the gridView.
-            }
-            catch
-            {// on error sends zero rows per page, to Pager.
-            }
-            //
+            int int_txtRowsInPage = int.MaxValue;// no paging, but a scrollBar on the gridView.
             CacherDbView cacherDbView = new CacherDbView(
                 null // this.Session
                 , queryTail
                 , ViewNameDecorator.ViewNameDecorator_SERVICE("TODO_this.Session.SessionID")
-                , new CacherDbView.SpecificViewBuilder(
+                , new CacherDbView.SpecificViewBuilder(// create the delegate which points to the appropriate Proxy().
                     Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_documento_SERVICE.usp_ViewCacher_specific_CREATE_documento
                   )
                 , int_txtRowsInPage
-                //
-                //, this.Request
-                //, this.grdDatiPaginati
-                //, this.pnlPageNumber
             );
             if (null != cacherDbView)
             {
-                //this.Session["CacherDbView"] = cacherDbView;
-                //cacherDbView.Pager_EntryPoint(
-                //    this.Session
-                //    , this.Request
-                //    , this.grdDatiPaginati
-                //    , this.pnlPageNumber
-                //);
-                this.grdDocumento.DataSource = cacherDbView.GetChunk(null, 1);
+                this.grdDocumento.DataSource = cacherDbView.GetChunk( null // null here stands for the Session. TODO: prune such parameter.
+                    , 1);// require first page, which contains the whole data, since there's no paging on localhost.
             }
             else
             {

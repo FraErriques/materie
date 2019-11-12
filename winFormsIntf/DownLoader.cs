@@ -11,6 +11,119 @@ public static class Downloader
 
 
 
+    public static void DownloadButton_Click(
+        Int32 id_doc_multi
+        ,out string extractionPath
+        )
+    {
+        // query for blob at id, by means of Entity_materie::Doc_multi.
+        Entity_materie.BusinessEntities.docMulti dm = new Entity_materie.BusinessEntities.docMulti();
+        string webServer_extractionPath = null;
+        Int32 res =
+            dm.FILE_from_DB_writeto_FS(
+                id_doc_multi
+                ,out webServer_extractionPath // sul web server.
+                ,"localhost"//par IP. Here calling the Entity::Proxy from localhost. When called from a web-client this parameter gets relevant.
+            );
+        // Ensure that Entity_materie::Doc_multi produced an actual file.
+        if (
+            string.IsNullOrEmpty(webServer_extractionPath)
+            || !System.IO.File.Exists(webServer_extractionPath)
+          )
+        {
+            // throw new HttpException(404, "doc_multi not found"); HTTP version
+            throw new System.Exception( "doc_multi not found");
+        }// else trace client credentials.
+        else
+        {
+            LoggingToolsContainerNamespace.LoggingToolsContainer.LogBothSinks_DbFs(
+                " document extracted at client path: " + webServer_extractionPath
+                , 5);// kkep this tracing-importance-level high, so that it's not cut off when excluding unnecessary logs.
+        }
+        // extract filename
+        int fnameIndex = webServer_extractionPath.LastIndexOf('\\');// it's a reserved char: double it.
+        string filename = webServer_extractionPath.Substring(fnameIndex + 1);// exclude the last backslash.
+        // NB. output par crucial for caller. I need the path only; so remove the filename.
+        extractionPath = webServer_extractionPath.Remove( webServer_extractionPath.LastIndexOf('\\') );
+        // l'application server su localhost ha scritto il file in: extractionPath\filename
+        // ready.
+    }// end method DownloadButton_Click versione localhost (i.e. NO HTTP).
+
+
+
+
+    # region cantina
+
+    ///// <summary>
+    ///// Set the content type, based on extension.
+    ///// </summary>
+    ///// <param name="extension"></param>
+    ///// <returns>the MIME type</returns>
+    //public static string setContentType(string extension)
+    //{
+    //    if (
+    //        null == extension
+    //        || "" == extension.Trim()
+    //        )
+    //    {
+    //        throw new System.Exception("invalid extension.");
+    //    }// else continue.
+    //    string the_MIME_type = null;
+    //    //
+    //    string clean_extension = extension.Trim().ToLower();
+    //    switch (clean_extension)
+    //    {
+    //        case ".c":
+    //        case ".txt":
+    //            {
+    //                the_MIME_type = "text/plain";
+    //                break;
+    //            }
+    //        case ".jpg":
+    //        case ".jpeg":
+    //            {
+    //                the_MIME_type = "image/jpeg";
+    //                break;
+    //            }
+    //        case ".pdf":
+    //            {
+    //                the_MIME_type = "application/pdf";
+    //                break;
+    //            }
+    //        case ".xls":
+    //            {
+    //                the_MIME_type = "application/msexcel";
+    //                break;
+    //            }
+    //        case ".ppt":
+    //        case ".pps":
+    //            {
+    //                the_MIME_type = "application/powerpoint";
+    //                break;
+    //            }
+    //        case ".doc":
+    //            {
+    //                the_MIME_type = "application/msword";
+    //                break;
+    //            }
+    //        //-------------------------------------------------------goto Browser ----------------
+    //        default://-----------------------------------------------goto Browser ----------------
+    //        case ".htm":
+    //        case ".html":
+    //        case ".htmls":
+    //        case ".htx":
+    //        case ".mht":
+    //            {
+    //                the_MIME_type = "text/html";
+    //                break;
+    //            }
+    //    }// end switch
+    //    // ready.
+    //    return the_MIME_type;
+    //}//
+
+
+
     ///// <summary>
     ///// on keywords research
     ///// </summary>
@@ -29,137 +142,7 @@ public static class Downloader
 
 
 
-
-
-    public static void DownloadButton_Click(
-        Int32 id_doc_multi
-        ,out string extractionPath
-        )
-    {
-        // query for blob at id, by means of Entity_materie::Doc_multi.
-        Entity_materie.BusinessEntities.docMulti dm = new Entity_materie.BusinessEntities.docMulti();
-        string webServer_extractionPath = null;
-        Int32 res =
-            dm.FILE_from_DB_writeto_FS(
-                id_doc_multi,
-                out webServer_extractionPath // sul web server.
-                , "this_Context.Request.UserHostName" // this_Context.Request.UserHostName
-            );
-        //
-        // Ensure that Entity_materie::Doc_multi produced an actual file.
-        if (
-            string.IsNullOrEmpty(webServer_extractionPath)
-            || !System.IO.File.Exists(webServer_extractionPath)
-          )
-        {
-            // throw new HttpException(404, "doc_multi not found");
-            throw new System.Exception( "doc_multi not found");
-        }// else trace client credentials.
-        else
-        {
-            LoggingToolsContainerNamespace.LoggingToolsContainer.LogBothSinks_DbFs(
-                " document extracted by client: "
-                //+ this_Context.Request.UserHostName
-                //+ "  "
-                , 5);
-        }
-        //
-        // portare in download dal web server al client.
-        //
-        // extract extension
-        int extIndex = webServer_extractionPath.LastIndexOf('.');
-        string extension = "doc";
-        if (-1 < extIndex)
-        {
-            extension = webServer_extractionPath.Substring(extIndex);
-        }// else let it default.
-        //
-        // extract filename
-        int fnameIndex = webServer_extractionPath.LastIndexOf('\\');// it's a reserved char: double it.
-        string filename = webServer_extractionPath.Substring(fnameIndex + 1);// exclude the last backslash.
-        extractionPath = webServer_extractionPath.Remove( webServer_extractionPath.LastIndexOf('\\') );
-        //
-//        this_Context.Response.ContentType = Downloader.setContentType(extension);
-        //
-        // Set the filename
-//        this_Context.Response.AddHeader("content-disposition", "attachment;filename=" + filename);
-        //
-        // Stream the file from web_Server to the client filesystem( the client browser will show a dialog).
-        //this_Context.Response.WriteFile(webServer_extractionPath);
-        // ready.
-    }// end method download_from_webServer_to_Client.
-
-
-
-
-
-    /// <summary>
-    /// Set the content type, based on extension.
-    /// </summary>
-    /// <param name="extension"></param>
-    /// <returns>the MIME type</returns>
-    public static string setContentType(string extension)
-    {
-        if (
-            null == extension
-            || "" == extension.Trim()
-            )
-        {
-            throw new System.Exception("invalid extension.");
-        }// else continue.
-        string the_MIME_type = null;
-        //
-        string clean_extension = extension.Trim().ToLower();
-        switch (clean_extension)
-        {
-            case ".c":
-            case ".txt":
-                {
-                    the_MIME_type = "text/plain";
-                    break;
-                }
-            case ".jpg":
-            case ".jpeg":
-                {
-                    the_MIME_type = "image/jpeg";
-                    break;
-                }
-            case ".pdf":
-                {
-                    the_MIME_type = "application/pdf";
-                    break;
-                }
-            case ".xls":
-                {
-                    the_MIME_type = "application/msexcel";
-                    break;
-                }
-            case ".ppt":
-            case ".pps":
-                {
-                    the_MIME_type = "application/powerpoint";
-                    break;
-                }
-            case ".doc":
-                {
-                    the_MIME_type = "application/msword";
-                    break;
-                }
-            //-------------------------------------------------------goto Browser ----------------
-            default://-----------------------------------------------goto Browser ----------------
-            case ".htm":
-            case ".html":
-            case ".htmls":
-            case ".htx":
-            case ".mht":
-                {
-                    the_MIME_type = "text/html";
-                    break;
-                }
-        }// end switch
-        // ready.
-        return the_MIME_type;
-    }//
+    # endregion cantina
 
 
 }// end class

@@ -9,15 +9,16 @@ using System.Windows.Forms;
 
 namespace winFormsIntf
 {
+
     public partial class frmDocumentoInsert : Form
     {
-        private System.Collections.ArrayList selectedDocFullPath;// of each of them.
-        public struct UploadElement
-        {
-            public string client_path;
-            public string web_server_path;
-        };
-        private int int_ref_autore_id = default(int);
+        private System.Collections.ArrayList selectedDocFullPath;// NB. of each of them.
+        //public struct UploadElement
+        //{ this is no more necessary, since on localhost there's only one path that is the clientPath.
+        //    public string client_path;
+        //    public string web_server_path;
+        //};
+        private int int_ref_autore_id = default(int);// follow the DoubleKey
         private int int_ref_materia_id = default(int);
         private string string_ref_autore_id;
         private string string_ref_materia_id;
@@ -156,17 +157,23 @@ namespace winFormsIntf
         private void frmDocumentoInsert_FormClosed( object sender, FormClosedEventArgs e )
         {// call Timbro menu manager, for removing the instance of the form that is in the proces of being closed.
             this.uscTimbro.removeSpecifiedWin(this);
+            // NB. specific to this form : clean up the DoubleKey. Thi insertion is over.
+            (Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["chiaveDoppiaMateria"]) = null;
+            Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["chiaveDoppiaAutore"] = null;
         }// frmDocumentoInsert_FormClosed
 
 
-
+        /// <summary>
+        /// delegate that opens a FileDialog which lets the user select one or more files.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSearchFileSystem_Click( object sender, EventArgs e )
         {
-            // this.folderBrowserDialog1.ShowDialog(this);
             this.openFileDialog1.ShowDialog(this);// the execution stops here and forks on the FileDialog
             // after the submitButton of the fileDialog, the execution continues from the next line:
-            // for  ... insert the fullPaths in a chechedList
-            if (null != this.selectedDocFullPath)
+            // Insert the selected fullPaths in a chechedList
+            if (null != this.selectedDocFullPath)// if one or more were selected
             {
                 for (int c = 0; c < selectedDocFullPath.Count; c++)
                 {
@@ -178,21 +185,22 @@ namespace winFormsIntf
 
         private void openFileDialog1_FileOk( object sender, CancelEventArgs e )
         {
-            string[] selectedFiles = this.openFileDialog1.FileNames;
-            if (null == this.selectedDocFullPath)
-            {
+            string[] selectedFiles = this.openFileDialog1.FileNames;// the selected documents
+            if (null == this.selectedDocFullPath)// if a member repository for them has not yet been created, since it's the first selection
+            {// then allocate it and add to it, at each successive file selection
                 this.selectedDocFullPath = new System.Collections.ArrayList();
             }
             for (int c = 0; c < selectedFiles.Length; c++)
             {
                 this.selectedDocFullPath.Add(selectedFiles[c]);
-                //this.lvwDocSelection.Items.Add(selectedFiles[c]);
+                // NB this is done in btnSearchFileSystem_Click : this.lvwDocSelection.Items.Add(selectedFiles[c]);
             }
-            string baseString = "listView1_testoLungoDiBase/sssssssssssss/ddddddddddddddd/fffffffffffff/";
-            for (int c = 0; c < 100; c++)
-            {
-                this.selectedDocFullPath.Add(baseString + c.ToString() + ".txt");
-            }
+            // utility for Debug only, when experimenting the graphical class ListView
+            //string baseString = "listView1_testoLungoDiBase/sssssssssssss/ddddddddddddddd/fffffffffffff/";
+            //for (int c = 0; c < 100; c++)
+            //{
+            //    this.selectedDocFullPath.Add(baseString + c.ToString() + ".txt");
+            //}
         }// openFileDialog1_FileOk
 
 
@@ -200,28 +208,6 @@ namespace winFormsIntf
         #region multi_upload
         //------------------------------------------------------------------------------------------------
 
-        //// porta singolo file in chechedList : sostituito dalla selezion multipla nella Dialog.
-        //protected void btnAllega_Click(object sender, EventArgs e)
-        //{
-            //string dbg = this.uploadFile.Value;
-            //if (null == this.Session["arlUploadPaths"])//----------TODO  dbg
-            //{
-            //    this.Session["arlUploadPaths"] = new ArrayList();
-            //}// else already built.
-            ////
-            //if (// add to chkList only valid items
-            //    null != dbg
-            //    && "" != dbg
-            //    )
-            //{
-            //    this.chkMultiDoc.Items.Add(new ListItem(dbg));
-            //    int presentCardinality = this.chkMultiDoc.Items.Count;
-            //    this.chkMultiDoc.Items[presentCardinality - 1].Selected = true;
-            //    // NB. the upload must be performed, before emptying the upload-html-control.
-            //    this.allegaSingoloFile();// on current selection; i.e. a scalar item. throws on empty selection.
-            //}// else skip an invalid selection.
-            //// ready
-        //}//
 
 
         /// <summary>
@@ -231,16 +217,14 @@ namespace winFormsIntf
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void btnDocsFromWebToDb_Click(object sender, EventArgs e)
+        protected void btnFromFsToDb_Click(object sender, EventArgs e)
         {
             string _abstract;
             int ref_autore_id;
             int ref_materia_id;
-//string sourceName;
             bool result = true;// bool mask.
             //
             bool validForWriting = default(bool);// a not-valid-forWriting item does not affect the whole insertion.
-            //int acc = 0;
             //
             foreach (ListViewItem itemRow in lvwDocSelection.Items)
             {
@@ -250,23 +234,16 @@ namespace winFormsIntf
                     {
                         if (i > 0) { throw new System.Exception("docPath must have only one element ! Do debug."); }//else can continue.
                         string fullPath = itemRow.SubItems[i].Text;
-//MessageBox.Show(fullPath);
-//this.allegaSingoloFile(fullPath );// on current selection; i.e. a scalar item. throws on empty selection.
-//UploadElement uploadElement = new UploadElement();// prepare data-structure,as desired by Entity_materie
-// Get the filename_only from client_fullpath.
-//string fileName_only = System.IO.Path.GetFileName(fullPath); // TODO ? serve
-//uploadElement.client_path = fullPath;
+                        //
                         validForWriting = this.validationForWrite(
                             out _abstract,
                             out ref_autore_id,
                             out ref_materia_id
-                            //, ref acc // the accumulator is used, as index, to acces an array in Session and incremented by the calee.
-                            //, out sourceName
                         );
                         if (true == validForWriting)
                         {
                             Entity_materie.BusinessEntities.docMulti dm = new Entity_materie.BusinessEntities.docMulti(
-                                ref_autore_id
+                                ref_autore_id// NB. use the Ctor() with DoubleKey
                                 , ref_materia_id
                                 );
                             int entityDbInsertionResult =
@@ -274,7 +251,7 @@ namespace winFormsIntf
                                     ref_autore_id,
                                     ref_materia_id,
                                     _abstract,
-                                    fullPath // TODO sourceName
+                                    fullPath // NB. sourceName
                                 );
                             result &= (0 < entityDbInsertionResult);// each insertion must return the lastGeneratedId, which>0.
                         }// else NOTvalidForWriting -> skip item.
@@ -289,8 +266,6 @@ namespace winFormsIntf
                     null,// original exception type
                     "Non e' stato possibile inserire il lavoro.",
                     0);
-                //this.pnlInteractiveControls.Enabled = true;// let the user correct errors on page.
-                //this.divUpload.Enabled = true;// let the user correct errors on page.
                 this.grbDocInsert.Enabled = true;// let the user correct errors on page.
                 this.lblEsito.Text = "Non e' stato possibile inserire il lavoro.";
                 this.lblEsito.BackColor = System.Drawing.Color.Red;
@@ -302,53 +277,11 @@ namespace winFormsIntf
                     null,// original exception type
                     "Il lavoro e' stato inserito correttamente.",
                     0);
-                //----navigate to "scadenziario", where the inserted phase is visible.
                 this.lblEsito.Text = "Il lavoro e' stato inserito correttamente.";
                 this.lblEsito.BackColor = System.Drawing.Color.Green;
-        //this.Session["errore"] = null;// gc  TODO
-        //this.Session["arlUploadPaths"] = null;// gc
-        //this.Session["ref_candidato_id"] = null;// gc --- NB.
-        // this.Response.Redirect("candidatoLoad.aspx");  TODO  stay in page with lblStatus & freeze
             }// else  i.e. ok docMulti inserito.
         }//---end submit()
 
-
-
-
-        ///// <summary>
-        ///// upload a single token( file) from an attachment-list( check-list).
-        ///// </summary>
-        ///// <param name="theFileToBeUploaded"></param>
-        //protected void allegaSingoloFile( string fullPath)
-        //{
-        //    UploadElement uploadElement = new UploadElement();// TODO store
-        //    // Get the filename_only from client_fullpath.
-        //    string fileName_only = System.IO.Path.GetFileName( fullPath); // this.uploadFile.PostedFile.FileName);
-        //    uploadElement.client_path = fullPath; // this.uploadFile.PostedFile.FileName;
-        //    ////
-        //    ConfigurationLayer.ConfigurationService cs = new
-        //        ConfigurationLayer.ConfigurationService("FileTransferTempPath/fullpath");
-        //    string serverPath = cs.GetStringValue("path");
-        //    // NB. adapt in App.config to the server file system.
-        //    // add ending part.
-        //    serverPath += "\\upload";
-        //    //
-        //    // Ensure the folder exists
-        //    if (!System.IO.Directory.Exists(serverPath))
-        //    {
-        //        System.IO.Directory.CreateDirectory(serverPath);
-        //    }// else already present on the web server file system.
-        //    //// Save the file to the folder, on the web-server.
-        //    string fullPath_onWebServer = System.IO.Path.Combine(serverPath, fileName_only);
-        //    uploadElement.web_server_path = fullPath_onWebServer;// TODO dbg.
-        //    //if (null == this.Session["arlUploadPaths"])
-        //    //{
-        //    //    throw new System.Exception("TODO call btnAllega() first!");
-        //    //}// else ok.
-        //    //((System.Collections.ArrayList)(this.Session["arlUploadPaths"])).Add(uploadElement);
-        //    //// ready
-        //    //this.uploadFile.PostedFile.SaveAs(fullPath_onWebServer);//--NB.---crucial system call: from client do web-srv.
-        //}// end uploadButton_Click()
 
 
 
@@ -368,7 +301,7 @@ namespace winFormsIntf
         {
             bool result = true;// used as bitmask with & operator.
             //
-            _abstract = this.textBox1.Text; // TODO names
+            _abstract = this.txtDocumentoAbstract.Text; // TODO names
             if (
                 null != _abstract
                 && "" != _abstract
@@ -379,10 +312,12 @@ namespace winFormsIntf
             else
             {
                 result &= false;
+                this.lblEsito.Text = "L'inserimento delle note al Documento è obbligatorio.";
+                this.lblEsito.BackColor = System.Drawing.Color.Red;
             }
             //
             ref_autore_id = this.int_ref_autore_id;
-            if (
+            if (// l'esito positivo dovrebbe essere scontato, grazie alla validazione DoubleKey in AutoreLoad
                 0 < ref_autore_id)
             {
                 result &= true;
@@ -393,7 +328,7 @@ namespace winFormsIntf
             }
             //
             ref_materia_id = this.int_ref_materia_id;
-            if (
+            if (// l'esito positivo dovrebbe essere scontato, grazie alla validazione DoubleKey in AutoreLoad
                 0 < ref_materia_id)
             {
                 result &= true;
@@ -402,33 +337,74 @@ namespace winFormsIntf
             {
                 result &= false;
             }
-            /*
-             * NB. the acc index is incremented, AFTER array-access, and returned to the caller, 
-             * which manages the loop.
-             */
-            // TODO sourceName = ((UploadElement)((System.Collections.ArrayList)(this.Session["arlUploadPaths"]))[acc++]).web_server_path; //sourceName
-            //sourceName = "TODO";
-            //if (
-            //    null != sourceName
-            //    && "" != sourceName
-            //    )
-            //{
-            //    result &= true;
-            //}
-            //else
-            //{
-            //    result &= false;
-            //}
-            //
             // ready
             return result;
         }// end validationForWrite.
 
-        private void btnFromFsToDb_Click(object sender, EventArgs e)
-        {
-            this.btnDocsFromWebToDb_Click(sender, e);// TODO : only one delegate
-        }
-
 
     }// class
 }// nmsp
+
+
+# region cantina
+
+//// porta singolo file in chechedList : sostituito dalla selezion multipla nella Dialog.
+//protected void btnAllega_Click(object sender, EventArgs e)
+//{
+//string dbg = this.uploadFile.Value;
+//if (null == this.Session["arlUploadPaths"])//----------TODO  dbg
+//{
+//    this.Session["arlUploadPaths"] = new ArrayList();
+//}// else already built.
+////
+//if (// add to chkList only valid items
+//    null != dbg
+//    && "" != dbg
+//    )
+//{
+//    this.chkMultiDoc.Items.Add(new ListItem(dbg));
+//    int presentCardinality = this.chkMultiDoc.Items.Count;
+//    this.chkMultiDoc.Items[presentCardinality - 1].Selected = true;
+//    // NB. the upload must be performed, before emptying the upload-html-control.
+//    this.allegaSingoloFile();// on current selection; i.e. a scalar item. throws on empty selection.
+//}// else skip an invalid selection.
+//// ready
+//}//
+
+
+///// <summary>
+///// upload a single token( file) from an attachment-list( check-list).
+///// </summary>
+///// <param name="theFileToBeUploaded"></param>
+//protected void allegaSingoloFile( string fullPath)
+//{
+//    UploadElement uploadElement = new UploadElement();// TODO store
+//    // Get the filename_only from client_fullpath.
+//    string fileName_only = System.IO.Path.GetFileName( fullPath); // this.uploadFile.PostedFile.FileName);
+//    uploadElement.client_path = fullPath; // this.uploadFile.PostedFile.FileName;
+//    ////
+//    ConfigurationLayer.ConfigurationService cs = new
+//        ConfigurationLayer.ConfigurationService("FileTransferTempPath/fullpath");
+//    string serverPath = cs.GetStringValue("path");
+//    // NB. adapt in App.config to the server file system.
+//    // add ending part.
+//    serverPath += "\\upload";
+//    //
+//    // Ensure the folder exists
+//    if (!System.IO.Directory.Exists(serverPath))
+//    {
+//        System.IO.Directory.CreateDirectory(serverPath);
+//    }// else already present on the web server file system.
+//    //// Save the file to the folder, on the web-server.
+//    string fullPath_onWebServer = System.IO.Path.Combine(serverPath, fileName_only);
+//    uploadElement.web_server_path = fullPath_onWebServer;// TODO dbg.
+//    //if (null == this.Session["arlUploadPaths"])
+//    //{
+//    //    throw new System.Exception("TODO call btnAllega() first!");
+//    //}// else ok.
+//    //((System.Collections.ArrayList)(this.Session["arlUploadPaths"])).Add(uploadElement);
+//    //// ready
+//    //this.uploadFile.PostedFile.SaveAs(fullPath_onWebServer);//--NB.---crucial system call: from client do web-srv.
+//}// end uploadButton_Click()
+
+# endregion cantina

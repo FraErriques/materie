@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtDocumentoAbstract = new System.Windows.Forms.TextBox();
             this.btnSearchFileSystem = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.lvwDocSelection = new System.Windows.Forms.ListView();
@@ -41,13 +41,13 @@
             this.grbDocInsert.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBox1
+            // txtDocumentoAbstract
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 21);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(356, 297);
-            this.textBox1.TabIndex = 1;
+            this.txtDocumentoAbstract.Location = new System.Drawing.Point(6, 21);
+            this.txtDocumentoAbstract.Multiline = true;
+            this.txtDocumentoAbstract.Name = "txtDocumentoAbstract";
+            this.txtDocumentoAbstract.Size = new System.Drawing.Size(356, 297);
+            this.txtDocumentoAbstract.TabIndex = 1;
             // 
             // btnSearchFileSystem
             // 
@@ -103,7 +103,7 @@
             // grbDocInsert
             // 
             this.grbDocInsert.Controls.Add(this.btnFromFsToDb);
-            this.grbDocInsert.Controls.Add(this.textBox1);
+            this.grbDocInsert.Controls.Add(this.txtDocumentoAbstract);
             this.grbDocInsert.Controls.Add(this.lvwDocSelection);
             this.grbDocInsert.Controls.Add(this.btnSearchFileSystem);
             this.grbDocInsert.Location = new System.Drawing.Point(12, 84);
@@ -153,7 +153,7 @@
         #endregion
 
         private Timbro uscTimbro;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtDocumentoAbstract;
         private System.Windows.Forms.Button btnSearchFileSystem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ListView lvwDocSelection;

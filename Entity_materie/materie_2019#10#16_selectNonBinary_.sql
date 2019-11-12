@@ -30,6 +30,7 @@ select * from materie.dbo.autore
 select MAX(id) from materie.dbo.docMulti
 select * from materie.dbo.docMulti where id=512
 
-select TOP 14 * -- id,insertion_time
+select * from materie.dbo.docMulti where id=527
+select TOP 14  id,insertion_time, sourceName
 from materie.dbo.docMulti
 order by id desc

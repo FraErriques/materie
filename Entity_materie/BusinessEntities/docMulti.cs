@@ -553,9 +553,9 @@ namespace Entity_materie.BusinessEntities
         ///     -1==failure.
         /// </returns>
         public Int32 FILE_from_DB_writeto_FS(
-            int id,
-            out string extractionFullPath
-            , string clientIP
+            int id
+            ,out string extractionFullPath
+            ,string clientIP// just for Logging.
           )
         {
             extractionFullPath = null;// compulsory init; actual initialization in body.
@@ -616,25 +616,38 @@ namespace Entity_materie.BusinessEntities
                     ConfigurationLayer.ConfigurationService cs = new
                         ConfigurationLayer.ConfigurationService("FileTransferTempPath/fullpath");
                     string dlgSave_InitialDirectory = cs.GetStringValue("path");
-                    //-Gestione dismessa --- NB. it's different for every user, included ASPNETusr ---------
-                    //-Gestione dismessa string dlgSave_InitialDirectory = Environment.GetEnvironmentVariable("tmp", EnvironmentVariableTarget.User);
-                    //-Gestione dismessa string dlgSave_InitialDirectory = @"C:\root\LogSinkFs\cv";// TODO adapt to the server file sysetm.
-                    dlgSave_InitialDirectory += "\\download";// from server to client.
+                    dlgSave_InitialDirectory += "\\download";// in case HTTP it's a path on the Web-Server. In case WindowsForms it's on localhost.
+                    // In case HTTP there is a WebApplication::AppCode::Downloader call 
+                    // to System.Web.HttpContext.Response.WriteFile(webServer_extractionPath)
+                    // to bring the file from webServer to client.;
                     //
                     // Ensure the folder exists
                     if (!System.IO.Directory.Exists(dlgSave_InitialDirectory))
                     {
                         System.IO.Directory.CreateDirectory(dlgSave_InitialDirectory);
                     }// else already present on the web server file system.
+                    string timeStamp =
+                        DateTime.Now.Year.ToString()
+                        + "#"
+                        + DateTime.Now.Month.ToString()
+                        + "#"
+                        + DateTime.Now.Day.ToString()
+                        + "#"
+                        + DateTime.Now.Hour.ToString()
+                        + "#"
+                        + DateTime.Now.Minute.ToString()
+                        + "#"
+                        + DateTime.Now.Second.ToString()
+                        + "#"
+                        + DateTime.Now.Millisecond.ToString()
+                        + "#";
+                    timeStamp = timeStamp.Replace('/', '_').Replace('\\', '_')
+                        .Replace(' ', '_').Replace('.', '_').Replace(':', '_')
+                        .Replace(';', '_').Replace(',', '_');
                     extractionFullPath =
                         dlgSave_InitialDirectory
                         + "\\"
-                        + DateTime.Now.Year.ToString()
-                        + DateTime.Now.Month.ToString()
-                        + DateTime.Now.Day.ToString()
-                        .Replace('/', '_').Replace('\\', '_')
-                        .Replace(' ', '_').Replace('.', '_').Replace(':', '_')
-                        .Replace(';', '_').Replace(',', '_')
+                        + timeStamp
                         + "_"
                         + sourceName;
                     if (null == clientIP || "" == clientIP)
@@ -642,13 +655,14 @@ namespace Entity_materie.BusinessEntities
                         clientIP = " unspecified. ";
                     }// else continue.
                     LoggingToolsContainerNamespace.LoggingToolsContainer.LogBothSinks_DbFs(
-                        " extractionFullPath = " + extractionFullPath
-                        + " _ clientIP = " + clientIP
-                        , 0);
+                        " extraction WebServer or localhost FullPath = " + 
+                          extractionFullPath
+                        + " #_# and  clientIP = " + clientIP
+                        , 5);
                     //--prepare the binary stream to append to.-----------
                     multiChunk_stream = new System.IO.FileStream(
                         extractionFullPath,
-                        System.IO.FileMode.Append,
+                        System.IO.FileMode.CreateNew, // .Append,// ? TODO isn't it better write than append ?
                         System.IO.FileAccess.Write,
                         System.IO.FileShare.None,
                         docBody__Length * hm_ids// prepare a size of "n" chunks of 64Kb. The last one is generally not full: so it's surely enough.
@@ -669,15 +683,15 @@ namespace Entity_materie.BusinessEntities
                         );
                     }// end for
                     LoggingToolsContainerNamespace.LoggingToolsContainer.LogBothSinks_DbFs(
-                        "OK, doc extracted.",
-                        0);
+                        "OK, doc extracted at: " + extractionFullPath,
+                        5);
                 }// end else// valid chunk group.
             }// end try.---
             catch (System.Exception ex)// invalid id inserted
             {
                 LoggingToolsContainerNamespace.LoggingToolsContainer.LogBothSinks_DbFs(
                     "error while trying to retrieve a document: " + ex.Message,
-                    0);
+                    5);
             }
             finally
             {
