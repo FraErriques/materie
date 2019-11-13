@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\ComboMaterieManager.cs" />
     <Compile Include="Cacher.cs" />
     <Compile Include="CacherDbView.cs" />
     <Compile Include="CheckLogin.cs" />
@@ -181,6 +182,10 @@
       <Project>{F4AF2E80-429C-4AF8-8C75-C9101C1AC314}</Project>
       <Name>Process_materie</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="prototype\" />
+    <Folder Include="zonaRiservata\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,6 +13,7 @@ namespace winFormsIntf
 
     public partial class frmDocumentoLoad : Form
     {
+        private winFormsIntf.App_Code.ComboMaterieManager comboMaterieManager;
 
 
         public frmDocumentoLoad()
@@ -31,33 +32,12 @@ namespace winFormsIntf
             //// init graphics
             InitializeComponent();
             //
-            //CacherDbView cacherDbView = new CacherDbView(         TODO enable out of web context
-            //    this.Session
-            //    , queryTail
-            //    , ViewNameDecorator.ViewNameDecorator_SERVICE(this.Session.SessionID)
-            //    , new CacherDbView.SpecificViewBuilder(
-            //        Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_documento_SERVICE.usp_ViewCacher_specific_CREATE_documento
-            //      )
-            //    , int_txtRowsInPage
-            //    //
-            //    , this.Request
-            //    , this.grdDatiPaginati
-            //    , this.pnlPageNumber
-            //);
-            //if (null != cacherDbView)
-            //{
-            //    this.Session["CacherDbView"] = cacherDbView;
-            //    cacherDbView.Pager_EntryPoint(
-            //        this.Session
-            //        , this.Request
-            //        , this.grdDatiPaginati
-            //        , this.pnlPageNumber
-            //    );
-            //}
-
-            //System.Data.DataTable dtProva = Entity_materie.Proxies.usp_docMulti_abstract_LOAD_SERVICE.usp_docMulti_abstract_LOAD(525);
-            //this.grdDocumento.DataSource = dtProva;
-            // ? bind() ? is implicit.
+            //
+            this.comboMaterieManager = new App_Code.ComboMaterieManager();
+            this.comboMaterieManager.populate_Combo_ddlMateria_for_LOAD(
+                this.ddlMaterie
+                , 0
+              );
         }// Ctor()
 
 
@@ -78,38 +58,39 @@ namespace winFormsIntf
         }
 
 
-        /// <summary>
-        /// selezione della cella ID-Documento a scopo di consultazione.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        enum tblDocumentoColumns
+        {//NB. enums cannot be declared into methods.
+            Invalid = -1
+            , RowNumber = 0
+            , id_Documento = 1
+            , nome_Materia = 2
+            , nome_Autore = 3
+            //  etc , ... 
+        }// NB. modify, in case of record layout modification.
+        //
         private void grdDocumento_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int row = e.RowIndex;
-            int col = e.ColumnIndex;
-            if (col == 1)// NB. verificare che non sia stata clickata una cella diversa dallo ID-materia.
+            try// inside here there's an int.Parse that throws.
             {
-                object selectedItem = this.grdDocumento.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                DataGridViewRow selRow = this.grdDocumento.Rows[e.RowIndex];
-                DataGridViewCell selCell = selRow.Cells[e.ColumnIndex];
-                string tmpSelectedDocId = selCell.Value.ToString();
-                int selectedDocId = int.Parse(tmpSelectedDocId);
-                this.lblStatus.Text = "selected Doc with ID="+selectedDocId.ToString();
-                this.lblStatus.BackColor = System.Drawing.Color.Green;
+                DataGridViewRow selRowDirect = this.grdDocumento.Rows[e.RowIndex];
+                DataGridViewCell selCellDirect =
+                    selRowDirect.Cells[(int)(winFormsIntf.frmDocumentoLoad.tblDocumentoColumns.id_Documento)];//compulsory.
+                string tmpSelected_Doc_IdDirect = selCellDirect.Value.ToString();
+                int selected_Doc_IdDirect = int.Parse(tmpSelected_Doc_IdDirect);// throws
                 //
                 string extractionPath;
-                Downloader.DownloadButton_Click(selectedDocId, out extractionPath);
+                Downloader.DownloadButton_Click( selected_Doc_IdDirect, out extractionPath);
                 this.openFileDialog1.InitialDirectory = extractionPath;
                 this.lblExtractedDoc.Text = "Doc is : " + extractionPath;
                 this.lblExtractedDoc.BackColor = System.Drawing.Color.LimeGreen;
                 this.openFileDialog1.ShowDialog();
-            }// else not a valid click
-            else
+            }// try
+            catch (System.Exception ex)
             {
-                this.lblStatus.Text = "Only ID-Documento is double-clickable for selection.";
+                this.lblStatus.Text = "trouble: " + ex.Message;
                 this.lblStatus.BackColor = System.Drawing.Color.Red;
             }
-        }
+        }// grdDocumento_CellDoubleClick()
 
 
 
@@ -128,28 +109,24 @@ namespace winFormsIntf
             // NB. primo "and implicito. perchè la stored ha già altri "and" nel testo sql. Quindi clausole ulteriori devono essere precedute
             // da un "and"
             string queryTail = "";
-            int indexOfAllSectors = 0;
+            int indexOfMateria = 0;
             try
             {
-                // TODO indexOfAllSectors = ((int)(this.Session["indexOfAllSectors"])).ToString();
-                indexOfAllSectors = 0;
+                indexOfMateria = this.comboMaterieManager.ddlMaterie_SelectedIndexChanged(this.ddlMaterie);
             }
             catch// all
             {// indexOfAllSectors will remain null.
             }
             //
             if (
-                null == this.ddlMaterie.SelectedItem
-                || "0" == this.ddlMaterie.SelectedText //  .SelectedItem.Value// no sector selected.
-                || null == this.ddlMaterie.SelectedItem // .Value// managed ex.
-                || indexOfAllSectors == this.ddlMaterie.SelectedIndex //  Item.Value// all sectors selected.
+                    indexOfMateria <= 0 // all sectors selected.
                 )
             {
                 // invalid "sector" characterization -> where condition omitted.
             }
             else
             {
-                queryTail += " and " + this.ddlMaterie.SelectedItem.ToString() + " = mat.id ";
+                queryTail += " and " + indexOfMateria.ToString() + " = mat.id ";
             }
             //
             /// NB. la query-tail che si costruisce in questa funzione va collegata obbligatoriamente in
@@ -185,19 +162,18 @@ namespace winFormsIntf
             //
             //----here ends the query-tail building code and starts the query execution.
             //
-            int int_txtRowsInPage = int.MaxValue;// no paging, but a scrollBar on the gridView.
             CacherDbView cacherDbView = new CacherDbView(
-                null // this.Session
+                Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance() //  this.Session
                 , queryTail
                 , ViewNameDecorator.ViewNameDecorator_SERVICE("TODO_this.Session.SessionID")
                 , new CacherDbView.SpecificViewBuilder(// create the delegate which points to the appropriate Proxy().
                     Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_documento_SERVICE.usp_ViewCacher_specific_CREATE_documento
                   )
-                , int_txtRowsInPage
             );
             if (null != cacherDbView)
             {
-                this.grdDocumento.DataSource = cacherDbView.GetChunk( null // null here stands for the Session. TODO: prune such parameter.
+                this.grdDocumento.DataSource = cacherDbView.GetChunk(
+                    Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance() //  this.Session
                     , 1);// require first page, which contains the whole data, since there's no paging on localhost.
             }
             else
@@ -229,6 +205,10 @@ namespace winFormsIntf
         }// end SqlTrim
 
 
+        private void ddlMaterie_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.comboMaterieManager.ddlMaterie_SelectedIndexChanged(this.ddlMaterie);
+        }// ddlMaterie_SelectedIndexChanged
 
 
     }//class

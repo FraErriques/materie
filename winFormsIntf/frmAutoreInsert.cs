@@ -3,38 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+
 using System.Text;
 using System.Windows.Forms;
 
-
 namespace winFormsIntf
 {
-
     public partial class frmAutoreInsert : Form
     {
-        public class comboElement
-        {
-            public string fieldName;
-            public int fieldId;
-            //
-            public comboElement(int fieldId_par, string fieldName_par)
-            {
-                this.fieldId = fieldId_par;
-                this.fieldName = fieldName_par;
-            }
-
-            public override string ToString()
-            {
-                return this.fieldName;
-            }
-
-            public int getId()
-            {
-                return this.fieldId;
-            }
-        };
-
-
         public frmAutoreInsert()
         {// check login status
             bool isLoggedIn =
@@ -51,9 +27,7 @@ namespace winFormsIntf
             //// init graphics
             InitializeComponent();
             //
-            object o = new comboElement(97, "aaaa");
-            //
-            this.comboBox1.Items.Add( o );
+            this.comboBox1.Items.Add("comboBox1_primo");
             this.comboBox1.Items.Add("comboBox1_secondo");
             //this.comboBox1.SelectedIndex = 1;// 0-based
             //
@@ -92,11 +66,6 @@ namespace winFormsIntf
             }
             //bool selIndexes = this.listView1.SelectedIndices.Contains(1);// ? 
             //
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int selectedId = ((winFormsIntf.frmAutoreInsert.comboElement)(this.comboBox1.SelectedItem)).getId();
         }// Ctor()
 
 

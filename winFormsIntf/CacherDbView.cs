@@ -45,8 +45,6 @@ namespace winFormsIntf
         /// Ctor()
         /// - CacherDbView creates a dbView onConstruction 
         /// NB. crucial for the Ctor() success is the call to this.GetChunk(firstPage)
-        /// this.GetChunk() sets this.Session[CacherDbView] and this is the condition to
-        /// let the dbView available; otherwise every call to 
         /// </summary>
         public CacherDbView(
             //---first the Cacher needs:
@@ -54,11 +52,6 @@ namespace winFormsIntf
             , string where_tail
             , string view_signature
             , SpecificViewBuilder specificViewBuilder
-            , int RowsInChunk
-            //---below follows the Pager need:
-            //, System.Web.HttpRequest Request
-            //, System.Web.UI.WebControls.GridView grdDatiPaginati
-            //, System.Web.UI.WebControls.Panel pnlPageNumber
           )
         {
             if (
@@ -80,14 +73,7 @@ namespace winFormsIntf
                 //
                 this.where_tail = where_tail;
                 //
-                if (RowsInChunk > 0)
-                {
-                    this.RowsInChunk = RowsInChunk;
-                }
-                else
-                {
-                    this.RowsInChunk = 5;// default.
-                }
+                this.RowsInChunk = int.MaxValue;
                 //
                 System.Data.DataTable dtViewRowCardinality =
                     Entity_materie.Proxies.usp_ViewCacher_generic_LOAD_length_SERVICE.usp_ViewCacher_generic_LOAD_length(
@@ -106,15 +92,7 @@ namespace winFormsIntf
                     this.rowCardinality = (int)(dtViewRowCardinality.Rows[0].ItemArray[0]);
                 }
                 //
-                //---done with the Cacher, now do the Pager.
-                // now fill the first page, after the View creation.
-                //this.Pager_EntryPoint( //    -------------------- TODO debug 
-                //    Session,
-                //    Request_Params_parPage
-                //    //, Request
-                //    //, grdDatiPaginati
-                //    //, pnlPageNumber
-                //);
+                //---done with the Cacher, no Pager on localhost. Just the scroll of the gridView.
             }
             catch (System.Exception ex)// the provided DataTable might be null;
             {

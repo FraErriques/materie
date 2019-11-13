@@ -99,6 +99,7 @@
             this.ddlMaterie.Name = "ddlMaterie";
             this.ddlMaterie.Size = new System.Drawing.Size(190, 21);
             this.ddlMaterie.TabIndex = 6;
+            this.ddlMaterie.SelectedIndexChanged += new System.EventHandler(this.ddlMaterie_SelectedIndexChanged);
             // 
             // btnQueryDoc
             // 

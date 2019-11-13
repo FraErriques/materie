@@ -12,11 +12,7 @@ namespace winFormsIntf
 {
     public partial class frmAutoreLoad : Form
     {
-        private DataTable dtMateria;
-        private int indexOfAll_Materie;
-        private int idOfSelectedItem;// in the comboMaterie
-        private int idOfSelected_Materia;
-        private int idOfSelected_Autore;
+        private winFormsIntf.App_Code.ComboMaterieManager comboMaterieManager;
 
 
         public frmAutoreLoad()
@@ -35,7 +31,11 @@ namespace winFormsIntf
             //// init graphics
             InitializeComponent();
             //
-            this.populate_Combo_ddlMateria_for_LOAD( 0, out this.indexOfAll_Materie);// pre-select the voice "selez.."
+            this.comboMaterieManager = new App_Code.ComboMaterieManager();
+            this.comboMaterieManager.populate_Combo_ddlMateria_for_LOAD(
+                this.ddlMaterie
+                , 0
+              );
         }// Ctor()
 
 
@@ -50,31 +50,6 @@ namespace winFormsIntf
         }
 
 
-        /// <summary>
-        /// this metohd calls the Proxy in Entity_materie, which loads Authors, filtered by Name and Abstract. The resultset is an Authors' list
-        /// from which the user can select an Author-id to compose the DoubleKey.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnAutoriNominativoNote_Click(object sender, EventArgs e)
-        {
-            int int_sector = default(int);
-            try//---if ddlMaterie.SelectedItem==null will throw.
-            {
-                int_sector = int.Parse(this.ddlMaterie.SelectedIndex.ToString() ); //  Item. .Value);
-                // this.Session["comboSectors_selectedValue"] = int_sector;// NB.---cache across postbacks.-----
-                Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["comboSectors_selectedValue"] = int_sector;// NB.---cache across postbacks.-----
-            }
-            catch (System.Exception ex)
-            {
-                string dbg = ex.Message;
-                int_sector = -1;// invalid.
-            }
-            finally
-            {
-                this.goProxyQueryAutoriByNominativoNote();// query sugli autori by Nominativo & Note.
-            }
-        }
 
 
 
@@ -82,7 +57,7 @@ namespace winFormsIntf
         /// <summary>
         /// // query sugli autori by Nominativo & Note.
         /// </summary>
-        private void goProxyQueryAutoriByNominativoNote()
+        private void goProxyQueryAutoriByNominativoNote( object sender, EventArgs e)
         {
             string queryTail;
             // Esempio di come deve diventare la queryTail: predisporre due textBox multiline per raccogliere "note" e "nominativo" like% ed "and".
@@ -113,43 +88,16 @@ namespace winFormsIntf
             }// else the field queryTail stays as queryTail = "";// init or as set by the previous statement.
             //
             //---manage the Cacher & Pager here.
-            //System.Web.UI.WebControls.TextBox txtRowsInPage = null;
-            
-            //try
-            //{
-            //    txtRowsInPage =
-            //        (System.Web.UI.WebControls.TextBox)(this.PageLengthManager1.FindControl("txtRowsInPage"));
-            //    int_txtRowsInPage = int.Parse(txtRowsInPage.Text);
-            //}
-            //catch
-            //{// on error sends zero rows per page, to Pager.
-            //}
-            int int_txtRowsInPage = int.MaxValue;// default to a high cardinality, since we don't page on localhost.
             CacherDbView cacherDbView = new CacherDbView(
                 Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance() //  this.Session
                 , queryTail
                 , "ViewNameDecorator_TODO" //ViewNameDecorator.ViewNameDecorator_SERVICE(this.Session.SessionID)// TODO : GUID
-                , new CacherDbView.SpecificViewBuilder(
+                , new CacherDbView.SpecificViewBuilder(// delegate to the right View Proxy.
                     Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore
                   )
-                , int_txtRowsInPage
-                //
-                //, this.Request
-                //, this.grdDatiPaginati
-                // this.pnlPageNumber
             );
             if (null != cacherDbView)
             {
-                
-                Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["CacherDbView"] = cacherDbView;
-                // this.Session["CacherDbView"] = cacherDbView;
-                //cacherDbView.Pager_EntryPoint(
-                //    this.Session
-                //    , this.Request
-                //    , this.grdDatiPaginati
-                //    , this.pnlPageNumber
-                //);
-                //------ check 
                 this.grdAutoriNominativoNote.DataSource = cacherDbView.GetChunk(
                     Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()
                     , 1 // TODO verify : but seems that does not paginete; so you will get all the View in a single chunk.
@@ -278,7 +226,7 @@ namespace winFormsIntf
         /// <param name="e"></param>
         private void btnPublishMateriaFromCombo_Click(object sender, EventArgs e)
         {
-            this.txtChiaveMateria.Text = this.idOfSelectedItem.ToString();
+            this.txtChiaveMateria.Text = this.comboMaterieManager.ddlMaterie_SelectedIndexChanged(this.ddlMaterie).ToString();
         }// btnPublishMateriaFromCombo_Click
 
 
@@ -296,11 +244,7 @@ namespace winFormsIntf
             int int_sector = default(int);
             try//---if ddlMaterie.SelectedItem==null will throw.
             {
-                int_sector = this.ddlMaterie.SelectedIndex;  //int.Parse( // .SelectedItem . Value);
-                Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["comboSectors_selectedValue"] = int_sector;
-                //this.Session["comboSectors_selectedValue"] = int_sector;// NB.---cache across postbacks.-----
-                //this.indexOfAll_Materie = 
-                //    (int)(Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["comboSectors_selectedValue"]);
+                int_sector = ((winFormsIntf.App_Code.comboRow)(this.ddlMaterie.SelectedItem)).getId(); 
             }
             catch (System.Exception ex)
             {
@@ -308,16 +252,12 @@ namespace winFormsIntf
                 int_sector = -1;// invalid.
             }
             finally
-            {// TODO : prevedere caso query su tutte le materie (i.e. su tutti gli Autori censiti ).
-                if (int_sector >= this.indexOfAll_Materie)
-                {
-                    int_sector = -1;// int_sector<0 means search Authors who wrote on whatever Subject.
-                }// else keep the single_Materia index.
+            {   // NB. int_sector = -1;// int_sector<0 means search Authors who wrote on whatever Subject.
+                // on index==0 query su tutte le materie. The id starts from 1. 0 is "seleziona materia".
                 System.Data.DataTable dt = Entity_materie.Proxies.usp_autore_LOAD_whoWroteOnMateria_SERVICE.usp_autore_LOAD_whoWroteOnMateria(int_sector);
                 this.grdAutoriMateria.DataSource = dt;
-                // this.GridView1.DataBind(); implicit in this context
             }
-        }
+        }// btnAutoriByArticoliPubblicati_Click()
 
 
         /// <summary>
@@ -332,116 +272,9 @@ namespace winFormsIntf
 
 
 
-        public void populate_Combo_ddlMateria_for_LOAD(
-            //System.Web.UI.WebControls.DropDownList ddlSettore,
-            object selectedElement,
-            out int indexOfAllSectors // it's one after the last id in the table.
-          )
-        {
-            indexOfAllSectors = default(int);// compulsory init, for out pars; the func_body will let it actual.
-            //--------------popolamento-----------------
-            dtMateria = Entity_materie.Proxies.usp_materia_LOOKUP_LOAD_SERVICE.usp_materia_LOOKUP_LOAD();
-            this.ddlMaterie.Items.Clear();
-            this.ddlMaterie.Items.Add("selezione della Materia"
-             //,//--no query for this combo voice ---
-             //   new System.Windows.Forms.ListControl( // .Web.UI.WebControls.ListItem(
-             //       "selezione della Materia",//--no query for this combo voice ---
-             //       "0" // index in combo-box
-             //   )// end new_list_item
-            );// end items_add
-            int c = 0;// zero is the first row in the datatable.
-            int max_identity = 0;
-            if (null != dtMateria)
-            {
-                for (; c < dtMateria.Rows.Count; c++)
-                {
-                    this.ddlMaterie.Items.Add(
-                            (string)(dtMateria.Rows[c]["nomeMateria"])
-                    );
-                    //this.ddlMaterie.Items.Add(
-                    //    new System.Web.UI.WebControls.ListItem(
-                    //        (string)(dtMateria.Rows[c]["nomeMateria"]),
-                    //        ((int)(dtMateria.Rows[c]["id"])).ToString() // the identity in the table, to be used for the query.
-                    //    )
-                    //);
-                    int tmp_identity = (int)(dtMateria.Rows[c]["id"]);
-                    if (tmp_identity > max_identity)
-                    {
-                        max_identity = tmp_identity;
-                    }// else skip.
-                }// end for.
-                this.ddlMaterie.Items.Add(
-                        "Tutte le Materie"//--select without "where-tail" -----
-                );
-                //indexOfAllSectors = max_identity + 1;//--------NB.------report combo_cardinality to the caller.-------
-                this.indexOfAll_Materie = indexOfAllSectors = dtMateria.Rows.Count + 2;//+2 because we add "scegli Materia" e "Tutte le Materie".
-            }// else skip.
-            //-------------- END popolamento Stati Lavorazione----------------------------------
-            int int_selectedElement = default(int);
-            if (
-                System.DBNull.Value != selectedElement
-                && null != selectedElement
-                )
-            {
-                int_selectedElement = (int)selectedElement;
-                if (0 >= int_selectedElement)
-                {
-                    this.ddlMaterie.SelectedIndex = 0;// i.e. "selezionare Materia.."
-                    return;// no preselection.
-                }// else continue pre-selecting.
-                int r = 0;
-                for (; r < dtMateria.Rows.Count; r++)
-                {
-                    if (// selectedElement contains an [id], i.e. an encoded FK.
-                        int_selectedElement == (int)(dtMateria.Rows[r]["id"])
-                        )
-                    {
-                        break;// selectedElement's row is "r".
-                    }// else continue.
-                }
-                if (r < dtMateria.Rows.Count)//--caso query su tutte le materie
-                {
-                    int theIndex =
-                        this.ddlMaterie.Items.IndexOf(
-                                (string)(dtMateria.Rows[r]["nomeMateria"])
-                        );
-                    this.ddlMaterie.SelectedIndex = theIndex;
-                }
-                else
-                {
-                    int theIndex =
-                        this.ddlMaterie.Items.IndexOf(
-                            "Tutte le Materie"  //--select without "where-tail" -----
-                    );
-                    this.ddlMaterie.SelectedIndex = theIndex;
-                }
-            }// else no pre-selection.
-        }//populate_Combo_ddlMateria_for_LOAD
-
-
         private void ddlMaterie_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int selIndex = this.ddlMaterie.SelectedIndex;// good
-            object selItem = this.ddlMaterie.SelectedItem;// good
-            //string selTxt = this.ddlMaterie.SelectedText;// bad
-            //object selVal = this.ddlMaterie.SelectedValue;// bad
-            //
-            idOfSelectedItem = default(int);
-            try
-            {
-                for (int c = 0; c < dtMateria.Rows.Count; c++)
-                {
-                    if ((string)selItem == (string)(dtMateria.Rows[c]["nomeMateria"]))
-                    {
-                        idOfSelectedItem = (int)(dtMateria.Rows[c]["id"]);
-                        break;// id are univocal. No more search after a match.
-                    }// if matches
-                }// for each row of dataTable
-            }// try
-            catch (System.Exception ex)
-            {
-                string msg = "something wrong " + ex.Message;
-            }// catch
+            this.comboMaterieManager.ddlMaterie_SelectedIndexChanged(this.ddlMaterie);
         }// ddlMaterie_SelectedIndexChanged
 
 
@@ -451,8 +284,10 @@ namespace winFormsIntf
             Invalid = -1
             ,RowNumber = 0
             ,idAutore = 1
+            ,nominativo = 2
+            ,note = 3
         }// NB. modify, in case of record layout modification.
-
+        //
         private void grdAutoriNominativoNote_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try// inside here there's an int.Parse that throws.
@@ -463,7 +298,6 @@ namespace winFormsIntf
                 int selectedAutoreIdDirect = int.Parse(tmpSelectedAutoreIdDirect);// throws
                 //
                 this.txtChiaveAutore.Text = selectedAutoreIdDirect.ToString();// report the selected DoubleKey portion.
-                this.idOfSelected_Autore = selectedAutoreIdDirect;// save to put in session for page frmDocumentoInsert
                 this.lblStatus.Text = "";// everything went ok.
                 this.lblStatus.BackColor = System.Drawing.Color.Transparent;
             }// try
@@ -475,28 +309,32 @@ namespace winFormsIntf
         }// grdAutoriNominativoNote_CellDoubleClick
 
 
+        enum tblAutoriOnMateriaColumns
+        {//NB. enums cannot be declared into methods.
+            Invalid = -1
+            // NB. no RowNumber in this query: it's not a View.
+            ,idAutore = 0
+            ,nomeAutore = 1
+            ,idMateria = 2
+            ,nomeMateria = 3
+        }// NB. modify, in case of record layout modification.
+        //
         private void grdAutoriMateria_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            // TODO verificare che non sia stata clickata una cella diversa dallo ID-materia.
-            // TODO mettere ID-Materia in txtMateriaID_DoubleKey
-            object theSender = sender;
-            int row = e.RowIndex;
-            int col = e.ColumnIndex;
-            if (col == 0)
+            try// inside here there's an int.Parse that throws.
             {
-                object selectedItem = this.grdAutoriMateria.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                DataGridViewRow selRow = this.grdAutoriMateria.Rows[e.RowIndex];
-                DataGridViewCell selCell = selRow.Cells[e.ColumnIndex];
-                string tmpSelectedMateriaId = selCell.Value.ToString();
-                int selectedMateriaId = int.Parse(tmpSelectedMateriaId);
-                this.txtChiaveMateria.Text = selectedMateriaId.ToString();
-                this.idOfSelected_Materia = selectedMateriaId;// save to put in session for page frmDocumentoInsert
-                this.lblStatus.Text = "";
+                DataGridViewRow selRowDirect = this.grdAutoriMateria.Rows[e.RowIndex];
+                DataGridViewCell selCellDirect = selRowDirect.Cells[(int)(winFormsIntf.frmAutoreLoad.tblAutoriOnMateriaColumns.idMateria)];//compulsory.
+                string tmpSelectedMateriaIdDirect = selCellDirect.Value.ToString();
+                int selectedMateriaIdDirect = int.Parse(tmpSelectedMateriaIdDirect);// throws
+                //
+                this.txtChiaveMateria.Text = selectedMateriaIdDirect.ToString();// report the selected DoubleKey portion.
+                this.lblStatus.Text = "";// everything went ok.
                 this.lblStatus.BackColor = System.Drawing.Color.Transparent;
-            }// else not a valid click
-            else
+            }// try
+            catch (System.Exception ex)
             {
-                this.lblStatus.Text = "Only ID-Materia is double-clickable for selection.";
+                this.lblStatus.Text = "trouble: " + ex.Message;
                 this.lblStatus.BackColor = System.Drawing.Color.Red;
             }
         }// grdAutoriMateria_CellDoubleClick

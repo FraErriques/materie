@@ -59,7 +59,7 @@
             this.btnAutoriNominativoNote.TabIndex = 10;
             this.btnAutoriNominativoNote.Text = "Query: Autori by Nominativo e Note";
             this.btnAutoriNominativoNote.UseVisualStyleBackColor = true;
-            this.btnAutoriNominativoNote.Click += new System.EventHandler(this.btnAutoriNominativoNote_Click);
+            this.btnAutoriNominativoNote.Click += new System.EventHandler(this.goProxyQueryAutoriByNominativoNote);
             // 
             // lblNoteAutore
             // 
