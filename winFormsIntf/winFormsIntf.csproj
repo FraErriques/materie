@@ -122,7 +122,6 @@
     <Compile Include="Timbro.Designer.cs">
       <DependentUpon>Timbro.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewNameDecorator.cs" />
     <Compile Include="windowWarehouse.cs" />
     <EmbeddedResource Include="frmAutoreInsert.resx">
       <DependentUpon>frmAutoreInsert.cs</DependentUpon>

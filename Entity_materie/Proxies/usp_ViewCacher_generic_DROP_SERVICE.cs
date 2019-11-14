@@ -7,24 +7,39 @@ using System.Data.SqlClient;
 namespace Entity_materie.Proxies
 {
 
-
+    // NB. manually modified !
     public abstract class usp_ViewCacher_generic_DROP_SERVICE
     {
 
 
+        // NB. manually modified !
+        public static SqlConnection getConnection()
+        {
+            System.Data.SqlClient.SqlConnection res = null;
+            while (null == res)
+            {
+                res =
+                    DbLayer.ConnectionManager.connectWithCustomSingleXpath(
+                    "ProxyGeneratorConnections/strings",// compulsory xpath
+                    "materie"
+                );
+            }
+            return res;
+        }
+
+
+        // NB. manually modified !
         public static int usp_ViewCacher_generic_DROP(
 			string view_signature		//
 		)
 		{
             //
             SqlCommand cmd = new SqlCommand();
-			cmd.Connection =
-				DbLayer.ConnectionManager.connectWithCustomSingleXpath(
-					"ProxyGeneratorConnections/strings",// compulsory xpath
-					"materie"
-				);
-            if( null==cmd.Connection)
+            cmd.Connection = getConnection();// NB. manually modified !
+            if (null == cmd.Connection)
+            {
                 return -1;// no conn
+            }
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "usp_ViewCacher_generic_DROP";
             //

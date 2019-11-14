@@ -42,7 +42,9 @@
     <Compile Include="BusinessEntities\Permesso.cs" />
     <Compile Include="BusinessEntities\Utente.cs" />
     <Compile Include="FormatConverters\CharConversion.cs" />
+    <Compile Include="FormatConverters\ViewNameDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proxies\directSql_createView_.cs" />
     <Compile Include="Proxies\LogViewer_web_materie_SERVICE.cs" />
     <Compile Include="Proxies\usp_autore_INSERT_SERVICE.cs" />
     <Compile Include="Proxies\usp_autore_LOAD_nominativo_SERVICE.cs" />

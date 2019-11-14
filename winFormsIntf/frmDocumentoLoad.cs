@@ -165,7 +165,7 @@ namespace winFormsIntf
             CacherDbView cacherDbView = new CacherDbView(
                 Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance() //  this.Session
                 , queryTail
-                , ViewNameDecorator.ViewNameDecorator_SERVICE("TODO_this.Session.SessionID")
+                , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator( "TODO_this.Session.SessionID")
                 , new CacherDbView.SpecificViewBuilder(// create the delegate which points to the appropriate Proxy().
                     Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_documento_SERVICE.usp_ViewCacher_specific_CREATE_documento
                   )

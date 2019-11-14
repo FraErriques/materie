@@ -56,7 +56,7 @@ namespace winFormsIntf
         {
             if (
                 null == view_signature
-                || "" == view_signature.Trim()
+                || "" == view_signature.Trim()  
                 || char.IsDigit(view_signature[0])
                 )
             {
@@ -66,7 +66,8 @@ namespace winFormsIntf
             //
             try
             {
-                this.doDestruction();// NB. be sure to drop omonimous objects, before a new fill( eg. for a different DataGrid in the same Session).
+                //this.doDestruction();// NB. on web was: be sure to drop omonimous objects, before a new fill
+                // ( eg. for a different DataGrid in the same Session). No such thing on localhost, with view names with millisecs.
                 //
                 this.specificViewBuilder = specificViewBuilder;
                 this.specificViewBuilder(where_tail, this.ViewName);

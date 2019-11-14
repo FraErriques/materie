@@ -8,6 +8,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 
+// utilizzato da tools/Pager.ascx
 
 /// <summary>
 /// This is a WebServer-Cacher.

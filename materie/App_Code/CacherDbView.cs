@@ -66,7 +66,7 @@ public class CacherDbView
         if (
             null == view_signature
             || "" == view_signature.Trim()
-            || char.IsDigit(view_signature[0])
+            || char.IsDigit(view_signature[0]) 
             )
         {
             throw new System.Exception("CacherDbView::Ctor: illegal view name.");
