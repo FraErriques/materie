@@ -29,6 +29,12 @@ create View [20191114#13:23:38#473] as
 select * from materie.dbo.materia_LOOKUP
 GO
 
+select * from [123]
+
+create View [123] as
+select * from materie.dbo.materia_LOOKUP
+GO
+
 select * from materie.dbo.autore 
 
 select MAX(id) from materie.dbo.docMulti

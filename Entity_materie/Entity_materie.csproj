@@ -41,6 +41,7 @@
     <Compile Include="BusinessEntities\docMulti.cs" />
     <Compile Include="BusinessEntities\Permesso.cs" />
     <Compile Include="BusinessEntities\Utente.cs" />
+    <Compile Include="BusinessEntities\ViewDynamics.cs" />
     <Compile Include="FormatConverters\CharConversion.cs" />
     <Compile Include="FormatConverters\ViewNameDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

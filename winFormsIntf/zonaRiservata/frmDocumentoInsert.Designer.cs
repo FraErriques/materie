@@ -127,7 +127,7 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(12, 12);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(857, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(891, 32);
             this.uscTimbro.TabIndex = 0;
             // 
             // frmDocumentoInsert
@@ -135,7 +135,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(138)))), ((int)(((byte)(0)))));
-            this.ClientSize = new System.Drawing.Size(915, 526);
+            this.ClientSize = new System.Drawing.Size(932, 526);
             this.Controls.Add(this.grbDocInsert);
             this.Controls.Add(this.lblEsito);
             this.Controls.Add(this.lblDoubleKey);

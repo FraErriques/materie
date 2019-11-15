@@ -8,18 +8,18 @@ namespace Entity_materie.FormatConverters
 
 
     /// <summary>
-    /// ViewNameDecorator puts square brackets around the this.Session.SessionID string, to
-    /// let it acceptable for the DB, as ViewName, even when it starts with a figure( i.e. [1, 9]).
-    /// The DB raises an exception when a numeric-starting sessionId is passed as ViewName.
+    /// ViewNameDecorator puts square brackets around the viewName parameter.
+    /// The database requires square brachets [] around the viewName.
+    /// But the actual name on the db is without brackets.
     /// </summary>
     public static class ViewNameDecorator_SERVICE
     {
 
 
-        public static string ViewNameDecorator(string SessionID)
+        public static string ViewNameDecorator(string viewName)
         {
             string res = "[";
-            res += SessionID;
+            res += viewName;
             res += "]";
             return res;
         }// end SERVICE.

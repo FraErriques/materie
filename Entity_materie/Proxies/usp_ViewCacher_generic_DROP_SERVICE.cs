@@ -12,7 +12,9 @@ namespace Entity_materie.Proxies
     {
 
 
-        // NB. manually modified !
+        // NB. manually modified ! Since it's called onAppDomainDrop, the dbHandles have already been dropped and the getConnection generally fails
+        // on first call. Due this, the need to loop on the connectWithCustomSingleXpath(). In general it succeeds at the second loop. 
+        // If called just once, the probability of not getting the connection is very high and so the Views remain on the database.
         public static SqlConnection getConnection()
         {
             System.Data.SqlClient.SqlConnection res = null;
@@ -25,7 +27,7 @@ namespace Entity_materie.Proxies
                 );
             }
             return res;
-        }
+        }// getConnection()
 
 
         // NB. manually modified !

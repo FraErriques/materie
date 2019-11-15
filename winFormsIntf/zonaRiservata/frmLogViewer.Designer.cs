@@ -37,7 +37,7 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(19, 14);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(857, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(905, 32);
             this.uscTimbro.TabIndex = 0;
             // 
             // grdLoggingDb
@@ -45,14 +45,14 @@
             this.grdLoggingDb.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdLoggingDb.Location = new System.Drawing.Point(19, 52);
             this.grdLoggingDb.Name = "grdLoggingDb";
-            this.grdLoggingDb.Size = new System.Drawing.Size(857, 494);
+            this.grdLoggingDb.Size = new System.Drawing.Size(905, 494);
             this.grdLoggingDb.TabIndex = 1;
             // 
             // frmLogViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(899, 581);
+            this.ClientSize = new System.Drawing.Size(982, 581);
             this.Controls.Add(this.grdLoggingDb);
             this.Controls.Add(this.uscTimbro);
             this.Name = "frmLogViewer";

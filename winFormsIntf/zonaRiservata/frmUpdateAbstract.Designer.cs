@@ -1,6 +1,6 @@
 ﻿namespace winFormsIntf
 {
-    partial class frmMateriaInsert
+    partial class frmUpdateAbstract
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.timbro1 = new winFormsIntf.Timbro();
+            this.SuspendLayout();
+            // 
+            // timbro1
+            // 
+            this.timbro1.Location = new System.Drawing.Point(17, 27);
+            this.timbro1.Name = "timbro1";
+            this.timbro1.Size = new System.Drawing.Size(903, 32);
+            this.timbro1.TabIndex = 0;
+            // 
+            // frmUpdateAbstract
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "frmMateriaInsert";
+            this.ClientSize = new System.Drawing.Size(942, 352);
+            this.Controls.Add(this.timbro1);
+            this.Name = "frmUpdateAbstract";
+            this.Text = "frmUpdateAbstract";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private Timbro timbro1;
     }
 }

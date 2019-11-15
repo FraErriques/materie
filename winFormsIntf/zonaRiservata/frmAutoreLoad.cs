@@ -87,21 +87,21 @@ namespace winFormsIntf
                 queryTail += "%' ";
             }// else the field queryTail stays as queryTail = "";// init or as set by the previous statement.
             //
-            //---manage the Cacher & Pager here.
+            //---manage the Cacher here.
+            Entity_materie.BusinessEntities.ViewDynamics.accessPoint("Autore");// view theme.
+            string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;// get the View name
             CacherDbView cacherDbView = new CacherDbView(
-                Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance() //  this.Session
-                , queryTail
-                , "ViewNameDecorator_TODO" //ViewNameDecorator.ViewNameDecorator_SERVICE(this.Session.SessionID)// TODO : GUID
-                , new CacherDbView.SpecificViewBuilder(// delegate to the right View Proxy.
+                queryTail
+                ,Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator( designedViewName)
+                ,new CacherDbView.SpecificViewBuilder(// delegate to the right View Proxy.
                     Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore
-                  )
+                )
             );
             if (null != cacherDbView)
             {
                 this.grdAutoriNominativoNote.DataSource = cacherDbView.GetChunk(
-                    Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()
-                    , 1 // TODO verify : but seems that does not paginete; so you will get all the View in a single chunk.
-                    );
+                    1 // NB : does not paginate; so you will get all the View in a single chunk.
+                );
             }
             else
             {

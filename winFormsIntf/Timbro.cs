@@ -164,7 +164,8 @@ namespace winFormsIntf
                     " \r\n frmLogViewer        =" + Program.activeInstances[7].checkCurrentTypeActualConsistency().ToString() +
                     " \r\n frmPrimes           =" + Program.activeInstances[8].checkCurrentTypeActualConsistency().ToString() +
                     " \r\n frmChangePwd        =" + Program.activeInstances[9].checkCurrentTypeActualConsistency().ToString() +
-                    " \r\n frmUpdateAbstract   =" + Program.activeInstances[10].checkCurrentTypeActualConsistency().ToString()
+                    " \r\n frmUpdateAbstract   =" + Program.activeInstances[10].checkCurrentTypeActualConsistency().ToString()+
+                    " \r\n frmPrototype        =" + Program.activeInstances[11].checkCurrentTypeActualConsistency().ToString()
                 ));
             //
             ErrorForm.ShowDialog();// block on Error Form
@@ -365,6 +366,30 @@ namespace winFormsIntf
             }// else is LoggedIn -> CanContinue
             //
         }// Logout
+
+        private void prototypeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Program.activeInstances[11].canOpenAnotherOne())// NB change here #
+            {
+                Program.formList.Add(new frmPrototype() );// NB change here #
+                if (Program.activeInstances[11].openingHowto() == windowWarehouse.openingMode.Modal)// NB change here #
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
+                }
+                else if (Program.activeInstances[11].openingHowto() == windowWarehouse.openingMode.NotModal)// NB change here #
+                {
+                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).Show();// show the last born.
+                }
+                else
+                {
+                    throw new System.Exception(" Invalid opening mode.");
+                }
+            }// if can open another win
+            else
+            {
+                MessageBox.Show(this, " No more instances of type frmPrototype available. Close something of this type.", "Win Cardinality");
+            }// else can open no more win
+        }// prototypeToolStripMenuItem_Click
 
         #endregion menuFormCreation
 

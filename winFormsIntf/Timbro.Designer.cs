@@ -40,6 +40,7 @@
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goToErrorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.prototypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuTimbro.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,10 +57,11 @@
             this.changePwdToolStripMenuItem,
             this.logoutToolStripMenuItem,
             this.closeAppToolStripMenuItem,
-            this.goToErrorToolStripMenuItem});
+            this.goToErrorToolStripMenuItem,
+            this.prototypeToolStripMenuItem});
             this.mnuTimbro.Location = new System.Drawing.Point(0, 0);
             this.mnuTimbro.Name = "mnuTimbro";
-            this.mnuTimbro.Size = new System.Drawing.Size(857, 24);
+            this.mnuTimbro.Size = new System.Drawing.Size(903, 24);
             this.mnuTimbro.TabIndex = 1;
             this.mnuTimbro.Text = "Timbro";
             // 
@@ -140,13 +142,20 @@
             this.goToErrorToolStripMenuItem.Text = "GoToError";
             this.goToErrorToolStripMenuItem.Click += new System.EventHandler(this.goToErrorToolStripMenuItem_Click);
             // 
+            // prototypeToolStripMenuItem
+            // 
+            this.prototypeToolStripMenuItem.Name = "prototypeToolStripMenuItem";
+            this.prototypeToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.prototypeToolStripMenuItem.Text = "Prototype";
+            this.prototypeToolStripMenuItem.Click += new System.EventHandler(this.prototypeToolStripMenuItem_Click);
+            // 
             // Timbro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.mnuTimbro);
             this.Name = "Timbro";
-            this.Size = new System.Drawing.Size(857, 32);
+            this.Size = new System.Drawing.Size(903, 32);
             this.Load += new System.EventHandler(this.Timbro_Load);
             this.mnuTimbro.ResumeLayout(false);
             this.mnuTimbro.PerformLayout();
@@ -169,5 +178,6 @@
         private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeAppToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem goToErrorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem prototypeToolStripMenuItem;
     }
 }

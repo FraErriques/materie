@@ -44,38 +44,38 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\ComboMaterieManager.cs" />
-    <Compile Include="Cacher.cs" />
-    <Compile Include="CacherDbView.cs" />
-    <Compile Include="CheckLogin.cs" />
-    <Compile Include="DownLoader.cs" />
-    <Compile Include="frmAutoreInsert.cs">
+    <Compile Include="App_Code\Cacher.cs" />
+    <Compile Include="App_Code\CacherDbView.cs" />
+    <Compile Include="App_Code\CheckLogin.cs" />
+    <Compile Include="App_Code\DownLoader.cs" />
+    <Compile Include="zonaRiservata\frmAutoreInsert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAutoreInsert.Designer.cs">
+    <Compile Include="zonaRiservata\frmAutoreInsert.Designer.cs">
       <DependentUpon>frmAutoreInsert.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmAutoreLoad.cs">
+    <Compile Include="zonaRiservata\frmAutoreLoad.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAutoreLoad.Designer.cs">
+    <Compile Include="zonaRiservata\frmAutoreLoad.Designer.cs">
       <DependentUpon>frmAutoreLoad.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmChangePwd.cs">
+    <Compile Include="zonaRiservata\frmChangePwd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmChangePwd.Designer.cs">
+    <Compile Include="zonaRiservata\frmChangePwd.Designer.cs">
       <DependentUpon>frmChangePwd.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmDocumentoInsert.cs">
+    <Compile Include="zonaRiservata\frmDocumentoInsert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDocumentoInsert.Designer.cs">
+    <Compile Include="zonaRiservata\frmDocumentoInsert.Designer.cs">
       <DependentUpon>frmDocumentoInsert.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmDocumentoLoad.cs">
+    <Compile Include="zonaRiservata\frmDocumentoLoad.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDocumentoLoad.Designer.cs">
+    <Compile Include="zonaRiservata\frmDocumentoLoad.Designer.cs">
       <DependentUpon>frmDocumentoLoad.cs</DependentUpon>
     </Compile>
     <Compile Include="frmError.cs">
@@ -90,49 +90,58 @@
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmLogViewer.cs">
+    <Compile Include="zonaRiservata\frmLogViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLogViewer.Designer.cs">
+    <Compile Include="zonaRiservata\frmLogViewer.Designer.cs">
       <DependentUpon>frmLogViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmMateriaInsert.cs">
+    <Compile Include="zonaRiservata\frmMateriaInsert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMateriaInsert.Designer.cs">
+    <Compile Include="zonaRiservata\frmMateriaInsert.Designer.cs">
       <DependentUpon>frmMateriaInsert.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmPrimes.cs">
+    <Compile Include="zonaRiservata\frmPrimes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPrimes.Designer.cs">
+    <Compile Include="zonaRiservata\frmPrimes.Designer.cs">
       <DependentUpon>frmPrimes.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmUpdateAbstract.cs">
+    <Compile Include="zonaRiservata\frmUpdateAbstract.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmUpdateAbstract.Designer.cs">
+    <Compile Include="zonaRiservata\frmUpdateAbstract.Designer.cs">
       <DependentUpon>frmUpdateAbstract.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="prototype\frmPrototype.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="prototype\frmPrototype.Designer.cs">
+      <DependentUpon>frmPrototype.cs</DependentUpon>
+    </Compile>
     <Compile Include="Timbro.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Timbro.Designer.cs">
       <DependentUpon>Timbro.cs</DependentUpon>
     </Compile>
-    <Compile Include="windowWarehouse.cs" />
-    <EmbeddedResource Include="frmAutoreInsert.resx">
+    <Compile Include="App_Code\windowWarehouse.cs" />
+    <EmbeddedResource Include="zonaRiservata\frmAutoreInsert.resx">
       <DependentUpon>frmAutoreInsert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAutoreLoad.resx">
+    <EmbeddedResource Include="zonaRiservata\frmAutoreLoad.resx">
       <DependentUpon>frmAutoreLoad.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDocumentoInsert.resx">
+    <EmbeddedResource Include="zonaRiservata\frmChangePwd.resx">
+      <DependentUpon>frmChangePwd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="zonaRiservata\frmDocumentoInsert.resx">
       <DependentUpon>frmDocumentoInsert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDocumentoLoad.resx">
+    <EmbeddedResource Include="zonaRiservata\frmDocumentoLoad.resx">
       <DependentUpon>frmDocumentoLoad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmError.resx">
@@ -141,8 +150,17 @@
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLogViewer.resx">
+    <EmbeddedResource Include="zonaRiservata\frmLogViewer.resx">
       <DependentUpon>frmLogViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="zonaRiservata\frmMateriaInsert.resx">
+      <DependentUpon>frmMateriaInsert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="zonaRiservata\frmPrimes.resx">
+      <DependentUpon>frmPrimes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="zonaRiservata\frmUpdateAbstract.resx">
+      <DependentUpon>frmUpdateAbstract.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -154,6 +172,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="prototype\frmPrototype.resx">
+      <DependentUpon>frmPrototype.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Timbro.resx">
       <DependentUpon>Timbro.cs</DependentUpon>
     </EmbeddedResource>
@@ -182,10 +204,7 @@
       <Name>Process_materie</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="prototype\" />
-    <Folder Include="zonaRiservata\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

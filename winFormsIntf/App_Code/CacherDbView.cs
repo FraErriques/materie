@@ -8,11 +8,12 @@ namespace winFormsIntf
 
 
     /// <summary>
-    /// NB.  put first chunk in Session, on ViewCreation!! -------------NB.----------
+    ///
     /// 
     /// - CacherDbView creates a dbView onConstruction 
     /// - queries on it, in a row-range
-    /// - deletes it onDestruction
+    /// - does NOT delete it onDestruction, since this activity is onAppDomainDrop. 
+    ///   In charge for it, the class Entity_materie.BusinessEntities.ViewDynamics
     /// </summary>
     public class CacherDbView
     {
@@ -33,7 +34,7 @@ namespace winFormsIntf
         //)
         public delegate int SpecificViewBuilder(
                 string where_tail,      // the specific join logic.
-                string view_signature	// the View_name, generally the SessionId.
+                string view_signature	// the View_name, generally the class Entity_materie.BusinessEntities.ViewDynamics
             );
         private SpecificViewBuilder specificViewBuilder = null;// cached, for re-building on View-refresh.
 
@@ -47,17 +48,15 @@ namespace winFormsIntf
         /// NB. crucial for the Ctor() success is the call to this.GetChunk(firstPage)
         /// </summary>
         public CacherDbView(
-            //---first the Cacher needs:
-            System.Collections.Hashtable Session // System.Web.SessionState.HttpSessionState Session
-            , string where_tail
-            , string view_signature
-            , SpecificViewBuilder specificViewBuilder
+            string where_tail
+            ,string view_signature
+            ,SpecificViewBuilder specificViewBuilder
           )
         {
             if (
                 null == view_signature
-                || "" == view_signature.Trim()  
-                || char.IsDigit(view_signature[0])
+                || "" == view_signature.Trim() 
+                // not needed || char.IsDigit(view_signature[0])
                 )
             {
                 throw new System.Exception("CacherDbView::Ctor: illegal view name.");
@@ -119,15 +118,13 @@ namespace winFormsIntf
         /// <summary>
         /// query a chunk. NB: only PageIndexManager() can call it.
         /// </summary>
-        /// <param name="Session">needed to set Session["CacherDbView"]</param>
         /// <param name="requiredPage">
         /// viene tradotto in due valori della chiave primaria della View,
         /// fra i quali viene fatto un "between", per estrarre la pagina.
         /// </param>
         /// <returns> the chunk-datatable </returns>
         public System.Data.DataTable GetChunk(
-            System.Collections.Hashtable Session // System.Web.SessionState.HttpSessionState Session 
-            ,int requiredPage
+            int requiredPage
           )
         {
             int RowNumber_min = this.RowsInChunk * (requiredPage - 1) + 1;
@@ -145,14 +142,12 @@ namespace winFormsIntf
                 // && 0 < tblCurrentPageData.Rows.Count TODO test
               )
             {
-                //Session["CacherDbView"] = this;// TODO test
+                //ok. do nothing.
             }
-            else
+            else // emergency
             {
-                Session["CacherDbView"] = null; // TODO View dropped.
                 LoggingToolsContainerNamespace.LoggingToolsContainer.LogBothSinks_DbFs(
                     "CacherDbView::GetChunk( "
-                    //+ " Session.SessionID = " + Session.SessionID
                     + " requiredPage = " + requiredPage.ToString()
                     + "   failed to retrieve the required page. TODO debug. "
                     , 0);

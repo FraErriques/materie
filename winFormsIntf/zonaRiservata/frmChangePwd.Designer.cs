@@ -1,6 +1,6 @@
 ﻿namespace winFormsIntf
 {
-    partial class frmUpdateAbstract
+    partial class frmChangePwd
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.timbro1 = new winFormsIntf.Timbro();
+            this.SuspendLayout();
+            // 
+            // timbro1
+            // 
+            this.timbro1.Location = new System.Drawing.Point(28, 19);
+            this.timbro1.Name = "timbro1";
+            this.timbro1.Size = new System.Drawing.Size(916, 32);
+            this.timbro1.TabIndex = 0;
+            // 
+            // frmChangePwd
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "frmUpdateAbstract";
+            this.ClientSize = new System.Drawing.Size(956, 263);
+            this.Controls.Add(this.timbro1);
+            this.Name = "frmChangePwd";
+            this.Text = "frmChangePwd";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private Timbro timbro1;
     }
 }

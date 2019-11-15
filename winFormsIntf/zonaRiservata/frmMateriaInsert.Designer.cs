@@ -1,6 +1,6 @@
 ﻿namespace winFormsIntf
 {
-    partial class frmPrimes
+    partial class frmMateriaInsert
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.timbro1 = new winFormsIntf.Timbro();
+            this.SuspendLayout();
+            // 
+            // timbro1
+            // 
+            this.timbro1.Location = new System.Drawing.Point(30, 29);
+            this.timbro1.Name = "timbro1";
+            this.timbro1.Size = new System.Drawing.Size(903, 32);
+            this.timbro1.TabIndex = 0;
+            // 
+            // frmMateriaInsert
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "frmPrimes";
+            this.ClientSize = new System.Drawing.Size(989, 518);
+            this.Controls.Add(this.timbro1);
+            this.Name = "frmMateriaInsert";
+            this.Text = "frmMateriaInsert";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private Timbro timbro1;
     }
 }

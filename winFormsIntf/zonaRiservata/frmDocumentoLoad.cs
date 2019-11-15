@@ -161,20 +161,21 @@ namespace winFormsIntf
             }// end nome-Autore
             //
             //----here ends the query-tail building code and starts the query execution.
-            //
+            //---manage the Cacher here.
+            Entity_materie.BusinessEntities.ViewDynamics.accessPoint("Documento");// view theme.
+            string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;// get the View name
             CacherDbView cacherDbView = new CacherDbView(
-                Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance() //  this.Session
-                , queryTail
-                , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator( "TODO_this.Session.SessionID")
-                , new CacherDbView.SpecificViewBuilder(// create the delegate which points to the appropriate Proxy().
+                queryTail
+                ,Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(designedViewName)
+                ,new CacherDbView.SpecificViewBuilder(// create the delegate which points to the appropriate Proxy().
                     Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_documento_SERVICE.usp_ViewCacher_specific_CREATE_documento
-                  )
+                )
             );
             if (null != cacherDbView)
             {
                 this.grdDocumento.DataSource = cacherDbView.GetChunk(
-                    Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance() //  this.Session
-                    , 1);// require first page, which contains the whole data, since there's no paging on localhost.
+                    1 // NB : does not paginate; so you will get all the View in a single chunk.
+                );
             }
             else
             {

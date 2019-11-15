@@ -90,7 +90,7 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(12, 2);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(829, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(889, 32);
             this.uscTimbro.TabIndex = 3;
             // 
             // frmLogin
@@ -98,7 +98,7 @@
             this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(877, 230);
+            this.ClientSize = new System.Drawing.Size(934, 230);
             this.Controls.Add(this.pnlLoginControls);
             this.Controls.Add(this.uscTimbro);
             this.MaximumSize = new System.Drawing.Size(950, 300);

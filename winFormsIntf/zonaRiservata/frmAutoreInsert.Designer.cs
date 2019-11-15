@@ -33,8 +33,8 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listView1 = new System.Windows.Forms.ListView();
             this.docFullPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.timbro1 = new winFormsIntf.Timbro();
             this.colDue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.timbro1 = new winFormsIntf.Timbro();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -88,7 +88,7 @@
             // 
             this.timbro1.Location = new System.Drawing.Point(12, 12);
             this.timbro1.Name = "timbro1";
-            this.timbro1.Size = new System.Drawing.Size(857, 32);
+            this.timbro1.Size = new System.Drawing.Size(899, 32);
             this.timbro1.TabIndex = 0;
             // 
             // frmAutoreInsert

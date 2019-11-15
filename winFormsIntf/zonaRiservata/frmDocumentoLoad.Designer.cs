@@ -55,7 +55,7 @@
             this.grdDocumento.Location = new System.Drawing.Point(31, 264);
             this.grdDocumento.Name = "grdDocumento";
             this.grdDocumento.ReadOnly = true;
-            this.grdDocumento.Size = new System.Drawing.Size(827, 350);
+            this.grdDocumento.Size = new System.Drawing.Size(889, 350);
             this.grdDocumento.TabIndex = 0;
             this.grdDocumento.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDocumento_CellDoubleClick);
             // 
@@ -128,7 +128,7 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(31, 12);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(827, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(889, 32);
             this.uscTimbro.TabIndex = 1;
             // 
             // lblNominativoAutore
@@ -190,7 +190,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(897, 666);
+            this.ClientSize = new System.Drawing.Size(978, 666);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lblPageLogic);
             this.Controls.Add(this.lblMaterie);

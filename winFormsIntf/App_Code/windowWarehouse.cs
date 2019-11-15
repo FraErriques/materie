@@ -23,6 +23,7 @@ namespace winFormsIntf
             ,frmPrimes = 9
             ,frmChangePwd = 10
             ,frmUpdateAbstract = 11
+            ,frmPrototype = 12
         }// enum
         private CurrentWindowType currentWindowType;
         private int thisTypeInstanceAccumulator;
@@ -100,6 +101,11 @@ namespace winFormsIntf
             {
                 this.thisTypeInstanceLimit = 1;
                 this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmPrototype )
+            {
+                this.thisTypeInstanceLimit = 99;// it's a raw deal with prototypes :-)
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
             }// no cases remaining.
             else
             {
