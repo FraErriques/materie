@@ -28,21 +28,20 @@ namespace winFormsIntf
             //
             //--###############################--test area: put here some test, when the need is to execute them, instead of the actual Main().
 
-
-            for (int c = 0; c < 40; c++)
-            {
-                Entity_materie.BusinessEntities.ViewDynamics.accessPoint("autore");
-                string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;
-                winFormsIntf.CacherDbView cacherInstance = new winFormsIntf.CacherDbView(
-                     "" // where tail
-                    , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(designedViewName)
-                    , new CacherDbView.SpecificViewBuilder(
-                        Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore
-                        )
-                     );
-                //
-                System.Threading.Thread.Sleep(9000);
-            }
+            //for (int c = 0; c < 40; c++)
+            //{
+            //    Entity_materie.BusinessEntities.ViewDynamics.accessPoint("autore");
+            //    string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;
+            //    winFormsIntf.CacherDbView cacherInstance = new winFormsIntf.CacherDbView(
+            //         "" // where tail
+            //        , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(designedViewName)
+            //        , new CacherDbView.SpecificViewBuilder(
+            //            Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore
+            //            )
+            //         );
+            //    //
+            //    System.Threading.Thread.Sleep(9000);
+            //}
             //--#############################################################----------------------- END test area
             // the following statement both makes "new" of the HashTable "Sessione" and sets the "lasciapassare" to null.
             Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"] = null;// not yet loggedIn
