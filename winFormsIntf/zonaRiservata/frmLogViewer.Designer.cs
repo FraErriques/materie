@@ -57,7 +57,7 @@
             this.Controls.Add(this.uscTimbro);
             this.Name = "frmLogViewer";
             this.Text = "frmLogViewer";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAutoreLoad_FormClosed);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmLogViewer_FormClosed );
             ((System.ComponentModel.ISupportInitialize)(this.grdLoggingDb)).EndInit();
             this.ResumeLayout(false);
 

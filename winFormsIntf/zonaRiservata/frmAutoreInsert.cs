@@ -69,6 +69,15 @@ namespace winFormsIntf
         }// Ctor()
 
 
+        /// <summary>
+        /// this method calls the Timbro's function which Disposes the frm that is on closure and removes it from the frm ArrayList.
+        /// </summary>
+        private void frmAutoreInsert_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.uscTimbro.removeSpecifiedWin(this);
+        }
+
+
 
 
 

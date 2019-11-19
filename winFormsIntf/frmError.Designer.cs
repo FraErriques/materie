@@ -68,6 +68,7 @@
             this.Controls.Add(this.txtStatus);
             this.Name = "frmError";
             this.Text = "frmError";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmError_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

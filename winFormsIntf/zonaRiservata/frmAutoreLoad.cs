@@ -194,27 +194,8 @@ namespace winFormsIntf
         /// user has to build and validate a DoubleKey to access there.
         /// </summary>
         private void goToDocumentoInsert()
-        {
-            if (Program.activeInstances[4].canOpenAnotherOne())// NB change here #
-            {
-                Program.formList.Add(new frmDocumentoInsert() );// NB change here #
-                if (Program.activeInstances[4].openingHowto() == windowWarehouse.openingMode.Modal)// NB change here #
-                {
-                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).ShowDialog();// show the last born.
-                }
-                else if (Program.activeInstances[4].openingHowto() == windowWarehouse.openingMode.NotModal)// NB change here #
-                {
-                    ((System.Windows.Forms.Form)(Program.formList[Program.formList.Count - 1])).Show();// show the last born.
-                }
-                else
-                {
-                    throw new System.Exception(" Invalid opening mode.");
-                }
-            }// if can open another win
-            else
-            {
-                MessageBox.Show(this, " No more instances of type frmDocumentoInsert available. Close something of this type.", "Win Cardinality");
-            }// else can open no more win
+        {// NB. access to frmDocumentoInsert is only from frmAutoreLoad
+            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmDocumentoInsert);
         }// goToDocumentoInsert()
 
 

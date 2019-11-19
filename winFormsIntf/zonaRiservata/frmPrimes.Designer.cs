@@ -28,30 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.timbro1 = new winFormsIntf.Timbro();
+            this.uscTimbro = new winFormsIntf.Timbro();
             this.SuspendLayout();
             // 
-            // timbro1
+            // uscTimbro
             // 
-            this.timbro1.Location = new System.Drawing.Point(37, 17);
-            this.timbro1.Name = "timbro1";
-            this.timbro1.Size = new System.Drawing.Size(903, 32);
-            this.timbro1.TabIndex = 0;
+            this.uscTimbro.Location = new System.Drawing.Point(37, 17);
+            this.uscTimbro.Name = "uscTimbro";
+            this.uscTimbro.Size = new System.Drawing.Size(903, 32);
+            this.uscTimbro.TabIndex = 0;
             // 
             // frmPrimes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1058, 481);
-            this.Controls.Add(this.timbro1);
+            this.Controls.Add(this.uscTimbro);
             this.Name = "frmPrimes";
             this.Text = "frmPrimes";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPrimes_FormClosed);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Timbro timbro1;
+        private Timbro uscTimbro;
     }
 }

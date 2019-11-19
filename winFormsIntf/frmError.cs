@@ -12,6 +12,7 @@ namespace winFormsIntf
 
     public partial class frmError : Form
     {
+        private string toBePublished;
 
         public frmError()
         {
@@ -40,10 +41,11 @@ namespace winFormsIntf
         }// Ctor
 
 
-
-
-
-
+        public void setContentToBePublished(string ContentToBePublished)
+        {
+            this.toBePublished = ContentToBePublished;
+            this.txtStatus.Text += this.toBePublished;
+        }// setContentToBePublished
 
 
         private void btnGoLogin_Click( object sender, EventArgs e )
@@ -63,9 +65,28 @@ namespace winFormsIntf
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Focus();
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtUser.Focus();
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().ShowDialog();// re-show the original Login; exec suspended here.
-            this.Close();// the frmError
-            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Show();// nonModal firstBlood
+//this.Close();// the frmError
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Show();// cannot do ShowDialog since the System does not accept 
+            // a second call to ShowDialog, without a closure. So nonModal firstBlood.
         }// btnGoLogin_Click
+
+
+        /// <summary>
+        /// this method calls the Timbro's function which Disposes the frm that is on closure and removes it from the frm ArrayList.
+        /// </summary>
+        private void frmError_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.uscTimbro.removeSpecifiedWin(this);
+        }// frmError_FormClosed
+
+
+        //// in this form it's done in btnGoLogin_Click
+        //private void frmError_FormClosed(object sender, FormClosedEventArgs e)
+        //{
+        //    //    this.uscTimbro.emptyWinList();// kill all windows.
+        //}
+        // the following line has been eliminated from frmErrorDesigner.cs
+        //this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmError_FormClosed);
 
 
     }//class

@@ -118,6 +118,10 @@ namespace Common.Template_Singleton
             }// end critical section
         }// end unsubscribe_all_
 
+        public static int getReferenceCardinality()
+        {
+            return TSingleton<T>.reference_counter;
+        }// getReferenceCardinality
 
     }// end  class TSingleton<T>
 

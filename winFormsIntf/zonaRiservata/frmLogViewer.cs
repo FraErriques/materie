@@ -29,10 +29,13 @@ namespace winFormsIntf
         }// Ctor()
 
 
-        private void frmAutoreLoad_FormClosed(object sender, FormClosedEventArgs e)
+        /// <summary>
+        /// this method calls the Timbro's function which Disposes the frm that is on closure and removes it from the frm ArrayList.
+        /// </summary>
+        private void frmLogViewer_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.uscTimbro.removeSpecifiedWin(this);
-        }// frmAutoreLoad_FormClosed
+        }// frmLogViewer_FormClosed
 
 
     }// class

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using System.Windows.Forms;
+using System.Reflection;
 
 
 namespace winFormsIntf
@@ -11,34 +11,10 @@ namespace winFormsIntf
 
     static class Program
     {
-        //public static System.Collections.Hashtable Session = null; both substituted by appropriate Singletons
-        //public static System.Windows.Forms.Form firstBlood = null;
-        public static System.Collections.ArrayList formList = new System.Collections.ArrayList();
-        public static windowWarehouse[] activeInstances = null;
-        //
+        public static System.Collections.ArrayList activeInstancesFormList = new System.Collections.ArrayList();
+        public static System.Collections.Hashtable frmTypeManagement = new System.Collections.Hashtable();
+
         
-
-            //public enum CurrentWindowType
-            //{
-            //    // invalid
-            //    Invalid = 0
-            //    ///	effective opening modes
-            //    ,frmAutoreLoad = 1
-            //    ,frmDocumentoLoad = 2
-            //    ,frmMateriaInsert = 3
-            //    ,frmAutoreInsert = 4
-            //    ,frmDocumentoInsert = 5
-            //    ,frmError = 6
-            //    ,frmLogin = 7
-            //    ,frmLogViewer = 8
-            //    ,frmPrimes = 9
-            //    ,frmChangePwd = 10
-            //    ,frmUpdateAbstract = 11
-            //    ,frmPrototype = 12
-            //}// enum
-
-
-
         /// <summary>
         /// The main entry point for the application. This class' static data will be used mostly as Singletons.
         /// NB. due to winForms characteristics, the entry point(i.e. Main) has to be "STAThread". Complex bugs
@@ -51,12 +27,13 @@ namespace winFormsIntf
             Application.SetCompatibleTextRenderingDefault(false);
             //
             //--###############################--test area: put here some test, when the need is to execute them, instead of the actual Main().
-            for (int c = 0; c < 200; c++)
+
+
+            for (int c = 0; c < 40; c++)
             {
                 Entity_materie.BusinessEntities.ViewDynamics.accessPoint("autore");
                 string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;
-                CacherDbView cacherInstance = new CacherDbView(
-                    // no more  Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()
+                winFormsIntf.CacherDbView cacherInstance = new winFormsIntf.CacherDbView(
                      "" // where tail
                     , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(designedViewName)
                     , new CacherDbView.SpecificViewBuilder(
@@ -69,21 +46,10 @@ namespace winFormsIntf
             //--#############################################################----------------------- END test area
             // the following statement both makes "new" of the HashTable "Sessione" and sets the "lasciapassare" to null.
             Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"] = null;// not yet loggedIn
-            //
-            activeInstances = new windowWarehouse[12];// NB. update here ! TODO pass to a binary tree with ["names"] as indexes.
-            activeInstances[0] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmAutoreLoad);// frmAutoreLoad
-            activeInstances[1] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmDocumentoLoad);// frmDocumentoLoad
-            activeInstances[2] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmMateriaInsert);// frmMateriaInsert
-            activeInstances[3] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmAutoreInsert);// frmAutoreInsert
-            activeInstances[4] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmDocumentoInsert);// frmDocumentoInsert
-            activeInstances[5] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmError);// frmError
-            activeInstances[6] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmLogin);// frmLogin
-            activeInstances[7] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmLogViewer);// frmLogViewer
-            activeInstances[8] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmPrimes);// frmPrimes
-            activeInstances[9] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmChangePwd);// frmChangePwd
-            activeInstances[10] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmUpdateAbstract);// UpdateAbstract
-            activeInstances[11] = new windowWarehouse(windowWarehouse.CurrentWindowType.frmPrototype );//  Proto
-
+            winFormsIntf.windowWarehouse.fillUpTypeWareHouse();// the fixed-size tree of known form types. A window manager (i.e. windowWarehouse)
+            // for each of the types. Such window manager accesses the instances 
+            // NB. this Array of Types has fixed length at compile time. It cannot be mixed up with the array of instances,
+            // whose length varies at runtime, due to the user behaviour.
             // try and locate the frmLogin.
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Left = 0;
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Top = 0;
@@ -100,6 +66,24 @@ namespace winFormsIntf
 
 # region cantina
 
+//bool res =
+//((winFormsIntf.windowWarehouse)
+//    (bogo_activeInstances[winFormsIntf.windowWarehouse.CurrentWindowType.frmAutoreLoad.ToString()])).canOpenAnotherOne();
+
+////Type t = typeof(String);
+//Type t = typeof( winFormsIntf.frmError);
+////System.Reflection.CallingConventions.
+//ConstructorInfo[] frmErrorGetCtors = t.GetConstructor( ( BindingFlags.CreateInstance);
+//    // ( "Substring",     new Type[] { typeof(int), typeof(int) });
+
+//Object result =
+//    frmErrorGetCtors[0].Invoke(new Object[] {"test from Reflection."} );
+////.Invoke( ("Hello, World!", new Object[] { 7, 5 });
+//System.Console.WriteLine( ((winFormsIntf.frmError)(result)).ShowDialog() );
+//Console.WriteLine("{0} returned \"{1}\".", frmErrorGetCtors[0]);
+/* This code example produces the following output:
+    System.String Substring(Int32, Int32) returned "World".
+*/
 
 //public static class Foo
 //{

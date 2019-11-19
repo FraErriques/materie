@@ -34,7 +34,7 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.docFullPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.timbro1 = new winFormsIntf.Timbro();
+            this.uscTimbro = new winFormsIntf.Timbro();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -84,12 +84,12 @@
             this.docFullPath.Text = "Doc full path";
             this.docFullPath.Width = 957;
             // 
-            // timbro1
+            // uscTimbro
             // 
-            this.timbro1.Location = new System.Drawing.Point(12, 12);
-            this.timbro1.Name = "timbro1";
-            this.timbro1.Size = new System.Drawing.Size(899, 32);
-            this.timbro1.TabIndex = 0;
+            this.uscTimbro.Location = new System.Drawing.Point(12, 12);
+            this.uscTimbro.Name = "uscTimbro";
+            this.uscTimbro.Size = new System.Drawing.Size(899, 32);
+            this.uscTimbro.TabIndex = 0;
             // 
             // frmAutoreInsert
             // 
@@ -100,16 +100,17 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.domainUpDown1);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.timbro1);
+            this.Controls.Add(this.uscTimbro);
             this.Name = "frmAutoreInsert";
             this.Text = "frmAutoreInsert";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAutoreInsert_FormClosed);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Timbro timbro1;
+        private Timbro uscTimbro;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DomainUpDown domainUpDown1;
         private System.Windows.Forms.ListBox listBox1;
