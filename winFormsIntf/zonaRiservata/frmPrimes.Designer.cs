@@ -29,24 +29,36 @@
         private void InitializeComponent()
         {
             this.uscTimbro = new winFormsIntf.Timbro();
+            this.grdPrimes = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.grdPrimes)).BeginInit();
             this.SuspendLayout();
             // 
             // uscTimbro
             // 
             this.uscTimbro.Location = new System.Drawing.Point(37, 17);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(903, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(903, 52);
             this.uscTimbro.TabIndex = 0;
+            // 
+            // grdPrimes
+            // 
+            this.grdPrimes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdPrimes.Location = new System.Drawing.Point(37, 75);
+            this.grdPrimes.Name = "grdPrimes";
+            this.grdPrimes.Size = new System.Drawing.Size(915, 402);
+            this.grdPrimes.TabIndex = 1;
             // 
             // frmPrimes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1058, 481);
+            this.ClientSize = new System.Drawing.Size(980, 489);
+            this.Controls.Add(this.grdPrimes);
             this.Controls.Add(this.uscTimbro);
             this.Name = "frmPrimes";
             this.Text = "frmPrimes";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPrimes_FormClosed);
+            ((System.ComponentModel.ISupportInitialize)(this.grdPrimes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -54,5 +66,6 @@
         #endregion
 
         private Timbro uscTimbro;
+        private System.Windows.Forms.DataGridView grdPrimes;
     }
 }

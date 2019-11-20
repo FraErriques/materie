@@ -35,7 +35,7 @@
             // 
             // txtStatus
             // 
-            this.txtStatus.Location = new System.Drawing.Point(12, 50);
+            this.txtStatus.Location = new System.Drawing.Point(12, 69);
             this.txtStatus.Multiline = true;
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.Size = new System.Drawing.Size(438, 267);
@@ -43,7 +43,7 @@
             // 
             // btnGoLogin
             // 
-            this.btnGoLogin.Location = new System.Drawing.Point(484, 50);
+            this.btnGoLogin.Location = new System.Drawing.Point(484, 69);
             this.btnGoLogin.Name = "btnGoLogin";
             this.btnGoLogin.Size = new System.Drawing.Size(217, 23);
             this.btnGoLogin.TabIndex = 1;
@@ -55,14 +55,14 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(12, 12);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(893, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(893, 51);
             this.uscTimbro.TabIndex = 2;
             // 
             // frmError
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(980, 329);
+            this.ClientSize = new System.Drawing.Size(980, 352);
             this.Controls.Add(this.uscTimbro);
             this.Controls.Add(this.btnGoLogin);
             this.Controls.Add(this.txtStatus);

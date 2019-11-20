@@ -53,7 +53,7 @@
             // 
             // btnAutoriNominativoNote
             // 
-            this.btnAutoriNominativoNote.Location = new System.Drawing.Point(29, 550);
+            this.btnAutoriNominativoNote.Location = new System.Drawing.Point(12, 576);
             this.btnAutoriNominativoNote.Name = "btnAutoriNominativoNote";
             this.btnAutoriNominativoNote.Size = new System.Drawing.Size(217, 23);
             this.btnAutoriNominativoNote.TabIndex = 10;
@@ -64,7 +64,7 @@
             // lblNoteAutore
             // 
             this.lblNoteAutore.AutoSize = true;
-            this.lblNoteAutore.Location = new System.Drawing.Point(26, 279);
+            this.lblNoteAutore.Location = new System.Drawing.Point(9, 305);
             this.lblNoteAutore.Name = "lblNoteAutore";
             this.lblNoteAutore.Size = new System.Drawing.Size(247, 13);
             this.lblNoteAutore.TabIndex = 9;
@@ -73,7 +73,7 @@
             // lblNominativoAutore
             // 
             this.lblNominativoAutore.AutoSize = true;
-            this.lblNominativoAutore.Location = new System.Drawing.Point(26, 50);
+            this.lblNominativoAutore.Location = new System.Drawing.Point(9, 76);
             this.lblNominativoAutore.Name = "lblNominativoAutore";
             this.lblNominativoAutore.Size = new System.Drawing.Size(257, 13);
             this.lblNominativoAutore.TabIndex = 8;
@@ -81,7 +81,7 @@
             // 
             // txtNoteAutore
             // 
-            this.txtNoteAutore.Location = new System.Drawing.Point(29, 295);
+            this.txtNoteAutore.Location = new System.Drawing.Point(12, 321);
             this.txtNoteAutore.Multiline = true;
             this.txtNoteAutore.Name = "txtNoteAutore";
             this.txtNoteAutore.Size = new System.Drawing.Size(365, 231);
@@ -89,7 +89,7 @@
             // 
             // txtNominativoAutore
             // 
-            this.txtNominativoAutore.Location = new System.Drawing.Point(29, 78);
+            this.txtNominativoAutore.Location = new System.Drawing.Point(12, 104);
             this.txtNominativoAutore.Multiline = true;
             this.txtNominativoAutore.Name = "txtNominativoAutore";
             this.txtNominativoAutore.Size = new System.Drawing.Size(365, 188);
@@ -98,7 +98,7 @@
             // grdAutoriNominativoNote
             // 
             this.grdAutoriNominativoNote.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdAutoriNominativoNote.Location = new System.Drawing.Point(29, 590);
+            this.grdAutoriNominativoNote.Location = new System.Drawing.Point(12, 616);
             this.grdAutoriNominativoNote.Name = "grdAutoriNominativoNote";
             this.grdAutoriNominativoNote.ReadOnly = true;
             this.grdAutoriNominativoNote.Size = new System.Drawing.Size(909, 163);
@@ -141,7 +141,7 @@
             // ddlMaterie
             // 
             this.ddlMaterie.FormattingEnabled = true;
-            this.ddlMaterie.Location = new System.Drawing.Point(430, 78);
+            this.ddlMaterie.Location = new System.Drawing.Point(413, 104);
             this.ddlMaterie.Name = "ddlMaterie";
             this.ddlMaterie.Size = new System.Drawing.Size(318, 21);
             this.ddlMaterie.TabIndex = 16;
@@ -149,7 +149,7 @@
             // 
             // btnPublishMateriaFromCombo
             // 
-            this.btnPublishMateriaFromCombo.Location = new System.Drawing.Point(765, 76);
+            this.btnPublishMateriaFromCombo.Location = new System.Drawing.Point(748, 102);
             this.btnPublishMateriaFromCombo.Name = "btnPublishMateriaFromCombo";
             this.btnPublishMateriaFromCombo.Size = new System.Drawing.Size(173, 23);
             this.btnPublishMateriaFromCombo.TabIndex = 17;
@@ -159,7 +159,7 @@
             // 
             // btnAutoriByArticoliPubblicati
             // 
-            this.btnAutoriByArticoliPubblicati.Location = new System.Drawing.Point(430, 105);
+            this.btnAutoriByArticoliPubblicati.Location = new System.Drawing.Point(413, 131);
             this.btnAutoriByArticoliPubblicati.Name = "btnAutoriByArticoliPubblicati";
             this.btnAutoriByArticoliPubblicati.Size = new System.Drawing.Size(349, 23);
             this.btnAutoriByArticoliPubblicati.TabIndex = 18;
@@ -171,7 +171,7 @@
             // 
             this.grdAutoriMateria.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdAutoriMateria.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.grdAutoriMateria.Location = new System.Drawing.Point(430, 143);
+            this.grdAutoriMateria.Location = new System.Drawing.Point(413, 169);
             this.grdAutoriMateria.Name = "grdAutoriMateria";
             this.grdAutoriMateria.ReadOnly = true;
             this.grdAutoriMateria.Size = new System.Drawing.Size(508, 194);
@@ -204,7 +204,7 @@
             this.grpDoubleKey.Controls.Add(this.lblChiaveMateria);
             this.grpDoubleKey.Controls.Add(this.lblStatus);
             this.grpDoubleKey.Controls.Add(this.btnSubmitDoubleKey);
-            this.grpDoubleKey.Location = new System.Drawing.Point(29, 762);
+            this.grpDoubleKey.Location = new System.Drawing.Point(12, 788);
             this.grpDoubleKey.Name = "grpDoubleKey";
             this.grpDoubleKey.Size = new System.Drawing.Size(357, 166);
             this.grpDoubleKey.TabIndex = 22;
@@ -215,7 +215,7 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(12, 12);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(926, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(926, 47);
             this.uscTimbro.TabIndex = 0;
             // 
             // frmAutoreLoad
@@ -223,7 +223,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.ClientSize = new System.Drawing.Size(1004, 940);
+            this.ClientSize = new System.Drawing.Size(1004, 968);
             this.Controls.Add(this.grpDoubleKey);
             this.Controls.Add(this.grdAutoriMateria);
             this.Controls.Add(this.btnAutoriByArticoliPubblicati);

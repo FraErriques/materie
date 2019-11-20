@@ -52,7 +52,7 @@
             this.grdDocumento.AllowUserToAddRows = false;
             this.grdDocumento.AllowUserToDeleteRows = false;
             this.grdDocumento.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdDocumento.Location = new System.Drawing.Point(31, 264);
+            this.grdDocumento.Location = new System.Drawing.Point(12, 298);
             this.grdDocumento.Name = "grdDocumento";
             this.grdDocumento.ReadOnly = true;
             this.grdDocumento.Size = new System.Drawing.Size(889, 350);
@@ -62,7 +62,7 @@
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(28, 631);
+            this.lblStatus.Location = new System.Drawing.Point(9, 665);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(30, 13);
             this.lblStatus.TabIndex = 2;
@@ -70,7 +70,7 @@
             // 
             // txtNominativoAutore
             // 
-            this.txtNominativoAutore.Location = new System.Drawing.Point(31, 67);
+            this.txtNominativoAutore.Location = new System.Drawing.Point(12, 101);
             this.txtNominativoAutore.Multiline = true;
             this.txtNominativoAutore.Name = "txtNominativoAutore";
             this.txtNominativoAutore.Size = new System.Drawing.Size(309, 73);
@@ -78,7 +78,7 @@
             // 
             // txtNoteAutore
             // 
-            this.txtNoteAutore.Location = new System.Drawing.Point(31, 164);
+            this.txtNoteAutore.Location = new System.Drawing.Point(12, 198);
             this.txtNoteAutore.Multiline = true;
             this.txtNoteAutore.Name = "txtNoteAutore";
             this.txtNoteAutore.Size = new System.Drawing.Size(309, 77);
@@ -86,7 +86,7 @@
             // 
             // txtDocumentoAbstract
             // 
-            this.txtDocumentoAbstract.Location = new System.Drawing.Point(389, 67);
+            this.txtDocumentoAbstract.Location = new System.Drawing.Point(370, 101);
             this.txtDocumentoAbstract.Multiline = true;
             this.txtDocumentoAbstract.Name = "txtDocumentoAbstract";
             this.txtDocumentoAbstract.Size = new System.Drawing.Size(190, 73);
@@ -95,7 +95,7 @@
             // ddlMaterie
             // 
             this.ddlMaterie.FormattingEnabled = true;
-            this.ddlMaterie.Location = new System.Drawing.Point(389, 164);
+            this.ddlMaterie.Location = new System.Drawing.Point(370, 198);
             this.ddlMaterie.Name = "ddlMaterie";
             this.ddlMaterie.Size = new System.Drawing.Size(190, 21);
             this.ddlMaterie.TabIndex = 6;
@@ -103,7 +103,7 @@
             // 
             // btnQueryDoc
             // 
-            this.btnQueryDoc.Location = new System.Drawing.Point(389, 202);
+            this.btnQueryDoc.Location = new System.Drawing.Point(370, 236);
             this.btnQueryDoc.Name = "btnQueryDoc";
             this.btnQueryDoc.Size = new System.Drawing.Size(394, 23);
             this.btnQueryDoc.TabIndex = 7;
@@ -118,7 +118,7 @@
             // lblExtractedDoc
             // 
             this.lblExtractedDoc.AutoSize = true;
-            this.lblExtractedDoc.Location = new System.Drawing.Point(395, 238);
+            this.lblExtractedDoc.Location = new System.Drawing.Point(376, 272);
             this.lblExtractedDoc.Name = "lblExtractedDoc";
             this.lblExtractedDoc.Size = new System.Drawing.Size(136, 13);
             this.lblExtractedDoc.TabIndex = 8;
@@ -128,13 +128,13 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(31, 12);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(889, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(889, 49);
             this.uscTimbro.TabIndex = 1;
             // 
             // lblNominativoAutore
             // 
             this.lblNominativoAutore.AutoSize = true;
-            this.lblNominativoAutore.Location = new System.Drawing.Point(46, 48);
+            this.lblNominativoAutore.Location = new System.Drawing.Point(27, 82);
             this.lblNominativoAutore.Name = "lblNominativoAutore";
             this.lblNominativoAutore.Size = new System.Drawing.Size(216, 13);
             this.lblNominativoAutore.TabIndex = 9;
@@ -143,7 +143,7 @@
             // lblNoteAutore
             // 
             this.lblNoteAutore.AutoSize = true;
-            this.lblNoteAutore.Location = new System.Drawing.Point(46, 148);
+            this.lblNoteAutore.Location = new System.Drawing.Point(27, 182);
             this.lblNoteAutore.Name = "lblNoteAutore";
             this.lblNoteAutore.Size = new System.Drawing.Size(194, 13);
             this.lblNoteAutore.TabIndex = 10;
@@ -152,7 +152,7 @@
             // lblDocumentoAbstract
             // 
             this.lblDocumentoAbstract.AutoSize = true;
-            this.lblDocumentoAbstract.Location = new System.Drawing.Point(386, 48);
+            this.lblDocumentoAbstract.Location = new System.Drawing.Point(367, 82);
             this.lblDocumentoAbstract.Name = "lblDocumentoAbstract";
             this.lblDocumentoAbstract.Size = new System.Drawing.Size(229, 13);
             this.lblDocumentoAbstract.TabIndex = 11;
@@ -161,7 +161,7 @@
             // lblMaterie
             // 
             this.lblMaterie.AutoSize = true;
-            this.lblMaterie.Location = new System.Drawing.Point(386, 148);
+            this.lblMaterie.Location = new System.Drawing.Point(367, 182);
             this.lblMaterie.Name = "lblMaterie";
             this.lblMaterie.Size = new System.Drawing.Size(228, 13);
             this.lblMaterie.TabIndex = 12;
@@ -170,7 +170,7 @@
             // lblPageLogic
             // 
             this.lblPageLogic.AutoSize = true;
-            this.lblPageLogic.Location = new System.Drawing.Point(654, 127);
+            this.lblPageLogic.Location = new System.Drawing.Point(635, 161);
             this.lblPageLogic.Name = "lblPageLogic";
             this.lblPageLogic.Size = new System.Drawing.Size(0, 13);
             this.lblPageLogic.TabIndex = 13;
@@ -178,7 +178,7 @@
             // textBox1
             // 
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(642, 50);
+            this.textBox1.Location = new System.Drawing.Point(623, 84);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(141, 95);
@@ -190,7 +190,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(978, 666);
+            this.ClientSize = new System.Drawing.Size(978, 696);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lblPageLogic);
             this.Controls.Add(this.lblMaterie);

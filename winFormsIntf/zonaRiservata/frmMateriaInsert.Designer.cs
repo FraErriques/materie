@@ -35,7 +35,7 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(30, 29);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(903, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(903, 51);
             this.uscTimbro.TabIndex = 0;
             // 
             // frmMateriaInsert

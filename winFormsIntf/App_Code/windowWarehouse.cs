@@ -11,9 +11,6 @@ namespace winFormsIntf
     /// </summary>
     public class windowWarehouse
     {
-
-        #region Data
-
         public enum CurrentWindowType
         {
             // invalid
@@ -46,8 +43,80 @@ namespace winFormsIntf
             Modal = 2
         }// enum
         openingMode curWinOpeningMode;
+        
+        
+        // Ctor()
+        public windowWarehouse(CurrentWindowType currentType)
+        {
+            this.thisTypeInstanceAccumulator = 0;
+            this.currentWindowType = currentType;
+            //
+            if( this.currentWindowType == CurrentWindowType.frmAutoreLoad )
+            {
+                this.thisTypeInstanceLimit = 2;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if ( this.currentWindowType == CurrentWindowType.frmDocumentoLoad )
+            {
+                this.thisTypeInstanceLimit = 5;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if ( this.currentWindowType == CurrentWindowType.frmMateriaInsert )
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if ( this.currentWindowType == CurrentWindowType.frmAutoreInsert )
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if ( this.currentWindowType == CurrentWindowType.frmDocumentoInsert )
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if ( this.currentWindowType == CurrentWindowType.frmError )
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if ( this.currentWindowType == CurrentWindowType.frmLogin )
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if ( this.currentWindowType == CurrentWindowType.frmLogViewer )
+            {
+                this.thisTypeInstanceLimit = 2;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if ( this.currentWindowType == CurrentWindowType.frmPrimes )
+            {
+                this.thisTypeInstanceLimit = 2;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if ( this.currentWindowType == CurrentWindowType.frmChangePwd )
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if ( this.currentWindowType == CurrentWindowType.frmUpdateAbstract )
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmPrototype )
+            {
+                this.thisTypeInstanceLimit = 99;// it's a raw deal with prototypes :-)
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }// no cases remaining.
+            else
+            {
+                throw new System.Exception(" A not-allowed type was passed to this factory.");
+            }// else-if
+        }// Ctor()
 
-        # endregion Data
 
         # region Services_public_static
 
@@ -123,11 +192,8 @@ namespace winFormsIntf
                 res = new winFormsIntf.frmDocumentoInsert();
             }
             else if (curWinType == winFormsIntf.windowWarehouse.CurrentWindowType.frmError)
-            {
+            {// NB. who assigns Session["error"] ?
                 res = new winFormsIntf.frmError();
-                ((winFormsIntf.frmError)res).setContentToBePublished(
-                    (string)(Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["errore"])
-                );
             }
             else if (curWinType == winFormsIntf.windowWarehouse.CurrentWindowType.frmLogin)
             {
@@ -168,21 +234,21 @@ namespace winFormsIntf
         {
             bool res = false; // init to invalid.
             // Debug when needed : System.Console.WriteLine(curWinType.ToString());
-            if (
+            if(
                 ((winFormsIntf.windowWarehouse)
-                (Program.frmTypeManagement[curWinType.ToString()])).canOpenAnotherOne())
+                (Program.frmTypeManagement[curWinType.ToString()])).canOpenAnotherOne() )
             {//pettine selezione Tipi;Type selection comb.
                 Program.activeInstancesFormList.Add(winFormsIntf.windowWarehouse.frmSelector(curWinType));//pettine selezione Tipi;
                 //pettine selezione Tipi;Type selection comb.
                 winFormsIntf.windowWarehouse.openingMode currentFrmOpeningMode =
                 ((winFormsIntf.windowWarehouse)(Program.frmTypeManagement[curWinType.ToString()])). // NB. the method call is next line.
                         openingHowto();// get if the opening mode is Modal or not.
-                if (currentFrmOpeningMode == windowWarehouse.openingMode.Modal)
+                if( currentFrmOpeningMode == windowWarehouse.openingMode.Modal)
                 {// show the last born.
                     ((System.Windows.Forms.Form)(Program.activeInstancesFormList[Program.activeInstancesFormList.Count - 1])).ShowDialog();
                     res = true;
                 }
-                else if (currentFrmOpeningMode == windowWarehouse.openingMode.NotModal)// NB change here #
+                else if( currentFrmOpeningMode == windowWarehouse.openingMode.NotModal)// NB change here #
                 {// show the last born.
                     ((System.Windows.Forms.Form)(Program.activeInstancesFormList[Program.activeInstancesFormList.Count - 1])).Show();
                     res = true;
@@ -198,7 +264,7 @@ namespace winFormsIntf
                 //System.Windows.Forms.MessageBox
                 System.Windows.Forms.MessageBox.Show(
                     ((System.Windows.Forms.Form)(Program.activeInstancesFormList[Program.activeInstancesFormList.Count - 1]))
-                    , " No more instances of type "
+                    ," No more instances of type "
                     + curWinType.ToString()
                     + " available. Close something of this type."
                     , "Win Cardinality"
@@ -209,80 +275,6 @@ namespace winFormsIntf
         }// subscribeNewFrm
 
         # endregion Services_public_static
-
-        # region Instance_methods
-        
-        // Ctor()
-        public windowWarehouse(CurrentWindowType currentType)
-        {
-            this.thisTypeInstanceAccumulator = 0;
-            this.currentWindowType = currentType;
-            //
-            if( this.currentWindowType == CurrentWindowType.frmAutoreLoad )
-            {
-                this.thisTypeInstanceLimit = 2;
-                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmDocumentoLoad )
-            {
-                this.thisTypeInstanceLimit = 5;
-                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmMateriaInsert )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmAutoreInsert )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmDocumentoInsert )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmError )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmLogin )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmLogViewer )
-            {
-                this.thisTypeInstanceLimit = 2;
-                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmPrimes )
-            {
-                this.thisTypeInstanceLimit = 2;
-                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmChangePwd )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmUpdateAbstract )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if (this.currentWindowType == CurrentWindowType.frmPrototype )
-            {
-                this.thisTypeInstanceLimit = 99;// it's a raw deal with prototypes :-)
-                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
-            }// no cases remaining.
-            else
-            {
-                throw new System.Exception(" A not-allowed type was passed to this factory.");
-            }// else-if
-        }// Ctor()
 
 
         public int checkCurrentTypeActualConsistency()
@@ -321,9 +313,6 @@ namespace winFormsIntf
         {
             return this.curWinOpeningMode;
         }// openingHowto
-
-
-        # endregion Instance_methods
 
     }// class windowWarehouse
 

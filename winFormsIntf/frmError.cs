@@ -18,6 +18,31 @@ namespace winFormsIntf
         {
             InitializeComponent();
             //
+            try
+            {
+                object messageForFrmError = Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["errore"];
+                if (null != messageForFrmError)
+                {
+                    this.toBePublished = (string)messageForFrmError;
+                }
+                else
+                {
+                    this.toBePublished = "";
+                }
+            }
+            catch (System.Exception ex)
+            {
+                this.toBePublished = "Exception in frmError::Ctor " + ex.Message;
+                if (null != ex.InnerException)
+                {
+                    this.toBePublished += "  Inner= " + ex.InnerException.Message;
+                }
+            }
+            finally
+            {
+                this.txtStatus.Text = this.toBePublished;
+            }
+            //
             this.txtStatus.Enabled = false;
             this.uscTimbro.Enabled = false;
         }// Ctor
@@ -41,11 +66,12 @@ namespace winFormsIntf
         }// Ctor
 
 
-        public void setContentToBePublished(string ContentToBePublished)
-        {
-            this.toBePublished = ContentToBePublished;
-            this.txtStatus.Text += this.toBePublished;
-        }// setContentToBePublished
+        //public void setContentToBePublished(string ContentToBePublished)
+        //{
+        //    this.toBePublished = ContentToBePublished;
+        //    this.txtStatus.Text += this.toBePublished;
+        //    //this.Paint; ? how ??
+        //}// setContentToBePublished
 
 
         private void btnGoLogin_Click( object sender, EventArgs e )
@@ -65,7 +91,7 @@ namespace winFormsIntf
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Focus();
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtUser.Focus();
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().ShowDialog();// re-show the original Login; exec suspended here.
-//this.Close();// the frmError
+            this.Close();// the frmError has to close, when proposing a new Login.
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Show();// cannot do ShowDialog since the System does not accept 
             // a second call to ShowDialog, without a closure. So nonModal firstBlood.
         }// btnGoLogin_Click
@@ -80,13 +106,9 @@ namespace winFormsIntf
         }// frmError_FormClosed
 
 
+        // NB. don't delete this memo.
+        ///    this.uscTimbro.emptyWinList();// kill all windows.
         //// in this form it's done in btnGoLogin_Click
-        //private void frmError_FormClosed(object sender, FormClosedEventArgs e)
-        //{
-        //    //    this.uscTimbro.emptyWinList();// kill all windows.
-        //}
-        // the following line has been eliminated from frmErrorDesigner.cs
-        //this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmError_FormClosed);
 
 
     }//class

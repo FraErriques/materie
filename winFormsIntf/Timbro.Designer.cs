@@ -41,6 +41,7 @@
             this.closeAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goToErrorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.prototypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblLoggedUser = new System.Windows.Forms.Label();
             this.mnuTimbro.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -149,13 +150,23 @@
             this.prototypeToolStripMenuItem.Text = "Prototype";
             this.prototypeToolStripMenuItem.Click += new System.EventHandler(this.prototypeToolStripMenuItem_Click);
             // 
+            // lblLoggedUser
+            // 
+            this.lblLoggedUser.AutoSize = true;
+            this.lblLoggedUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLoggedUser.Location = new System.Drawing.Point(272, 24);
+            this.lblLoggedUser.Name = "lblLoggedUser";
+            this.lblLoggedUser.Size = new System.Drawing.Size(0, 16);
+            this.lblLoggedUser.TabIndex = 2;
+            // 
             // Timbro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblLoggedUser);
             this.Controls.Add(this.mnuTimbro);
             this.Name = "Timbro";
-            this.Size = new System.Drawing.Size(903, 32);
+            this.Size = new System.Drawing.Size(903, 47);
             this.Load += new System.EventHandler(this.Timbro_Load);
             this.mnuTimbro.ResumeLayout(false);
             this.mnuTimbro.PerformLayout();
@@ -179,5 +190,6 @@
         private System.Windows.Forms.ToolStripMenuItem closeAppToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem goToErrorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem prototypeToolStripMenuItem;
+        private System.Windows.Forms.Label lblLoggedUser;
     }
 }

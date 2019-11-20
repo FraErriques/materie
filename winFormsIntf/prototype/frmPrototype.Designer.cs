@@ -40,14 +40,14 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(31, 65);
+            this.comboBox1.Location = new System.Drawing.Point(22, 177);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 1;
             // 
             // domainUpDown1
             // 
-            this.domainUpDown1.Location = new System.Drawing.Point(26, 133);
+            this.domainUpDown1.Location = new System.Drawing.Point(17, 245);
             this.domainUpDown1.Name = "domainUpDown1";
             this.domainUpDown1.Size = new System.Drawing.Size(126, 20);
             this.domainUpDown1.TabIndex = 2;
@@ -57,7 +57,7 @@
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.Location = new System.Drawing.Point(246, 65);
+            this.listBox1.Location = new System.Drawing.Point(237, 177);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
             this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
@@ -70,7 +70,7 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.docFullPath,
             this.colDue});
-            this.listView1.Location = new System.Drawing.Point(466, 65);
+            this.listView1.Location = new System.Drawing.Point(457, 177);
             this.listView1.Name = "listView1";
             this.listView1.ShowGroups = false;
             this.listView1.ShowItemToolTips = true;
@@ -88,14 +88,14 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(12, 12);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(911, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(911, 60);
             this.uscTimbro.TabIndex = 0;
             // 
             // frmPrototype
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(981, 493);
+            this.ClientSize = new System.Drawing.Size(981, 581);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.domainUpDown1);

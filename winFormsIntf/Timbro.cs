@@ -27,6 +27,8 @@ namespace winFormsIntf
             // laterThanCtor(); not yet ready, the this.Parent field.
             // NB. if (typeof( winFormsIntf.Timbro) == this.GetType() )// NB. typeof() is an operator on types while GetType is a method on instances.
             //{} as in the previous example, their return value is compatible since in both cases it's of type "System.Type".
+            this.lblLoggedUser.BackColor = System.Drawing.Color.GreenYellow;
+            this.lblLoggedUser.Text = " L'utente collegato e' : _________________";
         }// Ctor
 
 
@@ -94,6 +96,8 @@ namespace winFormsIntf
             }
             //
             // Note:...else if (this.Parent.GetType() == typeof(winFormsIntf.frmDocumentoLoad))
+            this.lblLoggedUser.Text = " L'utente collegato e' : _________________" +
+                patente.username + " which is " + patente.livelloAccesso;
         }// laterThanCtor
 
 
@@ -141,7 +145,7 @@ namespace winFormsIntf
         /// </summary>
         private void goToErrorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string toBePublished = "Debbugging Session: " +
+            string toBePublished = "Form cardinality per Type : \r\n----------------\r\n" +
                 " \r\n frmAutoreLoad       =" + ((winFormsIntf.windowWarehouse)
                 (Program.frmTypeManagement[winFormsIntf.windowWarehouse.CurrentWindowType.frmAutoreLoad.ToString()])).
                     checkCurrentTypeActualConsistency().ToString() +
@@ -297,7 +301,7 @@ namespace winFormsIntf
             {
                 winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("user is not Logged In"
                     , new System.Exception("Go to Login Form and access, in order to proceed.")));
-                ErrorForm.ShowDialog();// block on Error Form
+                ErrorForm.Show();// don't block on Error Form, otherwise the user cannot goTo Login.
             }// else is LoggedIn -> CanContinue
             //
         }// Logout

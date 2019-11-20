@@ -35,7 +35,7 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(28, 19);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(916, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(916, 52);
             this.uscTimbro.TabIndex = 0;
             // 
             // frmChangePwd

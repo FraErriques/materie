@@ -28,20 +28,12 @@ namespace winFormsIntf
             //
             //--###############################--test area: put here some test, when the need is to execute them, instead of the actual Main().
 
-            //for (int c = 0; c < 40; c++)
-            //{
-            //    Entity_materie.BusinessEntities.ViewDynamics.accessPoint("autore");
-            //    string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;
-            //    winFormsIntf.CacherDbView cacherInstance = new winFormsIntf.CacherDbView(
-            //         "" // where tail
-            //        , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(designedViewName)
-            //        , new CacherDbView.SpecificViewBuilder(
-            //            Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore
-            //            )
-            //         );
-            //    //
-            //    System.Threading.Thread.Sleep(9000);
-            //}
+            //// NO richiede fillUpTypeWareHouse() bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmError);
+            //Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["errore"] = "from Test-Area.";
+            //(new winFormsIntf.frmError()).ShowDialog();
+            ////(new winFormsIntf.frmError(new System.Exception("from Test-Area."))).ShowDialog();
+
+
             //--#############################################################----------------------- END test area
             // the following statement both makes "new" of the HashTable "Sessione" and sets the "lasciapassare" to null.
             Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"] = null;// not yet loggedIn
@@ -64,6 +56,22 @@ namespace winFormsIntf
 
 
 # region cantina
+
+////---test create & drop 40 Views --------------------------
+//for (int c = 0; c < 40; c++)
+//{
+//    Entity_materie.BusinessEntities.ViewDynamics.accessPoint("autore");
+//    string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;
+//    winFormsIntf.CacherDbView cacherInstance = new winFormsIntf.CacherDbView(
+//         "" // where tail
+//        , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(designedViewName)
+//        , new CacherDbView.SpecificViewBuilder(
+//            Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore
+//            )
+//         );
+//    //
+//    System.Threading.Thread.Sleep(9000);
+//}
 
 //bool res =
 //((winFormsIntf.windowWarehouse)

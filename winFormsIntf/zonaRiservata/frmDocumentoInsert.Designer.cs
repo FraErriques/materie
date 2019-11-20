@@ -85,7 +85,7 @@
             // lblDoubleKey
             // 
             this.lblDoubleKey.AutoSize = true;
-            this.lblDoubleKey.Location = new System.Drawing.Point(300, 56);
+            this.lblDoubleKey.Location = new System.Drawing.Point(300, 87);
             this.lblDoubleKey.Name = "lblDoubleKey";
             this.lblDoubleKey.Size = new System.Drawing.Size(110, 13);
             this.lblDoubleKey.TabIndex = 4;
@@ -94,7 +94,7 @@
             // lblEsito
             // 
             this.lblEsito.AutoSize = true;
-            this.lblEsito.Location = new System.Drawing.Point(15, 485);
+            this.lblEsito.Location = new System.Drawing.Point(15, 516);
             this.lblEsito.Name = "lblEsito";
             this.lblEsito.Size = new System.Drawing.Size(29, 13);
             this.lblEsito.TabIndex = 5;
@@ -106,7 +106,7 @@
             this.grbDocInsert.Controls.Add(this.txtDocumentoAbstract);
             this.grbDocInsert.Controls.Add(this.lvwDocSelection);
             this.grbDocInsert.Controls.Add(this.btnSearchFileSystem);
-            this.grbDocInsert.Location = new System.Drawing.Point(12, 84);
+            this.grbDocInsert.Location = new System.Drawing.Point(12, 115);
             this.grbDocInsert.Name = "grbDocInsert";
             this.grbDocInsert.Size = new System.Drawing.Size(808, 380);
             this.grbDocInsert.TabIndex = 6;
@@ -127,7 +127,7 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(12, 12);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(891, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(891, 52);
             this.uscTimbro.TabIndex = 0;
             // 
             // frmDocumentoInsert
@@ -135,7 +135,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(138)))), ((int)(((byte)(0)))));
-            this.ClientSize = new System.Drawing.Size(932, 526);
+            this.ClientSize = new System.Drawing.Size(932, 547);
             this.Controls.Add(this.grbDocInsert);
             this.Controls.Add(this.lblEsito);
             this.Controls.Add(this.lblDoubleKey);

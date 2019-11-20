@@ -28,94 +28,110 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.domainUpDown1 = new System.Windows.Forms.DomainUpDown();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.docFullPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colDue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.uscTimbro = new winFormsIntf.Timbro();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.lblNominativoAutore = new System.Windows.Forms.Label();
+            this.lblNoteAutore = new System.Windows.Forms.Label();
+            this.btnCommit = new System.Windows.Forms.Button();
+            this.lblStato = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(31, 65);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 1;
-            // 
-            // domainUpDown1
-            // 
-            this.domainUpDown1.Location = new System.Drawing.Point(26, 133);
-            this.domainUpDown1.Name = "domainUpDown1";
-            this.domainUpDown1.Size = new System.Drawing.Size(126, 20);
-            this.domainUpDown1.TabIndex = 2;
-            this.domainUpDown1.Text = "domainUpDown1";
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.Location = new System.Drawing.Point(246, 65);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBox1.Size = new System.Drawing.Size(120, 368);
-            this.listBox1.TabIndex = 3;
-            // 
-            // listView1
-            // 
-            this.listView1.CheckBoxes = true;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.docFullPath,
-            this.colDue});
-            this.listView1.Location = new System.Drawing.Point(466, 65);
-            this.listView1.Name = "listView1";
-            this.listView1.ShowGroups = false;
-            this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(299, 368);
-            this.listView1.TabIndex = 4;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // docFullPath
-            // 
-            this.docFullPath.Text = "Doc full path";
-            this.docFullPath.Width = 957;
             // 
             // uscTimbro
             // 
             this.uscTimbro.Location = new System.Drawing.Point(12, 12);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(899, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(899, 73);
             this.uscTimbro.TabIndex = 0;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(13, 125);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(422, 283);
+            this.textBox1.TabIndex = 1;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(469, 125);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(443, 283);
+            this.textBox2.TabIndex = 2;
+            // 
+            // lblNominativoAutore
+            // 
+            this.lblNominativoAutore.AutoSize = true;
+            this.lblNominativoAutore.BackColor = System.Drawing.Color.GreenYellow;
+            this.lblNominativoAutore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNominativoAutore.Location = new System.Drawing.Point(10, 88);
+            this.lblNominativoAutore.Name = "lblNominativoAutore";
+            this.lblNominativoAutore.Size = new System.Drawing.Size(118, 16);
+            this.lblNominativoAutore.TabIndex = 3;
+            this.lblNominativoAutore.Text = "Nominativo Autore";
+            // 
+            // lblNoteAutore
+            // 
+            this.lblNoteAutore.AutoSize = true;
+            this.lblNoteAutore.BackColor = System.Drawing.Color.GreenYellow;
+            this.lblNoteAutore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNoteAutore.Location = new System.Drawing.Point(466, 88);
+            this.lblNoteAutore.Name = "lblNoteAutore";
+            this.lblNoteAutore.Size = new System.Drawing.Size(79, 16);
+            this.lblNoteAutore.TabIndex = 4;
+            this.lblNoteAutore.Text = "Note Autore";
+            // 
+            // btnCommit
+            // 
+            this.btnCommit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCommit.Location = new System.Drawing.Point(721, 414);
+            this.btnCommit.Name = "btnCommit";
+            this.btnCommit.Size = new System.Drawing.Size(190, 34);
+            this.btnCommit.TabIndex = 5;
+            this.btnCommit.Text = "Commit Inserimento Autore";
+            this.btnCommit.UseVisualStyleBackColor = true;
+            this.btnCommit.Click += new System.EventHandler(this.btnCommit_Click);
+            // 
+            // lblStato
+            // 
+            this.lblStato.AutoSize = true;
+            this.lblStato.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStato.Location = new System.Drawing.Point(9, 428);
+            this.lblStato.Name = "lblStato";
+            this.lblStato.Size = new System.Drawing.Size(39, 16);
+            this.lblStato.TabIndex = 6;
+            this.lblStato.Text = "Stato";
             // 
             // frmAutoreInsert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Green;
             this.ClientSize = new System.Drawing.Size(981, 493);
-            this.Controls.Add(this.listView1);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.domainUpDown1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.lblStato);
+            this.Controls.Add(this.btnCommit);
+            this.Controls.Add(this.lblNoteAutore);
+            this.Controls.Add(this.lblNominativoAutore);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.uscTimbro);
             this.Name = "frmAutoreInsert";
             this.Text = "frmAutoreInsert";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAutoreInsert_FormClosed);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private Timbro uscTimbro;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.DomainUpDown domainUpDown1;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader docFullPath;
-        private System.Windows.Forms.ColumnHeader colDue;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label lblNominativoAutore;
+        private System.Windows.Forms.Label lblNoteAutore;
+        private System.Windows.Forms.Button btnCommit;
+        private System.Windows.Forms.Label lblStato;
     }
 }

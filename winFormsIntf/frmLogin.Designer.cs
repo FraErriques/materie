@@ -81,7 +81,7 @@
             this.pnlLoginControls.Controls.Add(this.lblStatus);
             this.pnlLoginControls.Controls.Add(this.txtPwd);
             this.pnlLoginControls.Controls.Add(this.btnLogin);
-            this.pnlLoginControls.Location = new System.Drawing.Point(608, 40);
+            this.pnlLoginControls.Location = new System.Drawing.Point(668, 52);
             this.pnlLoginControls.Name = "pnlLoginControls";
             this.pnlLoginControls.Size = new System.Drawing.Size(233, 166);
             this.pnlLoginControls.TabIndex = 5;
@@ -90,7 +90,7 @@
             // 
             this.uscTimbro.Location = new System.Drawing.Point(12, 2);
             this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(889, 32);
+            this.uscTimbro.Size = new System.Drawing.Size(889, 44);
             this.uscTimbro.TabIndex = 3;
             // 
             // frmLogin
