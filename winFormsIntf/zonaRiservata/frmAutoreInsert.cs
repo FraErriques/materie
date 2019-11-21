@@ -15,14 +15,10 @@ namespace winFormsIntf
     {
         public frmAutoreInsert()
         {// check login status
-            bool isLoggedIn =
-                winFormsIntf.CheckLogin.isLoggedIn(
-                    (Entity_materie.BusinessEntities.Permesso.Patente)
-                    Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"]);
-            if (!isLoggedIn)
+            if (!winFormsIntf.CheckLogin.isLoggedIn())
             {
-                winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("user is not Logged In"
-                    , new System.Exception("Go to Login Form and access, in order to proceed.")));
+                winFormsIntf.frmError ErrorForm = new frmError(
+                    new System.Exception("User is not Logged In : go to Login Form and access, in order to proceed."));
                 ErrorForm.ShowDialog();// block on Error Form
             }// else is LoggedIn -> CanContinue
             //
@@ -37,7 +33,7 @@ namespace winFormsIntf
         /// </summary>
         private void frmAutoreInsert_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.uscTimbro.removeSpecifiedWin(this);
+            winFormsIntf.windowWarehouse.removeSpecifiedWin(this);
         }
 
         private void btnCommit_Click(object sender, EventArgs e)

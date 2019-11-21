@@ -28,7 +28,6 @@ namespace winFormsIntf
             // NB. if (typeof( winFormsIntf.Timbro) == this.GetType() )// NB. typeof() is an operator on types while GetType is a method on instances.
             //{} as in the previous example, their return value is compatible since in both cases it's of type "System.Type".
             this.lblLoggedUser.BackColor = System.Drawing.Color.GreenYellow;
-            this.lblLoggedUser.Text = " L'utente collegato e' : _________________";
         }// Ctor
 
 
@@ -38,66 +37,63 @@ namespace winFormsIntf
         }// Timbro_Load
 
 
+        public void setLbl(string theMessage)
+        {
+            this.lblLoggedUser.Text = theMessage;
+        }
+
 
         public void laterThanCtor()
         {
             Entity_materie.BusinessEntities.Permesso.Patente patente = null;
             // the following check is necessary to avoid crashing when the "Timbro" is Loaded on a not yet mature Parent( eg. in the Timbro's Ctor).
-            if (null!=this.Parent )
+            if (null != this.Parent)
             {
-                try
-                {
-                    patente =
-                        (Entity_materie.BusinessEntities.Permesso.Patente)
-                    Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"];
-                    if (null == patente)
+                patente = winFormsIntf.CheckLogin.getPatente();
+                //
+                if (null != patente)
+                {// classification taken literally, from the db.
+                    ///     1	Administrator
+                    ///     2	writer
+                    ///     3	reader
+                    switch (patente.livelloAccesso)
                     {
-                        return; // NB. do not throw here. It will return on page with an enabled menu.
-                    }
-                }
-                catch (System.Exception ex)
+                        case "Administrator":
+                            {
+                                this.writeMenusEnabled(true);
+                                this.adminMenusEnabled(true);
+                                break;
+                            }
+                        case "writer":
+                            {
+                                this.writeMenusEnabled(true);
+                                this.adminMenusEnabled(false);
+                                break;
+                            }
+                        case "reader":
+                            {
+                                this.writeMenusEnabled(false);
+                                this.adminMenusEnabled(false);
+                                break;
+                            }
+                    }// switch
+                    this.setLbl(" Login corretta per l'utente " + patente.username + " which is " + patente.livelloAccesso);
+                    // NB enable menu, to let the recognized guy operate.
+                    this.mnuTimbro.Enabled = true;
+                    this.mnuTimbro.Visible = true;
+                }// null != patente
+                else// patente still==null.
                 {
-                    frmError unloggedUserError = new frmError(new System.Exception("current useer is NOT logged in : ALLARM ! "
-                        + ex.Message));
+                    this.setLbl(" Utente non collegato.");
+                    // NB enable menu, to let the recognized guy operate.
+                    this.mnuTimbro.Enabled = false;
+                    this.mnuTimbro.Visible = true;
                 }
             }// if (null!=this.Parent )
-            // else LoginForm cannot have a user already logged in.
-            if (null != patente)
-            {// classification taken literally, from the db.
-                ///     1	Administrator
-                ///     2	writer
-                ///     3	reader
-                switch (patente.livelloAccesso)
-                {
-                    case "Administrator":
-                        {
-                            this.writeMenusEnabled(true);
-                            this.adminMenusEnabled(true);
-                            break;
-                        }
-                    case "writer":
-                        {
-                            this.writeMenusEnabled(true);
-                            this.adminMenusEnabled(false);
-                            break;
-                        }
-                    case "reader":
-                        {
-                            this.writeMenusEnabled(false);
-                            this.adminMenusEnabled(false);
-                            break;
-                        }
-                }// switch
-            }// null != patente
-            else// means that the Timbro.cs is ready to set up the menu
-            {
-                this.mnuTimbro.Enabled = true;
-                this.mnuTimbro.Visible = true;
+            else
+            {// else LoginForm cannot have a user already logged in.
+                return;// on page. It's too early to perform the permission check.
             }
-            //
-            // Note:...else if (this.Parent.GetType() == typeof(winFormsIntf.frmDocumentoLoad))
-            this.lblLoggedUser.Text = " L'utente collegato e' : _________________" +
-                patente.username + " which is " + patente.livelloAccesso;
         }// laterThanCtor
 
 
@@ -130,8 +126,8 @@ namespace winFormsIntf
 
 
         private void closeAppToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.emptyWinList();// kill all windows.
+        {// it's an action; not a Form.
+            winFormsIntf.windowWarehouse.emptyWinList();// kill all windows.
             // the following means Program.firstBlood.Dispose() i.e. kill the frmLogin, which was the first one.
             // if frmLogin was in the "ArrayList activeInstancesFormList" a Logout would close the App.
             // the chance to LogOff and re-Login is guaranteed by keeping the frmLogin instance in a Singleton,
@@ -187,84 +183,6 @@ namespace winFormsIntf
         }// goToErrorToolStripMenuItem_Click
 
 
-
-        #endregion adminMenus
-
-
-        #region kernelModules
-
-        public void emptyWinList()
-        {
-            for (int c = Program.activeInstancesFormList.Count; c > 0; c--)
-            {
-                if (null != Program.activeInstancesFormList[c - 1])
-                {
-                    ((System.Windows.Forms.Form)(Program.activeInstancesFormList[c - 1])).Dispose();
-                    Program.activeInstancesFormList[c - 1] = null;//gc
-                    Program.activeInstancesFormList.RemoveAt(c - 1);// remove the empty slot
-                }// skip null entries; pass to a fixed-size_Array end reset the index.
-            }
-        }// emptyWinList()
-
-
-        public void removeSpecifiedWin(System.Windows.Forms.Form parFrm)
-        {
-            for (int c = Program.activeInstancesFormList.Count; c > 0; c--)
-            {
-                if (null != Program.activeInstancesFormList[c - 1])
-                {
-                    if (parFrm == (System.Windows.Forms.Form)(Program.activeInstancesFormList[c - 1]))
-                    {
-                        ((System.Windows.Forms.Form)(Program.activeInstancesFormList[c - 1])).Dispose();
-                        Program.activeInstancesFormList[c - 1] = null;//gc
-                        Program.activeInstancesFormList.RemoveAt(c - 1);// remove the empty slot
-                    }
-                }// skip null entries; pass to a fixed-size_Array end reset the index.
-            }
-        }// removeSpecifiedWin()
-
-
-        #endregion kernelModules
-
-
-
-
-        #region menuFormCreation
-
-        private void autoreLoadToolStripMenuItem_Click( object sender, EventArgs e )
-        {
-            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmAutoreLoad);
-        }// autoreLoadToolStripMenuItem_Click
-
-
-        private void documentoLToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmDocumentoLoad);
-        }// documentoLToolStripMenuItem_Click
-
-
-        private void mappaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // TODObool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmMap
-        }
-
-        private void insertMateriaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmMateriaInsert);
-        }
-
-
-        /// <summary>
-        /// NB. look at "NB change here #" markers, when adapting the code.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void insertAutoreToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm( windowWarehouse.CurrentWindowType.frmAutoreInsert);
-        }// insertAutoreToolStripMenuItem_Click
-
-
         /// <summary>
         /// LogViewer : an interface for the LoggingDatabase used from Singleton_LogSinkDb_
         /// </summary>
@@ -276,11 +194,48 @@ namespace winFormsIntf
         }// logToolStripMenuItem_Click
 
 
-
         private void primesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmPrimes);
         }
+
+
+        private void prototypeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmPrototype);
+        }// prototypeToolStripMenuItem_Click
+
+
+        #endregion adminMenus
+
+        
+        #region menuFormCreation
+
+        private void autoreLoadToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmAutoreLoad);
+        }// autoreLoadToolStripMenuItem_Click
+
+        private void documentoLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmDocumentoLoad);
+        }// documentoLToolStripMenuItem_Click
+
+        private void mappaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODObool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmMap
+        }
+
+        private void insertMateriaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmMateriaInsert);
+        }
+
+        private void insertAutoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm( windowWarehouse.CurrentWindowType.frmAutoreInsert);
+        }// insertAutoreToolStripMenuItem_Click
+
 
         private void changePwdToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -289,27 +244,18 @@ namespace winFormsIntf
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {// NB. "Logout" is not a Form. It's an action. !
-            this.emptyWinList();// kill all windows.
+            winFormsIntf.windowWarehouse.emptyWinList();// kill all windows.
             //
             Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"] = null;// no more loggedIn
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().uscTimbro.setLbl("");// on the Login frm.
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().pnlLoginControls.Enabled = true;// let the guy re-login.
             // check login status
-            bool isLoggedIn =
-                winFormsIntf.CheckLogin.isLoggedIn(
-                    (Entity_materie.BusinessEntities.Permesso.Patente)
-                    Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"]);
-            if (!isLoggedIn)
+            if( ! winFormsIntf.CheckLogin.isLoggedIn() )
             {
-                winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("user is not Logged In"
-                    , new System.Exception("Go to Login Form and access, in order to proceed.")));
-                ErrorForm.Show();// don't block on Error Form, otherwise the user cannot goTo Login.
+                winFormsIntf.frmError ErrorForm = new frmError();
+                ErrorForm.ShowDialog();// block on Error Form
             }// else is LoggedIn -> CanContinue
-            //
         }// Logout
-
-        private void prototypeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmPrototype);
-        }// prototypeToolStripMenuItem_Click
 
 
         #endregion menuFormCreation

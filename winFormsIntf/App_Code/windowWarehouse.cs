@@ -11,6 +11,9 @@ namespace winFormsIntf
     /// </summary>
     public class windowWarehouse
     {
+
+        #region Data
+
         public enum CurrentWindowType
         {
             // invalid
@@ -44,79 +47,7 @@ namespace winFormsIntf
         }// enum
         openingMode curWinOpeningMode;
         
-        
-        // Ctor()
-        public windowWarehouse(CurrentWindowType currentType)
-        {
-            this.thisTypeInstanceAccumulator = 0;
-            this.currentWindowType = currentType;
-            //
-            if( this.currentWindowType == CurrentWindowType.frmAutoreLoad )
-            {
-                this.thisTypeInstanceLimit = 2;
-                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmDocumentoLoad )
-            {
-                this.thisTypeInstanceLimit = 5;
-                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmMateriaInsert )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmAutoreInsert )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmDocumentoInsert )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmError )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmLogin )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmLogViewer )
-            {
-                this.thisTypeInstanceLimit = 2;
-                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmPrimes )
-            {
-                this.thisTypeInstanceLimit = 2;
-                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmChangePwd )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if ( this.currentWindowType == CurrentWindowType.frmUpdateAbstract )
-            {
-                this.thisTypeInstanceLimit = 1;
-                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
-            }
-            else if (this.currentWindowType == CurrentWindowType.frmPrototype )
-            {
-                this.thisTypeInstanceLimit = 99;// it's a raw deal with prototypes :-)
-                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
-            }// no cases remaining.
-            else
-            {
-                throw new System.Exception(" A not-allowed type was passed to this factory.");
-            }// else-if
-        }// Ctor()
-
+        #endregion Data        
 
         # region Services_public_static
 
@@ -274,9 +205,117 @@ namespace winFormsIntf
             return res;
         }// subscribeNewFrm
 
+
+        public static void emptyWinList()
+        {
+            for (int c = Program.activeInstancesFormList.Count; c > 0; c--)
+            {
+                if (null != Program.activeInstancesFormList[c - 1])
+                {
+                    ((System.Windows.Forms.Form)(Program.activeInstancesFormList[c - 1])).Dispose();
+                    Program.activeInstancesFormList[c - 1] = null;//gc
+                    Program.activeInstancesFormList.RemoveAt(c - 1);// remove the empty slot
+                }// skip null entries; pass to a fixed-size_Array end reset the index.
+            }
+        }// emptyWinList()
+
+
+        public static void removeSpecifiedWin(System.Windows.Forms.Form parFrm)
+        {
+            for (int c = Program.activeInstancesFormList.Count; c > 0; c--)
+            {
+                if (null != Program.activeInstancesFormList[c - 1])
+                {
+                    if (parFrm == (System.Windows.Forms.Form)(Program.activeInstancesFormList[c - 1]))
+                    {
+                        ((System.Windows.Forms.Form)(Program.activeInstancesFormList[c - 1])).Dispose();
+                        Program.activeInstancesFormList[c - 1] = null;//gc
+                        Program.activeInstancesFormList.RemoveAt(c - 1);// remove the empty slot
+                    }
+                }// skip null entries; pass to a fixed-size_Array end reset the index.
+            }
+        }// removeSpecifiedWin()
+
+
         # endregion Services_public_static
 
+        #region Instance_methods
 
+
+        // Ctor()
+        public windowWarehouse(CurrentWindowType currentType)
+        {
+            this.thisTypeInstanceAccumulator = 0;
+            this.currentWindowType = currentType;
+            //
+            if (this.currentWindowType == CurrentWindowType.frmAutoreLoad)
+            {
+                this.thisTypeInstanceLimit = 2;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmDocumentoLoad)
+            {
+                this.thisTypeInstanceLimit = 5;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmMateriaInsert)
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmAutoreInsert)
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmDocumentoInsert)
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmError)
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmLogin)
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmLogViewer)
+            {
+                this.thisTypeInstanceLimit = 2;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmPrimes)
+            {
+                this.thisTypeInstanceLimit = 2;
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmChangePwd)
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmUpdateAbstract)
+            {
+                this.thisTypeInstanceLimit = 1;
+                this.curWinOpeningMode = windowWarehouse.openingMode.Modal;
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmPrototype)
+            {
+                this.thisTypeInstanceLimit = 99;// it's a raw deal with prototypes :-)
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }// no cases remaining.
+            else
+            {
+                throw new System.Exception(" A not-allowed type was passed to this factory.");
+            }// else-if
+        }// Ctor()
+
+
+        // count for the cardinality of this.Type.
         public int checkCurrentTypeActualConsistency()
         {
             this.thisTypeInstanceAccumulator = default(int);
@@ -299,6 +338,7 @@ namespace winFormsIntf
         }// checkCurrentTypeActualConsistency
 
 
+        // check if the currentType==this.Type can accept yet another instance.
         public bool canOpenAnotherOne()
         {
             this.checkCurrentTypeActualConsistency();// refresh the counter
@@ -309,10 +349,14 @@ namespace winFormsIntf
             return false;
         }// canOpenAnotherOne
 
+
+        // check whether this.Type has to opened Modal or not( i.e. ShorDialogue() or Show() ).
         public openingMode openingHowto()
         {
             return this.curWinOpeningMode;
         }// openingHowto
+
+        #endregion Instance_methods
 
     }// class windowWarehouse
 

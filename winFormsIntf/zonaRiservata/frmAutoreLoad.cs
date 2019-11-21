@@ -17,14 +17,10 @@ namespace winFormsIntf
 
         public frmAutoreLoad()
         {// check login status
-            bool isLoggedIn =
-                winFormsIntf.CheckLogin.isLoggedIn(
-                    (Entity_materie.BusinessEntities.Permesso.Patente)
-                    Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"]);
-            if (!isLoggedIn)
+            if (!winFormsIntf.CheckLogin.isLoggedIn())
             {
-                winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("user is not Logged In"
-                    , new System.Exception("Go to Login Form and access, in order to proceed.")));
+                winFormsIntf.frmError ErrorForm = new frmError(
+                    new System.Exception("User is not Logged In : go to Login Form and access, in order to proceed."));
                 ErrorForm.ShowDialog();// block on Error Form
             }// else is LoggedIn -> CanContinue
             //
@@ -36,6 +32,8 @@ namespace winFormsIntf
                 this.ddlMaterie
                 , 0
               );
+            // NB. only writers can navigate to frmDocumentoInsert.
+            this.prepareLavagna_dynamicPortion();// decide whether to enable grpDoubleKey.
         }// Ctor()
 
 
@@ -46,7 +44,7 @@ namespace winFormsIntf
         /// <param name="e"></param>
         private void frmAutoreLoad_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.uscTimbro.removeSpecifiedWin(this);
+            winFormsIntf.windowWarehouse.removeSpecifiedWin(this);
         }
 
 
@@ -248,7 +246,23 @@ namespace winFormsIntf
         /// </summary>
         private void prepareLavagna_dynamicPortion()
         {
-        }
+            Entity_materie.BusinessEntities.Permesso.Patente patente = CheckLogin.getPatente();
+            if (null != patente)
+            {
+                if (patente.livelloAccesso == "reader")
+                {
+                    this.grpDoubleKey.Enabled = false;
+                }
+                else// can write, and then insert into db.
+                {
+                    this.grpDoubleKey.Enabled = true;
+                }
+            }
+            else
+            {// patente is null
+                throw new System.Exception(" Alarm ! User should be logged in, at this phase. ");
+            }
+        }// prepareLavagna_dynamicPortion
 
 
 

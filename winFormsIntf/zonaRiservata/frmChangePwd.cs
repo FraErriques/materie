@@ -15,9 +15,16 @@ namespace winFormsIntf
     public partial class frmChangePwd : Form
     {
         public frmChangePwd()
-        {
+        {// check login status
+            if (!winFormsIntf.CheckLogin.isLoggedIn())
+            {
+                winFormsIntf.frmError ErrorForm = new frmError(
+                    new System.Exception("User is not Logged In : go to Login Form and access, in order to proceed."));
+                ErrorForm.ShowDialog();// block on Error Form
+            }// else is LoggedIn -> CanContinue
+            //
             InitializeComponent();
-        }
+        }// Ctor()
 
 
         /// <summary>
@@ -25,7 +32,7 @@ namespace winFormsIntf
         /// </summary>
         private void frmChangePwd_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.uscTimbro.removeSpecifiedWin(this);
+            winFormsIntf.windowWarehouse.removeSpecifiedWin(this);
         }// frmChangePwd_FormClosed
 
 

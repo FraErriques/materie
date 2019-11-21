@@ -14,6 +14,10 @@ namespace winFormsIntf
     {
         private string toBePublished;
 
+
+        /// <summary>
+        /// Ctor() NB. frmError does not require to be logged in.
+        /// </summary>
         public frmError()
         {
             InitializeComponent();
@@ -48,7 +52,9 @@ namespace winFormsIntf
         }// Ctor
 
 
-
+        /// <summary>
+        /// Ctor() NB. frmError does not require to be logged in.
+        /// </summary>
         public frmError( System.Exception ex)
         {
             InitializeComponent();
@@ -86,12 +92,14 @@ namespace winFormsIntf
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtUser.Text = "";// ? order ?
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().pnlLoginControls.Enabled = true;
             //
-            this.uscTimbro.emptyWinList();// kill all windows.
+            winFormsIntf.windowWarehouse.emptyWinList();// kill all windows.
             //
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Focus();
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().txtUser.Focus();
             //Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().ShowDialog();// re-show the original Login; exec suspended here.
             this.Close();// the frmError has to close, when proposing a new Login.
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().uscTimbro.setLbl("");// on the Login frm.
+            Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().pnlLoginControls.Enabled = true;// let the guy re-login.
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().Show();// cannot do ShowDialog since the System does not accept 
             // a second call to ShowDialog, without a closure. So nonModal firstBlood.
         }// btnGoLogin_Click
@@ -102,12 +110,12 @@ namespace winFormsIntf
         /// </summary>
         private void frmError_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.uscTimbro.removeSpecifiedWin(this);
+            winFormsIntf.windowWarehouse.removeSpecifiedWin(this);
         }// frmError_FormClosed
 
 
         // NB. don't delete this memo.
-        ///    this.uscTimbro.emptyWinList();// kill all windows.
+        ///  emptyWinList();// kill all windows.
         //// in this form it's done in btnGoLogin_Click
 
 

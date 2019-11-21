@@ -27,14 +27,10 @@ namespace winFormsIntf
         // Ctor()
         public frmDocumentoInsert()
         {// check login status
-            bool isLoggedIn =
-                winFormsIntf.CheckLogin.isLoggedIn(
-                    (Entity_materie.BusinessEntities.Permesso.Patente)
-                    Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"]);
-            if (!isLoggedIn)
+            if (!winFormsIntf.CheckLogin.isLoggedIn())
             {
-                winFormsIntf.frmError ErrorForm = new frmError(new System.Exception("user is not Logged In"
-                    , new System.Exception("Go to Login Form and access, in order to proceed.")));
+                winFormsIntf.frmError ErrorForm = new frmError(
+                    new System.Exception("User is not Logged In : go to Login Form and access, in order to proceed."));
                 ErrorForm.ShowDialog();// block on Error Form
             }// else is LoggedIn -> CanContinue
             //
@@ -156,7 +152,7 @@ namespace winFormsIntf
         /// <param name="e"></param>
         private void frmDocumentoInsert_FormClosed( object sender, FormClosedEventArgs e )
         {// call Timbro menu manager, for removing the instance of the form that is in the proces of being closed.
-            this.uscTimbro.removeSpecifiedWin(this);
+            winFormsIntf.windowWarehouse.removeSpecifiedWin(this);
             // NB. specific to this form : clean up the DoubleKey. Thi insertion is over.
             (Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["chiaveDoppiaMateria"]) = null;
             Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["chiaveDoppiaAutore"] = null;
