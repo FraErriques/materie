@@ -324,13 +324,11 @@ public partial class zonaRiservata_docMultiInsert : System.Web.UI.Page
                 if (true == validForWriting)
                 {
                     Entity_materie.BusinessEntities.docMulti dm = new Entity_materie.BusinessEntities.docMulti(
-                        ref_autore_id
-                        , ref_materia_id
-                        );
-                    int entityDbInsertionResult =
+                        ref_autore_id// the DoubleKey is passed while instantiating.
+                        , ref_materia_id// the DoubleKey is passed while instantiating.
+                        );// the DoubleKey is passed while instantiating.
+                    int entityDbInsertionResult =// the DoubleKey is passed while instantiating.
                         dm.FILE_from_FS_insertto_DB(
-                            ref_autore_id,
-                            ref_materia_id,
                             _abstract,
                             sourceName
                         );

@@ -48,6 +48,8 @@
     <Compile Include="App_Code\CacherDbView.cs" />
     <Compile Include="App_Code\CheckLogin.cs" />
     <Compile Include="App_Code\DownLoader.cs" />
+    <Compile Include="App_Code\GenericCoupleKeyValue.cs" />
+    <Compile Include="App_Code\ListBoxMaterieManager.cs" />
     <Compile Include="zonaRiservata\frmAutoreInsert.cs">
       <SubType>Form</SubType>
     </Compile>

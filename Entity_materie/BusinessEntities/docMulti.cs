@@ -359,25 +359,25 @@ namespace Entity_materie.BusinessEntities
 
 
         #region data_IO
-
-
-
-
+      
+       
 
         /// <summary>
-        /// input into the db.
+        /// Input into the db.
+        /// Since the method is not static, user must have instantiated the class, passing a valid DoubleKey.
+        /// // the DoubleKey is passed while instantiating.
         /// </summary>
-        /// <param name="idAutore"> the logged user</param>
-        /// <param name="_abstract"> the text by means of which the semantic engine works </param>
-        /// <param name="inputSelect_FileName"> the input file fullpath </param>
+        /// <param name="ref_candidato_id"></param>// the DoubleKey is passed while instantiating.
+        /// <param name="ref_materia_id"></param>// the DoubleKey is passed while instantiating.
+        /// <param name="_abstract">A rich note for full Text search on the document</param>
+        /// <param name="inputSelect_FileName">fullpath of the document</param>
         /// <returns>
         /// a status integer:
-        ///     0==success,
-        ///     -1==failure.
+        ///     >=0 means success (in general the lastGeneratedId is returned; it's an integer>0)
+        ///     -1 means failure
         /// </returns>
         public Int32 FILE_from_FS_insertto_DB(
-            int ref_candidato_id,
-            int ref_materia_id,
+            // the DoubleKey is passed while instantiating.
             string _abstract,
             string inputSelect_FileName  // fullpath choosen
           )
@@ -393,7 +393,7 @@ namespace Entity_materie.BusinessEntities
             // Aborted on abstract insertion.
             {
                 LoggingToolsContainerNamespace.LoggingToolsContainer.LogBothSinks_DbFs(
-                    "Aborted onabstract insertion. Documento non inserito.",
+                    "Aborted on abstract insertion. It's compulsory to produce an abstract for the document. It has to be a text, for searches.",
                     0);
                 return -1;
             }// else can continue.
@@ -406,7 +406,7 @@ namespace Entity_materie.BusinessEntities
             )// Aborted on file-selection
             {
                 LoggingToolsContainerNamespace.LoggingToolsContainer.LogBothSinks_DbFs(
-                    "Aborted on file-selection. Documento non inserito.",
+                    "Aborted on file-selection. A valid fullpath is necessary.",
                     0);
                 return -1;
             }// else can continue.
@@ -463,10 +463,11 @@ namespace Entity_materie.BusinessEntities
                         actual_abstract = "_##__fake_abstract__##_";//   actual abstract; ONLY in last chunk.
                     }
                     //
-                    //-------what follows is unusefull since the upload-download http services always add chunks after EOF
+                    //-------what follows is unusefull in HTTP since the upload-download http services always add chunks after EOF
                     //-------(typically html chunks), so it's unusefull to force packet truncation.
-                    //
-                    //----start---in test---truncation of last chunk for msWord 2007---------
+                    //-------but it's extremely usefull on localhost, where there's no packet decoration, using raw sockets,
+                    //-------instead of HTTP.
+                    //----start----truncation of last chunk---------
                     byte[] lastChunk_truncated = null;
                     if (readResult < docBody__Length)
                     {
@@ -490,8 +491,8 @@ namespace Entity_materie.BusinessEntities
                     insertionProxyResult =
                         Entity_materie.Proxies.usp_docMulti_INSERT_SERVICE.usp_docMulti_INSERT(
                             lastGeneratedId,
-                            ref_candidato_id,
-                            ref_materia_id,
+                            ref_autore_id,// the DoubleKey is passed while instantiating.
+                            ref_materia_id,// the DoubleKey is passed while instantiating.
                             actual_abstract,//   actual abstract; ONLY in last chunk.
                             fname,// sourceName
                             docBody,//--- current chunk ---------------
@@ -558,10 +559,11 @@ namespace Entity_materie.BusinessEntities
             ,string clientIP// just for Logging.
           )
         {
+            int res = -1;// init to invalid.
             extractionFullPath = null;// compulsory init; actual initialization in body.
             if (0 >= id)
             {// invalid id.
-                return -1;
+                return -1;// -1==failure.
             }// else can continue.
             //
             System.IO.FileStream multiChunk_stream = null;
@@ -577,7 +579,7 @@ namespace Entity_materie.BusinessEntities
                 if (0 >= hm_ids
                     || 0 >= ds_allInvolvedIds.Tables[1].Rows.Count)// NB Tables[0] is static; doesn't count.
                 {// invalid id.
-                    return -1;
+                    return -1;// -1==failure.
                 }// else can continue.
                 else// valid chunk group.
                 {
@@ -610,7 +612,7 @@ namespace Entity_materie.BusinessEntities
                     }
                     else
                     {// invalid id.
-                        return -1;
+                        return -1;// -1==failure.
                     }// else can continue.
                     //
                     ConfigurationLayer.ConfigurationService cs = new
@@ -632,18 +634,19 @@ namespace Entity_materie.BusinessEntities
                         + DateTime.Now.Month.ToString()
                         + "#"
                         + DateTime.Now.Day.ToString()
-                        + "#"
+                        + "_"
                         + DateTime.Now.Hour.ToString()
                         + "#"
                         + DateTime.Now.Minute.ToString()
                         + "#"
                         + DateTime.Now.Second.ToString()
-                        + "#"
+                        + "_"
                         + DateTime.Now.Millisecond.ToString()
-                        + "#";
+                        + "_";
                     timeStamp = timeStamp.Replace('/', '_').Replace('\\', '_')
                         .Replace(' ', '_').Replace('.', '_').Replace(':', '_')
-                        .Replace(';', '_').Replace(',', '_');
+                        .Replace(';', '_').Replace(',', '_').Replace('|', '_')
+                        .Replace('<', '_').Replace('>', '_').Replace('?', '_').Replace('*', '_').Replace('"', '_');
                     extractionFullPath =
                         dlgSave_InitialDirectory
                         + "\\"
@@ -692,6 +695,7 @@ namespace Entity_materie.BusinessEntities
                 LoggingToolsContainerNamespace.LoggingToolsContainer.LogBothSinks_DbFs(
                     "error while trying to retrieve a document: " + ex.Message,
                     5);
+                res = -1;// -1==failure.
             }
             finally
             {
@@ -703,9 +707,10 @@ namespace Entity_materie.BusinessEntities
                     multiChunk_stream.Close();
                     multiChunk_stream = null;//---garbage collect.-----
                 }//----------else already ok.----
+                res = 0;
             }
             //---ready---
-            return 0;// means success.
+            return res;// 0==success.
         }//---end method----
 
 

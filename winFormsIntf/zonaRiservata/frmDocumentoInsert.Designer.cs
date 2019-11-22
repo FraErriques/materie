@@ -115,9 +115,9 @@
             // 
             // btnFromFsToDb
             // 
-            this.btnFromFsToDb.Location = new System.Drawing.Point(615, 335);
+            this.btnFromFsToDb.Location = new System.Drawing.Point(578, 335);
             this.btnFromFsToDb.Name = "btnFromFsToDb";
-            this.btnFromFsToDb.Size = new System.Drawing.Size(144, 23);
+            this.btnFromFsToDb.Size = new System.Drawing.Size(181, 23);
             this.btnFromFsToDb.TabIndex = 4;
             this.btnFromFsToDb.Text = "Upload from FileSystem to Db";
             this.btnFromFsToDb.UseVisualStyleBackColor = true;

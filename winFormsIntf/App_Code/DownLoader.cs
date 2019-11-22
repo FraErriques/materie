@@ -19,7 +19,7 @@ public static class Downloader
         // query for blob at id, by means of Entity_materie::Doc_multi.
         Entity_materie.BusinessEntities.docMulti dm = new Entity_materie.BusinessEntities.docMulti();
         string webServer_extractionPath = null;
-        Int32 res =
+        Int32 downloadResult =
             dm.FILE_from_DB_writeto_FS(
                 id_doc_multi
                 ,out webServer_extractionPath // sul web server.
@@ -27,12 +27,13 @@ public static class Downloader
             );
         // Ensure that Entity_materie::Doc_multi produced an actual file.
         if (
-            string.IsNullOrEmpty(webServer_extractionPath)
+            0 != downloadResult
+            || string.IsNullOrEmpty(webServer_extractionPath)
             || !System.IO.File.Exists(webServer_extractionPath)
           )
         {
             // throw new HttpException(404, "doc_multi not found"); HTTP version
-            throw new System.Exception( "doc_multi not found");
+            throw new System.Exception( "Exception : docMulti not found.");
         }// else trace client credentials.
         else
         {

@@ -1,3 +1,6 @@
+select * from utente
+select * from permesso_LOOKUP
+
 select top 5 
 dm.id, dm.ref_job_id, dm.ref_autore_id, dm.ref_materia_id,dm.abstract,dm.sourceName,dm.insertion_time
 from materie.dbo.docMulti dm

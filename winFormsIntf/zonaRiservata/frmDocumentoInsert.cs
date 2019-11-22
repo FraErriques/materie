@@ -216,8 +216,8 @@ namespace winFormsIntf
         protected void btnFromFsToDb_Click(object sender, EventArgs e)
         {
             string _abstract;
-            int ref_autore_id;
-            int ref_materia_id;
+            int ref_autore_id;// DoubleKey that will be passed down, instantiating Entity_materie::docMulti
+            int ref_materia_id;// DoubleKey that will be passed down, instantiating Entity_materie::docMulti
             bool result = true;// bool mask.
             //
             bool validForWriting = default(bool);// a not-valid-forWriting item does not affect the whole insertion.
@@ -244,8 +244,8 @@ namespace winFormsIntf
                                 );
                             int entityDbInsertionResult =
                                 dm.FILE_from_FS_insertto_DB(
-                                    ref_autore_id,
-                                    ref_materia_id,
+                                    //ref_autore_id,// NB. use the Ctor() with DoubleKey
+                                    //ref_materia_id, no more DoubleKey here
                                     _abstract,
                                     fullPath // NB. sourceName
                                 );

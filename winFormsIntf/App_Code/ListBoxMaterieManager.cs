@@ -1,69 +1,67 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 
 namespace winFormsIntf.App_Code
 {
 
+    
 
-
-    public class ComboMaterieManager
+    public class ListBoxMaterieManager
     {
         private System.Data.DataTable dtMateria;
         private int idOfSelectedItem;// in the comboMaterie
 
         
         //Ctor()
-        public ComboMaterieManager()
+        public ListBoxMaterieManager()
         {
             this.dtMateria = Entity_materie.Proxies.usp_materia_LOOKUP_LOAD_SERVICE.usp_materia_LOOKUP_LOAD();// Proxy
         }//Ctor()
 
-        public void populate_Combo_ddlMateria_for_LOAD(
-            System.Windows.Forms.ComboBox ddlMaterie,
-            int selectedElement// the default pre-selection is index==0 -> i.e. "selezione della Materia".
+
+        public void populate_Listbox_ddlMateria_for_LOAD(
+            System.Windows.Forms.ListBox lsbMaterie
           )
         {
             //--------------popolamento : -----------------
-            ddlMaterie.Items.Clear();
-            ddlMaterie.Items.Add( 
+            lsbMaterie.Items.Clear();
+            lsbMaterie.Items.Add(// this line will be the title, which appears pre-selected.
                    new winFormsIntf.App_Code.GenericCoupleKeyValue(
-                       "selezione della Materia" //--no query for this combo voice ---
+                       "Elenco delle Materie ad oggi censite" //--no query for this combo voice ---
                        ,0 // index in combo-box
                    )// end new_list_item
-            );// end items_add
+             );// end items_add
             if (null != dtMateria)
             {
                 for( int c = 0; c < dtMateria.Rows.Count; c++)// dataTable is zero-based
                 {
-                    ddlMaterie.Items.Add(
+                    lsbMaterie.Items.Add(
                         new winFormsIntf.App_Code.GenericCoupleKeyValue(
                             (string)(dtMateria.Rows[c]["nomeMateria"])
                             ,(int)(dtMateria.Rows[c]["id"]) // index in combo-box
                         )// end new_list_item
                    );// end items_add
                 }// end for.
-                ddlMaterie.Items.Add(// NB. an additional item, for querying with no condition tail.
-                        new winFormsIntf.App_Code.GenericCoupleKeyValue(
-                            "Tutte le Materie"//--select without "where-tail" -----
-                            , -1 // index in combo-box : Proxy queries on allMaterie when index<0
-                        )// end new_list_item
-                   );// end items_add
+                //lsbMaterie.Items.Add(// NB. an additional item, for querying with no condition tail.
+                //        new winFormsIntf.App_Code.comboRow(  -- NOT DESIRED IN THIS CASE
+                //            "Tutte le Materie"//--select without "where-tail" -----
+                //            , -1 // index in combo-box : Proxy queries on allMaterie when index<0
+                //        )// end new_list_item
+                //   );// end items_add
             }// else skip, on null dataTable(es. no connection).
-            //--pre selection.
-            ddlMaterie.SelectedIndex = selectedElement;
+            //--NO pre selection, since it hides the line in the listBox.
         }// populate_Combo_ddlMateria_for_LOAD()
 
 
-        public int ddlMaterie_SelectedIndexChanged(
-            System.Windows.Forms.ComboBox ddlMaterie
+        public int lsbMaterie_SelectedIndexChanged(
+            System.Windows.Forms.ListBox lsbMaterie
             )
         {
-            int selIndex = ddlMaterie.SelectedIndex;// good
-            object selItem = ddlMaterie.SelectedItem;// good
-            string selTxt = ddlMaterie.SelectedText;// bad
-            object selVal = ddlMaterie.SelectedValue;// bad
+            int selIndex = lsbMaterie.SelectedIndex;// good
+            object selItem = lsbMaterie.SelectedItem;// good
+            //string selTxt = lsbMaterie.SelectedText;// bad
+            //object selVal = lsbMaterie.SelectedValue;// bad
             //
             this.idOfSelectedItem = default(int);
             try
@@ -76,11 +74,10 @@ namespace winFormsIntf.App_Code
             }// catch
             // ready
             return this.idOfSelectedItem;
-        }// ddlMaterie_SelectedIndexChanged
+        }// lsbMaterie_SelectedIndexChanged
 
 
     }// class ComboMaterieManager
-
 
 
 }// nmsp

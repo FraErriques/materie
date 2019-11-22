@@ -69,7 +69,7 @@ namespace winFormsIntf
         //
         private void grdDocumento_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            try// inside here there's an int.Parse that throws.
+            try// inside here there's an int.Parse that throws. And the Downloader.DownloadButton_Click throws too.
             {
                 DataGridViewRow selRowDirect = this.grdDocumento.Rows[e.RowIndex];
                 DataGridViewCell selCellDirect =

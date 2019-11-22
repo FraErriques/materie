@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.uscTimbro = new winFormsIntf.Timbro();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtNominativoAutore = new System.Windows.Forms.TextBox();
+            this.txtAbstractAutore = new System.Windows.Forms.TextBox();
             this.lblNominativoAutore = new System.Windows.Forms.Label();
             this.lblNoteAutore = new System.Windows.Forms.Label();
             this.btnCommit = new System.Windows.Forms.Button();
@@ -44,21 +44,21 @@
             this.uscTimbro.Size = new System.Drawing.Size(899, 73);
             this.uscTimbro.TabIndex = 0;
             // 
-            // textBox1
+            // txtNominativoAutore
             // 
-            this.textBox1.Location = new System.Drawing.Point(13, 125);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(422, 283);
-            this.textBox1.TabIndex = 1;
+            this.txtNominativoAutore.Location = new System.Drawing.Point(13, 125);
+            this.txtNominativoAutore.Multiline = true;
+            this.txtNominativoAutore.Name = "txtNominativoAutore";
+            this.txtNominativoAutore.Size = new System.Drawing.Size(422, 283);
+            this.txtNominativoAutore.TabIndex = 1;
             // 
-            // textBox2
+            // txtAbstractAutore
             // 
-            this.textBox2.Location = new System.Drawing.Point(469, 125);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(443, 283);
-            this.textBox2.TabIndex = 2;
+            this.txtAbstractAutore.Location = new System.Drawing.Point(469, 125);
+            this.txtAbstractAutore.Multiline = true;
+            this.txtAbstractAutore.Name = "txtAbstractAutore";
+            this.txtAbstractAutore.Size = new System.Drawing.Size(443, 283);
+            this.txtAbstractAutore.TabIndex = 2;
             // 
             // lblNominativoAutore
             // 
@@ -113,8 +113,8 @@
             this.Controls.Add(this.btnCommit);
             this.Controls.Add(this.lblNoteAutore);
             this.Controls.Add(this.lblNominativoAutore);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtAbstractAutore);
+            this.Controls.Add(this.txtNominativoAutore);
             this.Controls.Add(this.uscTimbro);
             this.Name = "frmAutoreInsert";
             this.Text = "frmAutoreInsert";
@@ -127,8 +127,8 @@
         #endregion
 
         private Timbro uscTimbro;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtNominativoAutore;
+        private System.Windows.Forms.TextBox txtAbstractAutore;
         private System.Windows.Forms.Label lblNominativoAutore;
         private System.Windows.Forms.Label lblNoteAutore;
         private System.Windows.Forms.Button btnCommit;

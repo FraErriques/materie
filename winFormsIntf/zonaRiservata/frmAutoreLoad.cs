@@ -223,7 +223,7 @@ namespace winFormsIntf
             int int_sector = default(int);
             try//---if ddlMaterie.SelectedItem==null will throw.
             {
-                int_sector = ((winFormsIntf.App_Code.comboRow)(this.ddlMaterie.SelectedItem)).getId(); 
+                int_sector = ((winFormsIntf.App_Code.GenericCoupleKeyValue)(this.ddlMaterie.SelectedItem)).getId(); 
             }
             catch (System.Exception ex)
             {
