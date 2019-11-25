@@ -147,7 +147,7 @@ namespace winFormsIntf
         // NB.
         private void frmLogin_Load(object sender, EventArgs e)
         {// DON'T check login status onLOAD
-            //if (!winFormsIntf.CheckLogin.isLoggedIn())
+            //if (!winFormsIntf.App_Code.CheckLogin.isLoggedIn())
             //{
             //    winFormsIntf.frmError ErrorForm = new frmError(
             //        new System.Exception("User is not Logged In : go to Login Form and access, in order to proceed."));

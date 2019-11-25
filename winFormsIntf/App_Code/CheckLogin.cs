@@ -3,7 +3,7 @@ using System.Text;
 
 
 
-namespace winFormsIntf
+namespace winFormsIntf.App_Code
 {
 
 

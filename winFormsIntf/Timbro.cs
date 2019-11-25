@@ -49,7 +49,7 @@ namespace winFormsIntf
             // the following check is necessary to avoid crashing when the "Timbro" is Loaded on a not yet mature Parent( eg. in the Timbro's Ctor).
             if (null != this.Parent)
             {
-                patente = winFormsIntf.CheckLogin.getPatente();
+                patente = winFormsIntf.App_Code.CheckLogin.getPatente();
                 //
                 if (null != patente)
                 {// classification taken literally, from the db.
@@ -250,7 +250,7 @@ namespace winFormsIntf
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().uscTimbro.setLbl("");// on the Login frm.
             Common.Template_Singleton.TSingleton<winFormsIntf.frmLogin>.instance().pnlLoginControls.Enabled = true;// let the guy re-login.
             // check login status
-            if( ! winFormsIntf.CheckLogin.isLoggedIn() )
+            if( ! winFormsIntf.App_Code.CheckLogin.isLoggedIn() )
             {
                 winFormsIntf.frmError ErrorForm = new frmError();
                 ErrorForm.ShowDialog();// block on Error Form

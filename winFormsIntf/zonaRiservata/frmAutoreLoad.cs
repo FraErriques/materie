@@ -17,7 +17,7 @@ namespace winFormsIntf
 
         public frmAutoreLoad()
         {// check login status
-            if (!winFormsIntf.CheckLogin.isLoggedIn())
+            if (!winFormsIntf.App_Code.CheckLogin.isLoggedIn())
             {
                 winFormsIntf.frmError ErrorForm = new frmError(
                     new System.Exception("User is not Logged In : go to Login Form and access, in order to proceed."));
@@ -246,7 +246,7 @@ namespace winFormsIntf
         /// </summary>
         private void prepareLavagna_dynamicPortion()
         {
-            Entity_materie.BusinessEntities.Permesso.Patente patente = CheckLogin.getPatente();
+            Entity_materie.BusinessEntities.Permesso.Patente patente = winFormsIntf.App_Code.CheckLogin.getPatente();
             if (null != patente)
             {
                 if (patente.livelloAccesso == "reader")

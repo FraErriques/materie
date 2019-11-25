@@ -1,7 +1,83 @@
+
+select 
+doc.id as id_doc
+, doc.ref_materia_id as ref_materia_id
+, doc.sourceName      as FileFullPath
+ , mat.nomeMateria as Materia
+ , aut.nominativo as Autore
+ 
+--delete
+ select *
+from 
+	materie.dbo.docMulti	
+	--,materie.dbo.materia_LOOKUP mat
+	--,materie.dbo.autore			aut
+where 
+	ref_autore_id = 14
+	ref_materia_id in (21)
+	and mat.id=doc.ref_materia_id
+	and aut.id = doc.ref_autore_id
+
+
+
+select 
+doc.id as id_doc
+, doc.ref_materia_id as ref_materia_id
+, doc.sourceName      as FileFullPath
+ , mat.nomeMateria as Materia
+ , aut.nominativo as Autore
+from 
+	materie.dbo.docMulti		doc
+	,materie.dbo.materia_LOOKUP mat
+	,materie.dbo.autore			aut
+where 
+	ref_materia_id in (12)
+	and mat.id=doc.ref_materia_id
+	and aut.id = doc.ref_autore_id
+
+ --,4,15,17,6,3,7,10,19,23,20,21)
+	and ref_autore_id in (2,11,6,8,3,4,7,5,14)
+
+select 
+doc.id as id_doc
+,ref_materia_id as ref_materia_id
+, sourceName      as FileFullPath
+, mat.nomeMateria as Materia
+, aut.nominativo as Autore
+from 
+	materie.dbo.docMulti		doc
+	,materie.dbo.materia_LOOKUP mat
+	,materie.dbo.autore			aut
+where 
+	ref_materia_id in (12,4,15,17,6,3,7,10,19,23,20,21)
+	and ref_autore_id in (2,11,6,8,3,4,7,5,14)
+	and mat.id=doc.ref_materia_id
+	and aut.id = doc.ref_autore_id
+
+--delete from materie.dbo.materia_LOOKUP
+--where materie.dbo.materia_LOOKUP.id in  (12,4,15,17,6,3,7,10,19,23,20,21)
+
+--delete from materie.dbo.autore
+--where autore.id in  (2,11,6,8,3,4,7,5,14)
+
+select * from materie.dbo.docMulti
+where id=68
+
+select * from materie.dbo.docMulti
+where abstract not like '%fake%'
+
+--truncate table materie.dbo.docMulti
+
+select *
+--delete
+from materie.dbo.docMulti
+where id>=94 and id<=152
+
 select * from utente
 select * from permesso_LOOKUP
 
-select top 5 
+
+select --top 5 
 dm.id, dm.ref_job_id, dm.ref_autore_id, dm.ref_materia_id,dm.abstract,dm.sourceName,dm.insertion_time
 from materie.dbo.docMulti dm
 order by dm.id desc
@@ -15,7 +91,9 @@ order by dm.id desc
 select * from materie.dbo.utente
 select * from materie.dbo.permesso_LOOKUP
 
-select * from materie.dbo.materia_LOOKUP
+select * from materie.dbo.materia_LOOKUP order by nomeMateria asc
+select * from materie.dbo.autore order by nominativo asc
+
 select * from materie.dbo.materia_LOOKUP order by nomeMateria asc
 --delete from materie.dbo.materia_LOOKUP where nomeMateria='Farlocco'
 

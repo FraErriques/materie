@@ -28,6 +28,8 @@ namespace winFormsIntf
             //
             //--###############################--test area: put here some test, when the need is to execute them, instead of the actual Main().
 
+            // Application.Run(new frmChangePwd());// try without login : OK does not pass & then crashes due to unBuilt frmTypeManagement
+
             //// NO richiede fillUpTypeWareHouse() bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmError);
             //Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["errore"] = "from Test-Area.";
             //(new winFormsIntf.frmError()).ShowDialog();

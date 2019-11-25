@@ -16,7 +16,7 @@ namespace winFormsIntf
     {
         public frmChangePwd()
         {// check login status
-            if (!winFormsIntf.CheckLogin.isLoggedIn())
+            if (!winFormsIntf.App_Code.CheckLogin.isLoggedIn())
             {
                 winFormsIntf.frmError ErrorForm = new frmError(
                     new System.Exception("User is not Logged In : go to Login Form and access, in order to proceed."));
@@ -34,6 +34,31 @@ namespace winFormsIntf
         {
             winFormsIntf.windowWarehouse.removeSpecifiedWin(this);
         }// frmChangePwd_FormClosed
+
+
+        private void btnCommit_Click(object sender, EventArgs e)
+        {
+            Entity_materie.BusinessEntities.Permesso.Patente curPatente = App_Code.CheckLogin.getPatente();
+            bool result =
+                Process.utente.utente_changePwd.CambioPassword(
+                    curPatente.username,
+                    // web side it's : ((Entity_materie.BusinessEntities.Permesso.Patente)(this.Session["lasciapassare"])).username,
+                    this.txtOldPwd.Text,
+                    this.txtNewPwd.Text,
+                    this.txtConfirmNewPwd.Text
+                );
+            // write result.
+            if (result)
+            {
+                this.lblStato.Text = "La password e' stata modificata.";
+                this.lblStato.BackColor = System.Drawing.Color.Gray;
+            }
+            else
+            {
+                this.lblStato.Text = "Non e' stato possibile modificare la password.";
+                this.lblStato.BackColor = System.Drawing.Color.Red;
+            }
+        }// end btnChangePwd_Click
 
 
     }// class

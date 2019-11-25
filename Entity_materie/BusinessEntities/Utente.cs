@@ -194,12 +194,16 @@ namespace Entity_materie.BusinessEntities
             System.Data.SqlClient.SqlConnection conn =
                 DbLayer.ConnectionManager.connectWithCustomSingleXpath(
                     "ProxyGeneratorConnections/strings",// compulsory xpath
-                    "cv_db_app"
+                    "materie"
                 );
             if (null != conn)
+            {
                 trx = conn.BeginTransaction();
+            }
             else
+            {
                 return false;// no db connection.
+            }
             //--END--open transazione-----
             //
             int usrQueryResult =
