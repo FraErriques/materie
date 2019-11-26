@@ -31,6 +31,7 @@ namespace winFormsIntf
             this.listBoxMaterieManager = new App_Code.ListBoxMaterieManager();
             this.listBoxMaterieManager.populate_Listbox_ddlMateria_for_LOAD(
                 this.lsbMaterie             );
+            this.grbMateriaInsert.Enabled = true;
         }// Ctor()
 
 
@@ -68,19 +69,23 @@ namespace winFormsIntf
                 );
                 if (mustCommit)
                 {
+                    this.btnRefresh_Click(this, null);// get the new picture.
                     this.lblStato.Text = "Inserimento Materia avvenuto con successo.";
                     this.lblStato.BackColor = System.Drawing.Color.GreenYellow;
+                    this.grbMateriaInsert.Enabled = false;// a second Commit is not allowed.
                 }
                 else
                 {
                     this.lblStato.Text = "Inserimento Materia fallito.";
-                    this.lblStato.BackColor = System.Drawing.Color.Red;
+                    this.lblStato.BackColor = System.Drawing.Color.OrangeRed;
+                    this.grbMateriaInsert.Enabled = true;
                 }
             }
             else
             {
                 this.lblStato.Text = "Il campo Nominativo della Materia non puo' essere vuoto.";
                 this.lblStato.BackColor = System.Drawing.Color.Red;
+                this.grbMateriaInsert.Enabled = true;
             }
         }// btnCommit_Click
 

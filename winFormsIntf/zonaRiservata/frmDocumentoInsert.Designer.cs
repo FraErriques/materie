@@ -38,6 +38,7 @@
             this.grbDocInsert = new System.Windows.Forms.GroupBox();
             this.btnFromFsToDb = new System.Windows.Forms.Button();
             this.uscTimbro = new winFormsIntf.Timbro();
+            this.lblWarning = new System.Windows.Forms.Label();
             this.grbDocInsert.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,7 +86,7 @@
             // lblDoubleKey
             // 
             this.lblDoubleKey.AutoSize = true;
-            this.lblDoubleKey.Location = new System.Drawing.Point(300, 87);
+            this.lblDoubleKey.Location = new System.Drawing.Point(264, 67);
             this.lblDoubleKey.Name = "lblDoubleKey";
             this.lblDoubleKey.Size = new System.Drawing.Size(110, 13);
             this.lblDoubleKey.TabIndex = 4;
@@ -106,7 +107,7 @@
             this.grbDocInsert.Controls.Add(this.txtDocumentoAbstract);
             this.grbDocInsert.Controls.Add(this.lvwDocSelection);
             this.grbDocInsert.Controls.Add(this.btnSearchFileSystem);
-            this.grbDocInsert.Location = new System.Drawing.Point(12, 115);
+            this.grbDocInsert.Location = new System.Drawing.Point(12, 93);
             this.grbDocInsert.Name = "grbDocInsert";
             this.grbDocInsert.Size = new System.Drawing.Size(808, 380);
             this.grbDocInsert.TabIndex = 6;
@@ -130,12 +131,23 @@
             this.uscTimbro.Size = new System.Drawing.Size(891, 52);
             this.uscTimbro.TabIndex = 0;
             // 
+            // lblWarning
+            // 
+            this.lblWarning.AutoSize = true;
+            this.lblWarning.Location = new System.Drawing.Point(12, 486);
+            this.lblWarning.Name = "lblWarning";
+            this.lblWarning.Size = new System.Drawing.Size(634, 13);
+            this.lblWarning.TabIndex = 5;
+            this.lblWarning.Text = "Warning: inserire molteplici documenti in una volta, attribuira\' a tutti il medes" +
+    "imo campo note. Ciò\' influira\' negativamente sulle ricerche.";
+            // 
             // frmDocumentoInsert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(138)))), ((int)(((byte)(0)))));
             this.ClientSize = new System.Drawing.Size(932, 547);
+            this.Controls.Add(this.lblWarning);
             this.Controls.Add(this.grbDocInsert);
             this.Controls.Add(this.lblEsito);
             this.Controls.Add(this.lblDoubleKey);
@@ -162,5 +174,6 @@
         private System.Windows.Forms.Label lblEsito;
         private System.Windows.Forms.GroupBox grbDocInsert;
         private System.Windows.Forms.Button btnFromFsToDb;
+        private System.Windows.Forms.Label lblWarning;
     }
 }

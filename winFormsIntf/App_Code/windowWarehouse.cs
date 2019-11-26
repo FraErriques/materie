@@ -31,6 +31,7 @@ namespace winFormsIntf
             ,frmChangePwd = 10
             ,frmUpdateAbstract = 11
             ,frmPrototype = 12
+            ,frmMappa = 13
         }// enum
         private CurrentWindowType currentWindowType;
         private int thisTypeInstanceAccumulator;
@@ -89,6 +90,9 @@ namespace winFormsIntf
             );
             Program.frmTypeManagement.Add(winFormsIntf.windowWarehouse.CurrentWindowType.frmPrototype.ToString()//12
                 , new windowWarehouse(windowWarehouse.CurrentWindowType.frmPrototype)
+            );
+            Program.frmTypeManagement.Add(winFormsIntf.windowWarehouse.CurrentWindowType.frmMappa.ToString()//13
+                , new windowWarehouse(windowWarehouse.CurrentWindowType.frmMappa)
             );
         }// fillUpTypeWareHouse
 
@@ -149,6 +153,10 @@ namespace winFormsIntf
             else if (curWinType == winFormsIntf.windowWarehouse.CurrentWindowType.frmUpdateAbstract)
             {
                 res = new winFormsIntf.frmUpdateAbstract();
+            }
+            else if (curWinType == winFormsIntf.windowWarehouse.CurrentWindowType.frmMappa )
+            {
+                res = new winFormsIntf.frmMappa();
             }
             else // no more Types
             {
@@ -307,9 +315,14 @@ namespace winFormsIntf
             {
                 this.thisTypeInstanceLimit = 99;// it's a raw deal with prototypes :-)
                 this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
-            }// no cases remaining.
-            else
+            }
+            else if (this.currentWindowType == CurrentWindowType.frmMappa )
             {
+                this.thisTypeInstanceLimit = 99;// it's a raw deal with informative-tools too. :-)
+                this.curWinOpeningMode = windowWarehouse.openingMode.NotModal;
+            }
+            else// no cases remaining.
+            {// no cases remaining.
                 throw new System.Exception(" A not-allowed type was passed to this factory.");
             }// else-if
         }// Ctor()

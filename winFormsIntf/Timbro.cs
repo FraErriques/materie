@@ -176,6 +176,9 @@ namespace winFormsIntf
                     checkCurrentTypeActualConsistency().ToString() +
                 " \r\n frmPrototype       =" + ((winFormsIntf.windowWarehouse)
                 (Program.frmTypeManagement[winFormsIntf.windowWarehouse.CurrentWindowType.frmPrototype.ToString()])).
+                    checkCurrentTypeActualConsistency().ToString() +
+                " \r\n frmMappa       =" + ((winFormsIntf.windowWarehouse)
+                (Program.frmTypeManagement[winFormsIntf.windowWarehouse.CurrentWindowType.frmMappa.ToString()])).
                     checkCurrentTypeActualConsistency().ToString();
             //
             Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["errore"] = toBePublished;
@@ -222,8 +225,8 @@ namespace winFormsIntf
         }// documentoLToolStripMenuItem_Click
 
         private void mappaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // TODObool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmMap
+        {// figure informative sui flussi dell'applicazione.
+            bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmMappa);
         }
 
         private void insertMateriaToolStripMenuItem_Click(object sender, EventArgs e)

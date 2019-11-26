@@ -64,17 +64,20 @@ namespace winFormsIntf
                 {
                     this.lblStato.Text = "Inserimento Autore avvenuto con successo.";
                     this.lblStato.BackColor = System.Drawing.Color.GreenYellow;
+                    this.grbAutoreInsert.Enabled = false;// a second commit is not allowed.
                 }
                 else
                 {
                     this.lblStato.Text = "Inserimento Autore fallito.";
                     this.lblStato.BackColor = System.Drawing.Color.Red;
+                    this.grbAutoreInsert.Enabled = true;// give a chance to correct.
                 }
             }
             else
             {
                 this.lblStato.Text = "Il campo Nominativo ed il campo Note sono entrambi obbligatori.";
                 this.lblStato.BackColor = System.Drawing.Color.Red;
+                this.grbAutoreInsert.Enabled = true;// give a chance to correct.
             }
         }// btnCommit_Click
 

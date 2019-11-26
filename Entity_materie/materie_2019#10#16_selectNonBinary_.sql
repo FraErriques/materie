@@ -1,4 +1,108 @@
 
+exec materie.dbo.usp_ViewGetChunk 
+'[123#test#caching#@_]'
+,4
+,9
+
+
+
+--create view [123#test#caching#@_]
+--as
+--	select 
+--		ROW_NUMBER() OVER (ORDER BY m.nomeMateria asc) AS 'RowNumber'
+--		, id
+--		, nomeMateria
+--	from 
+--		materie.dbo.materia_LOOKUP  m  
+--GO
+
+--drop view   [123#test#caching#@_]
+select * from  [123#test#caching#@_]
+where [ID] between 2 and 5
+GO
+
+
+--create procedure [dbo].[usp_ViewGetChunk]
+--@view_signature varchar(350)
+--,@rowInf int
+--,@rowSup int
+--as
+--declare @q varchar(7900)
+--	begin transaction
+--		begin try
+--			if @view_signature is NULL or Ltrim(Rtrim( @view_signature))=''
+--			begin
+--				-- RAISERROR with severity 11-19 will cause exeuction to jump to the CATCH block.
+--				RAISERROR( '---NB. @view_signature ----- must be specified and non-empty.'
+--						   ,16 -- Severity. -- RAISERROR with severity 11-19 will cause exeuction to jump to the CATCH block.
+--						   ,1 -- State.
+--						   );
+--			end--end if @view_signature is NULL else can continue.
+---------------------------------------------------------------------------
+--			select @q =
+--			'
+--				select * from ' 
+--				+ Ltrim(Rtrim( @view_signature))
+--				+' where RowNumber between ' + CAST(@rowInf AS nvarchar(40)) 
+--				+' and ' + CAST(@rowSup AS nvarchar(40)) 
+--			exec( @q )
+--			-- if you get here, you can commit.
+--			commit transaction
+--	end try
+--	begin catch
+--		rollback transaction
+--	end catch
+--	-- ready
+--GO-- END proc
+
+--##
+
+CREATE procedure [dbo].[usp_ViewCacher_specific_CREATE_Primes]
+	@where_tail varchar(1500)
+	,@view_signature varchar(500)
+as
+declare @q varchar(7900)
+	begin transaction
+		begin try
+			if @where_tail is NULL
+			BEGIN
+				select @where_tail = ''
+			END -- else it's already a valid tail.
+			--
+			if @view_signature is NULL or Ltrim(Rtrim( @view_signature))=''
+			begin
+				-- RAISERROR with severity 11-19 will cause exeuction to jump to the CATCH block.
+				RAISERROR( '---NB. @view_signature ----- must be specified and non-empty.'
+						   ,16 -- Severity. -- RAISERROR with severity 11-19 will cause exeuction to jump to the CATCH block.
+						   ,1 -- State.
+						   );
+			end--end if @view_signature is NULL else can continue.
+-------------------------------------------------------------------------
+			select @q =
+			'
+				create view ' 
+				+ Ltrim(Rtrim( @view_signature))
+				+' as
+					select 
+						ROW_NUMBER() OVER (ORDER BY p.ordinal asc) AS ''RowNumber''
+						, ordinal
+						, prime  
+					from 
+						[PrimeData].[dbo].[Prime_sequence]  p  '
+						+ @where_tail  -- where	p.ordinal  between  min and  max
+			exec( @q )
+			-- if you get here, you can commit.
+			commit transaction
+	end try
+	begin catch
+		rollback transaction
+	end catch
+	-- ready
+
+--##@
+
+
+
 select 
 doc.id as id_doc
 , doc.ref_materia_id as ref_materia_id

@@ -274,7 +274,8 @@ namespace winFormsIntf
                     "Il lavoro e' stato inserito correttamente.",
                     0);
                 this.lblEsito.Text = "Il lavoro e' stato inserito correttamente.";
-                this.lblEsito.BackColor = System.Drawing.Color.Green;
+                this.lblEsito.BackColor = System.Drawing.Color.GreenYellow;
+                this.grbDocInsert.Enabled = false;// a second commit is not allowed.
             }// else  i.e. ok docMulti inserito.
         }//---end submit()
 

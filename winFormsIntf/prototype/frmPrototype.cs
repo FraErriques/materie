@@ -82,6 +82,27 @@ namespace winFormsIntf
         }// frmPrototype_FormClosed
 
 
+        private void lblChunkUno_Click(object sender, EventArgs e)
+        {// Go query for the second chunk
+            this.dataGridView1.DataSource =
+                Entity_materie.Proxies.usp_ViewGetChunk_SERVICE.usp_ViewGetChunk(
+                    Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator("123#test#caching#@_")
+                    , 1
+                    , 3
+                    );
+        }
+
+        private void lblChunkDue_Click(object sender, EventArgs e)
+        {// Go query for the second chunk
+            this.dataGridView1.DataSource =
+                Entity_materie.Proxies.usp_ViewGetChunk_SERVICE.usp_ViewGetChunk(
+                    Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator("123#test#caching#@_")
+                    , 3
+                    , 6
+                    );
+        }
+
+
 
     }
 }

@@ -50,6 +50,12 @@
     <Compile Include="App_Code\DownLoader.cs" />
     <Compile Include="App_Code\GenericCoupleKeyValue.cs" />
     <Compile Include="App_Code\ListBoxMaterieManager.cs" />
+    <Compile Include="zonaRiservata\frmMappa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="zonaRiservata\frmMappa.Designer.cs">
+      <DependentUpon>frmMappa.cs</DependentUpon>
+    </Compile>
     <Compile Include="zonaRiservata\frmAutoreInsert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +137,9 @@
       <DependentUpon>Timbro.cs</DependentUpon>
     </Compile>
     <Compile Include="App_Code\windowWarehouse.cs" />
+    <EmbeddedResource Include="zonaRiservata\frmMappa.resx">
+      <DependentUpon>frmMappa.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="zonaRiservata\frmAutoreInsert.resx">
       <DependentUpon>frmAutoreInsert.cs</DependentUpon>
     </EmbeddedResource>

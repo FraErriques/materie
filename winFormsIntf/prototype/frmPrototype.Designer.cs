@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrototype));
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.domainUpDown1 = new System.Windows.Forms.DomainUpDown();
@@ -38,9 +37,10 @@
             this.colDue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.uscTimbro = new winFormsIntf.Timbro();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.lblChunkUno = new System.Windows.Forms.Label();
+            this.lblChunkDue = new System.Windows.Forms.Label();
             this.idAutore = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nominativoAutore = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noteAutore = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.imbDoSomething = new System.Windows.Forms.DataGridViewImageColumn();
             this.Read = new System.Windows.Forms.DataGridViewImageColumn();
             this.UpdateAbstract = new System.Windows.Forms.DataGridViewImageColumn();
@@ -50,14 +50,14 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(40, 463);
+            this.comboBox1.Location = new System.Drawing.Point(326, 548);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 1;
             // 
             // domainUpDown1
             // 
-            this.domainUpDown1.Location = new System.Drawing.Point(35, 525);
+            this.domainUpDown1.Location = new System.Drawing.Point(114, 549);
             this.domainUpDown1.Name = "domainUpDown1";
             this.domainUpDown1.Size = new System.Drawing.Size(126, 20);
             this.domainUpDown1.TabIndex = 2;
@@ -67,11 +67,11 @@
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.Location = new System.Drawing.Point(237, 463);
+            this.listBox1.Location = new System.Drawing.Point(515, 539);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
             this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBox1.Size = new System.Drawing.Size(120, 82);
+            this.listBox1.Size = new System.Drawing.Size(120, 30);
             this.listBox1.TabIndex = 3;
             // 
             // listView1
@@ -80,11 +80,11 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.docFullPath,
             this.colDue});
-            this.listView1.Location = new System.Drawing.Point(457, 477);
+            this.listView1.Location = new System.Drawing.Point(658, 532);
             this.listView1.Name = "listView1";
             this.listView1.ShowGroups = false;
             this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(299, 68);
+            this.listView1.Size = new System.Drawing.Size(299, 37);
             this.listView1.TabIndex = 4;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -109,7 +109,6 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idAutore,
             this.nominativoAutore,
-            this.noteAutore,
             this.imbDoSomething,
             this.Read,
             this.UpdateAbstract});
@@ -119,31 +118,40 @@
             this.dataGridView1.Size = new System.Drawing.Size(883, 393);
             this.dataGridView1.TabIndex = 5;
             // 
+            // lblChunkUno
+            // 
+            this.lblChunkUno.AutoSize = true;
+            this.lblChunkUno.Location = new System.Drawing.Point(268, 477);
+            this.lblChunkUno.Name = "lblChunkUno";
+            this.lblChunkUno.Size = new System.Drawing.Size(68, 13);
+            this.lblChunkUno.TabIndex = 6;
+            this.lblChunkUno.Text = "lblChunkUno";
+            this.lblChunkUno.Click += new System.EventHandler(this.lblChunkUno_Click);
+            // 
+            // lblChunkDue
+            // 
+            this.lblChunkDue.AutoSize = true;
+            this.lblChunkDue.Location = new System.Drawing.Point(512, 477);
+            this.lblChunkDue.Name = "lblChunkDue";
+            this.lblChunkDue.Size = new System.Drawing.Size(68, 13);
+            this.lblChunkDue.TabIndex = 7;
+            this.lblChunkDue.Text = "lblChunkDue";
+            this.lblChunkDue.Click += new System.EventHandler(this.lblChunkDue_Click);
+            // 
             // idAutore
             // 
             this.idAutore.DataPropertyName = "id";
-            this.idAutore.HeaderText = "ID Autore";
+            this.idAutore.HeaderText = "ID Materia";
             this.idAutore.Name = "idAutore";
             this.idAutore.ReadOnly = true;
             this.idAutore.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // nominativoAutore
             // 
-            this.nominativoAutore.DataPropertyName = "nominativo";
-            this.nominativoAutore.HeaderText = "Nominativo Autore";
+            this.nominativoAutore.DataPropertyName = "nomeMateria";
+            this.nominativoAutore.HeaderText = "Materia";
             this.nominativoAutore.Name = "nominativoAutore";
             this.nominativoAutore.ReadOnly = true;
-            // 
-            // noteAutore
-            // 
-            this.noteAutore.DataPropertyName = "note";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle1.NullValue = null;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.noteAutore.DefaultCellStyle = dataGridViewCellStyle1;
-            this.noteAutore.HeaderText = "Note Autore";
-            this.noteAutore.Name = "noteAutore";
-            this.noteAutore.ReadOnly = true;
             // 
             // imbDoSomething
             // 
@@ -175,6 +183,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(981, 581);
+            this.Controls.Add(this.lblChunkDue);
+            this.Controls.Add(this.lblChunkUno);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.listBox1);
@@ -186,6 +196,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPrototype_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -199,9 +210,10 @@
         private System.Windows.Forms.ColumnHeader docFullPath;
         private System.Windows.Forms.ColumnHeader colDue;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label lblChunkUno;
+        private System.Windows.Forms.Label lblChunkDue;
         private System.Windows.Forms.DataGridViewTextBoxColumn idAutore;
         private System.Windows.Forms.DataGridViewTextBoxColumn nominativoAutore;
-        private System.Windows.Forms.DataGridViewTextBoxColumn noteAutore;
         private System.Windows.Forms.DataGridViewImageColumn imbDoSomething;
         private System.Windows.Forms.DataGridViewImageColumn Read;
         private System.Windows.Forms.DataGridViewImageColumn UpdateAbstract;
