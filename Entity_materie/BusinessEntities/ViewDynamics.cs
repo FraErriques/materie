@@ -61,6 +61,10 @@ namespace Entity_materie.BusinessEntities
         }
 
 
+        /// <summary>
+        /// this method composes the viewName from the themeDecoration plus a timeSeededSuffix.
+        /// </summary>
+        /// <param name="themeDecoration"></param>
         public static void accessPoint(string themeDecoration)
         {
             string theWholeName = themeDecoration;

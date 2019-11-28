@@ -40,7 +40,7 @@ namespace winFormsIntf
         {
             Entity_materie.BusinessEntities.Permesso.Patente curPatente = App_Code.CheckLogin.getPatente();
             bool result =
-                Process.utente.utente_changePwd.CambioPassword(
+                Process_materie.utente.utente_changePwd.CambioPassword(
                     curPatente.username,
                     // web side it's : ((Entity_materie.BusinessEntities.Permesso.Patente)(this.Session["lasciapassare"])).username,
                     this.txtOldPwd.Text,

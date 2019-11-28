@@ -26,10 +26,10 @@ public partial class LoginSquareClient : System.Web.UI.UserControl
         LogSinkFs.Wrappers.LogWrappers.SectionOpen("LoginSquareClient", 5);
         LogSinkDb.Wrappers.LogWrappers.SectionOpen("LoginSquareClient", 5);
         //---filter username----NB. no filtering on pwd----------
-        string filtered_username = Process.utente.utente_login.filterUsername(this.txtUser.Text);
+        string filtered_username = Process_materie.utente.utente_login.filterUsername(this.txtUser.Text);
         //
         int loginResult =
-            Process.utente.utente_login.canLogOn(
+            Process_materie.utente.utente_login.canLogOn(
                 filtered_username,
                 this.txtPwd.Text //--NB. no filtering on pwd---------- 
             );
@@ -39,7 +39,7 @@ public partial class LoginSquareClient : System.Web.UI.UserControl
         {
             Entity_materie.BusinessEntities.Permesso perm = new Entity_materie.BusinessEntities.Permesso( filtered_username);
             patente = perm.GetPatente();
-                //Process.permesso.permesso_loadSingle.GetPatente(
+                //Process_materie.permesso.permesso_loadSingle.GetPatente(
                 //    filtered_username
                 //);
         }// else "patente" stays null.
@@ -84,7 +84,7 @@ public partial class LoginSquareClient : System.Web.UI.UserControl
         else// if 0<loginResult -> get error msg.
         {//--out
             this.Session["lasciapassare"] = null;
-            this.Session["errore"] = Process.utente.utente_login.loginMessages[loginResult];
+            this.Session["errore"] = Process_materie.utente.utente_login.loginMessages[loginResult];
             //
             LogSinkFs.Wrappers.LogWrappers.SectionContent(
                 "Login fallito per l'utente " + this.txtUser.Text + " tradotto in " + filtered_username +

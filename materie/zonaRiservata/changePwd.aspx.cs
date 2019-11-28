@@ -61,7 +61,7 @@ public partial class zonaRiservata_changePwd : System.Web.UI.Page
     protected void btnChangePwd_Click(object sender, EventArgs e)
     {
         bool result =
-            Process.utente.utente_changePwd.CambioPassword(
+            Process_materie.utente.utente_changePwd.CambioPassword(
                 ((Entity_materie.BusinessEntities.Permesso.Patente)(this.Session["lasciapassare"])).username,
                 this.txtOldPwd.Text,
                 this.txtNewPwd.Text,

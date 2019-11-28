@@ -50,6 +50,12 @@
     <Compile Include="App_Code\DownLoader.cs" />
     <Compile Include="App_Code\GenericCoupleKeyValue.cs" />
     <Compile Include="App_Code\ListBoxMaterieManager.cs" />
+    <Compile Include="Pager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pager.Designer.cs">
+      <DependentUpon>Pager.cs</DependentUpon>
+    </Compile>
     <Compile Include="zonaRiservata\frmMappa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +143,9 @@
       <DependentUpon>Timbro.cs</DependentUpon>
     </Compile>
     <Compile Include="App_Code\windowWarehouse.cs" />
+    <EmbeddedResource Include="Pager.resx">
+      <DependentUpon>Pager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="zonaRiservata\frmMappa.resx">
       <DependentUpon>frmMappa.cs</DependentUpon>
     </EmbeddedResource>

@@ -2,7 +2,7 @@
 using System.Text;
 
 
-namespace Process.utente
+namespace Process_materie.utente
 {
 
     /// <summary>
@@ -29,13 +29,13 @@ namespace Process.utente
         /// </summary>
         static utente_login()
         {
-            Process.utente.utente_login.loginMessages = new string[6];
-            Process.utente.utente_login.loginMessages[0] = "Login Riuscita.";
-            Process.utente.utente_login.loginMessages[1] = "No Db Connection.";
-            Process.utente.utente_login.loginMessages[2] = "no such row; i.e. wrong usr.";
-            Process.utente.utente_login.loginMessages[3] = "unexpected data irregularity.";
-            Process.utente.utente_login.loginMessages[4] = "good username, wrong password.";
-            Process.utente.utente_login.loginMessages[5] = "Sono stati fatti piu' di tre tentativi errati. E' necessario contattare l'Amministratore per essere riabilitati al servizio.";
+            Process_materie.utente.utente_login.loginMessages = new string[6];
+            Process_materie.utente.utente_login.loginMessages[0] = "Login Riuscita.";
+            Process_materie.utente.utente_login.loginMessages[1] = "No Db Connection.";
+            Process_materie.utente.utente_login.loginMessages[2] = "no such row; i.e. wrong usr.";
+            Process_materie.utente.utente_login.loginMessages[3] = "unexpected data irregularity.";
+            Process_materie.utente.utente_login.loginMessages[4] = "good username, wrong password.";
+            Process_materie.utente.utente_login.loginMessages[5] = "Sono stati fatti piu' di tre tentativi errati. E' necessario contattare l'Amministratore per essere riabilitati al servizio.";
         }// end static ctor
 
 

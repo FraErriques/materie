@@ -79,6 +79,18 @@ namespace Entity_materie.BusinessEntities
         }// getChunk
 
 
+        public int get_rowCardinalityTotalView()
+        {
+            return this.rowCardinalityTotalView;
+        }// get_rowCardinalityTotalView
+
+
+        public string get_viewName()
+        {
+            return this.viewName;
+        }// get_viewName
+
+
     }// class
 
 

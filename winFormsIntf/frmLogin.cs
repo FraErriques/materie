@@ -33,10 +33,10 @@ namespace winFormsIntf
             LogSinkFs.Wrappers.LogWrappers.SectionOpen("LoginSquareClient", 5);
             LogSinkDb.Wrappers.LogWrappers.SectionOpen("LoginSquareClient", 5);
             //---filter username----NB. no filtering on pwd----------
-            string filtered_username = Process.utente.utente_login.filterUsername(this.txtUser.Text);
+            string filtered_username = Process_materie.utente.utente_login.filterUsername(this.txtUser.Text);
             //
             int loginResult =
-                Process.utente.utente_login.canLogOn(
+                Process_materie.utente.utente_login.canLogOn(
                     filtered_username,
                     this.txtPwd.Text //--NB. no filtering on pwd---------- 
                 );
@@ -77,7 +77,7 @@ namespace winFormsIntf
                         ,5);
                     Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"] = null;// login failed
                     Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["errore"] =
-                        Process.utente.utente_login.loginMessages[loginResult];
+                        Process_materie.utente.utente_login.loginMessages[loginResult];
                     this.lblStatus.Text = "Errore : Login negata.";// "this" is acting on firstBlood; from inside instance can avoid the Singleton syntax.
                     this.lblStatus.BackColor = System.Drawing.Color.Red;
                     this.uscTimbro.setLbl(" Errore : Login negata.");
@@ -101,7 +101,7 @@ namespace winFormsIntf
             {//--out
                 Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["lasciapassare"] = null;// login failed
                 Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["errore"]=
-                    Process.utente.utente_login.loginMessages[loginResult];
+                    Process_materie.utente.utente_login.loginMessages[loginResult];
                 //
                 LogSinkFs.Wrappers.LogWrappers.SectionContent(
                     "Login fallito per l'utente " + this.txtUser.Text + " tradotto in " + filtered_username
