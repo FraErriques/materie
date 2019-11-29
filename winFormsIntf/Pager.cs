@@ -32,12 +32,12 @@ namespace winFormsIntf
 
         private void lblFirstPage_Click( object sender, EventArgs e )
         {
-            this.onPageOne();
+            this.onFirstPage();
         }
 
         private void lblLastPage_Click( object sender, EventArgs e )
         {
-            this.onPageLast();
+            this.onLastPage();
         }
 
         private void lblBefore_Click( object sender, EventArgs e )
@@ -69,63 +69,115 @@ namespace winFormsIntf
 
         }
 
-        private void btnGoToPage_Click( object sender, EventArgs e )
-        {
 
-        }
 
-        private void btnChangeChunk_Click( object sender, EventArgs e )
+        /// <summary>
+        /// change both params: it's no good to separate them.
+        /// </summary>
+        private void btnChangeBoth_Click( object sender, EventArgs e )
         {
+            try
+            {
+                this.currentPage = int.Parse(this.txtGoToPage.Text);
+                if (1 > this.currentPage
+                    || this.lastPage < this.currentPage
+                    )
+                { throw new System.Exception("Page out of range. Range is [+1, Last]."); }
+                this.lblStato.Text = "";
+                this.lblStato.BackColor = System.Drawing.Color.Transparent;
+                this.checkState();
+            }
+            catch (System.Exception ex)
+            {
+                this.lblStato.Text = ex.Message;
+                this.lblStato.BackColor = System.Drawing.Color.Orange;
+            }
 
         }
 
 
         private void defaultState()
         {
-            this.onPageOne();
+            this.onFirstPage();
         }
 
-        private void onPageOne()
+        private void onFirstPage()
         {
+            this.lblFirstPage.Enabled = false;
+            this.lblFirstPage.BackColor = System.Drawing.Color.Transparent;
+            //
+            this.lblPageBefore.Enabled = false;
+            this.lblPageBefore.BackColor = System.Drawing.Color.Transparent;
+            //
             this.currentPage = +1;
             this.lblCurrentPage.Text =
                 this.currentPageText +
                 this.currentPage.ToString();
             this.lblCurrentPage.Enabled = false;
-            //
-            this.lblFirstPage.Enabled = false;
-            //
-            this.lblPageBefore.Enabled = false;
+            this.lblCurrentPage.BackColor = System.Drawing.Color.Transparent;
             //
             this.lblPageAfter.Enabled = true;
+            this.lblPageAfter.BackColor = System.Drawing.Color.GreenYellow;
             //
             this.lblLastPage.Text =
                 this.lastPageText +
                 this.lastPage.ToString();
             this.lblLastPage.BackColor = System.Drawing.Color.GreenYellow;
             this.lblLastPage.Enabled = true;
-        }
+        }// onFirstPage
 
-        private void onPageLast()
+
+        private void onLastPage()
         {
+            this.lblFirstPage.Enabled = true;
+            this.lblFirstPage.BackColor = System.Drawing.Color.GreenYellow;
+            //
+            this.lblPageBefore.Enabled = true;
+            this.lblPageBefore.BackColor = System.Drawing.Color.GreenYellow;
+            //
             this.currentPage = this.lastPage;
             this.lblCurrentPage.Text =
                 this.currentPageText +
                 this.currentPage.ToString();
             this.lblCurrentPage.Enabled = false;
-            //
-            this.lblFirstPage.Enabled = true;
-            //
-            this.lblPageBefore.Enabled = true;
+            this.lblCurrentPage.BackColor = System.Drawing.Color.Transparent;
             //
             this.lblPageAfter.Enabled = false;
+            this.lblPageAfter.BackColor = System.Drawing.Color.Transparent;
             //
             this.lblLastPage.Text =
-                    this.lastPageText +
-                    this.lastPage.ToString();
+                this.lastPageText +
+                this.lastPage.ToString();
             this.lblLastPage.BackColor = System.Drawing.Color.Transparent;
             this.lblLastPage.Enabled = false;
-        }
+        }//onLastPage
+
+
+        private void onIntermediatePage()
+        {
+            this.lblFirstPage.Enabled = true;
+            this.lblFirstPage.BackColor = System.Drawing.Color.GreenYellow;
+            //
+            this.lblPageBefore.Enabled = true;
+            this.lblPageBefore.BackColor = System.Drawing.Color.GreenYellow;
+            //
+            // this.currentPage = this.currentPage; sure
+            this.lblCurrentPage.Text =
+                this.currentPageText +
+                this.currentPage.ToString();
+            this.lblCurrentPage.Enabled = false;
+            this.lblCurrentPage.BackColor = System.Drawing.Color.Transparent;
+            //
+            this.lblPageAfter.Enabled = true;
+            this.lblPageAfter.BackColor = System.Drawing.Color.GreenYellow;
+            //
+            this.lblLastPage.Text =
+                this.lastPageText +
+                this.lastPage.ToString();
+            this.lblLastPage.BackColor = System.Drawing.Color.GreenYellow;
+            this.lblLastPage.Enabled = true;
+        }// onIntermediatePage
+
 
         private void checkState()
         {
@@ -135,20 +187,14 @@ namespace winFormsIntf
             }
             else if (this.currentPage == this.lastPage)
             {
-                this.onPageLast();
+                this.onLastPage();
             }
             else// intermediate page
             {
-                this.lblFirstPage.Enabled = true;
-                //
-                this.lblCurrentPage.Text =
-                    this.currentPageText +
-                    this.currentPage.ToString();
-                this.lblCurrentPage.Enabled = false;
-                //
-                this.lblLastPage.Enabled = true;
+                this.onIntermediatePage();
             }
-        }
+        }// checkState
+
 
     }// class
 }//nmsp

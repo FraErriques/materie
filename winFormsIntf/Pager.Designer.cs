@@ -36,10 +36,9 @@
             this.lblGoToPage = new System.Windows.Forms.Label();
             this.lblRowXchunk = new System.Windows.Forms.Label();
             this.lblStato = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.btnGoToPage = new System.Windows.Forms.Button();
-            this.btnChangeChunk = new System.Windows.Forms.Button();
+            this.txtGoToPage = new System.Windows.Forms.TextBox();
+            this.txtChunkSize = new System.Windows.Forms.TextBox();
+            this.btnChangeParams = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblFirstPage
@@ -121,48 +120,38 @@
             this.lblStato.TabIndex = 5;
             this.lblStato.Text = "stato";
             // 
-            // textBox1
+            // txtGoToPage
             // 
-            this.textBox1.Location = new System.Drawing.Point(109, 37);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(70, 20);
-            this.textBox1.TabIndex = 8;
+            this.txtGoToPage.Location = new System.Drawing.Point(109, 37);
+            this.txtGoToPage.Name = "txtGoToPage";
+            this.txtGoToPage.Size = new System.Drawing.Size(70, 20);
+            this.txtGoToPage.TabIndex = 8;
             // 
-            // textBox2
+            // txtChunkSize
             // 
-            this.textBox2.Location = new System.Drawing.Point(109, 63);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(70, 20);
-            this.textBox2.TabIndex = 9;
+            this.txtChunkSize.Location = new System.Drawing.Point(109, 63);
+            this.txtChunkSize.Name = "txtChunkSize";
+            this.txtChunkSize.Size = new System.Drawing.Size(70, 20);
+            this.txtChunkSize.TabIndex = 9;
             // 
-            // btnGoToPage
+            // btnChangeParams
             // 
-            this.btnGoToPage.Location = new System.Drawing.Point(195, 36);
-            this.btnGoToPage.Name = "btnGoToPage";
-            this.btnGoToPage.Size = new System.Drawing.Size(75, 20);
-            this.btnGoToPage.TabIndex = 10;
-            this.btnGoToPage.Text = "Go To Page";
-            this.btnGoToPage.UseVisualStyleBackColor = true;
-            this.btnGoToPage.Click += new System.EventHandler(this.btnGoToPage_Click);
-            // 
-            // btnChangeChunk
-            // 
-            this.btnChangeChunk.Location = new System.Drawing.Point(195, 62);
-            this.btnChangeChunk.Name = "btnChangeChunk";
-            this.btnChangeChunk.Size = new System.Drawing.Size(75, 20);
-            this.btnChangeChunk.TabIndex = 11;
-            this.btnChangeChunk.Text = "Change Chunk";
-            this.btnChangeChunk.UseVisualStyleBackColor = true;
-            this.btnChangeChunk.Click += new System.EventHandler(this.btnChangeChunk_Click);
+            this.btnChangeParams.BackColor = System.Drawing.Color.Transparent;
+            this.btnChangeParams.Location = new System.Drawing.Point(197, 58);
+            this.btnChangeParams.Name = "btnChangeParams";
+            this.btnChangeParams.Size = new System.Drawing.Size(105, 25);
+            this.btnChangeParams.TabIndex = 11;
+            this.btnChangeParams.Text = "Change both";
+            this.btnChangeParams.UseVisualStyleBackColor = false;
+            this.btnChangeParams.Click += new System.EventHandler(this.btnChangeBoth_Click);
             // 
             // Pager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnChangeChunk);
-            this.Controls.Add(this.btnGoToPage);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.btnChangeParams);
+            this.Controls.Add(this.txtChunkSize);
+            this.Controls.Add(this.txtGoToPage);
             this.Controls.Add(this.lblGoToPage);
             this.Controls.Add(this.lblRowXchunk);
             this.Controls.Add(this.lblStato);
@@ -188,9 +177,8 @@
         private System.Windows.Forms.Label lblGoToPage;
         private System.Windows.Forms.Label lblRowXchunk;
         private System.Windows.Forms.Label lblStato;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button btnGoToPage;
-        private System.Windows.Forms.Button btnChangeChunk;
+        private System.Windows.Forms.TextBox txtGoToPage;
+        private System.Windows.Forms.TextBox txtChunkSize;
+        private System.Windows.Forms.Button btnChangeParams;
     }
 }
