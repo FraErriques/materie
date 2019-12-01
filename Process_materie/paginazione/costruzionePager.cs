@@ -8,6 +8,21 @@ namespace Process_materie.paginazione
     public static class costruzionePager
     {
 
+
+		/* Scopo di questa classe e' racchiudere le operazioni di istanziazione, inizializzazione e 
+			* soprattutto coordinamento dei tre oggetti Cacher, PagingCalculator ed Interface::Pager.
+			* Cacher e PagingCalculator appartengono ad Entity_materie. Interface::Pager deve essere
+			* implementato per ogni interfaccia e gestisce label, bottoni o linea di comando. Le istanze
+			* dei tre oggetti citati devono transitare come parametri di output, affinche' l'interfaccia
+			* chiamante possa passarle ad altri metodi di Process che dovono proseguire nel coordinamento
+			* della BusinessLogic. Il banco di test sara' di chiamare questo Process da Web::Pager e da 
+			* WinForms::Pager con risultati identici. La segnatura deve diventare:
+			* public static void primaCostruzionePager(
+				 string viewTheme
+				,out int rowCardinalityTotalView
+				,out Entity_materie.BusinessEntities.Cacher instantiatedCacher
+			)
+		*/
         public static void primaCostruzionePager(
             string viewTheme
             ,out int rowCardinalityTotalView

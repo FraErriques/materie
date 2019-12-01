@@ -8,6 +8,15 @@ namespace Process_materie.paginazione
     public static class updatePager
     {
 
+
+	/* Il Process dovra' essere comune fra le diverse interfacce. In questo caso Web::Pager e
+	 * WinForms::Pager dovranno chiamare Process_materie::paginazione con risultati identici.
+	 * Ciascuna interfaccia passera' in input le proprie label, textBox,etc.. e ricevera' in
+	 * output le istanze degli oggetti di Entity manipolati, i.e. Cacher e PagingCalculator.
+	 * Nella segnatura del presente metodo, i primi due parametri sono stati costruiti e 
+	 * forniti in out da Process:paginazione::costruzione. I tre ultimi parametri, sono qui
+	 * forniti in out a beneficio dell'interfaccia chiamante, che fa DataBind.
+	 */
         public static void aggiornamentoPaginazione(
             Entity_materie.BusinessEntities.Cacher prototypeCacher
             ,Entity_materie.BusinessEntities.PagingCalculator pagingCalc
