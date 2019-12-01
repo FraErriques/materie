@@ -7,8 +7,7 @@ namespace Process_materie.paginazione
 
     public static class updatePager
     {
-
-
+ 
 	/* Il Process dovra' essere comune fra le diverse interfacce. In questo caso Web::Pager e
 	 * WinForms::Pager dovranno chiamare Process_materie::paginazione con risultati identici.
 	 * Ciascuna interfaccia passera' in input le proprie label, textBox,etc.. e ricevera' in

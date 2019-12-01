@@ -8,6 +8,7 @@ namespace Process_materie.paginazione
     public static class costruzionePager
     {
 
+ 
 
 		/* Scopo di questa classe e' racchiudere le operazioni di istanziazione, inizializzazione e 
 			* soprattutto coordinamento dei tre oggetti Cacher, PagingCalculator ed Interface::Pager.
@@ -23,6 +24,7 @@ namespace Process_materie.paginazione
 				,out Entity_materie.BusinessEntities.Cacher instantiatedCacher
 			)
 		*/
+ 
         public static void primaCostruzionePager(
             string viewTheme
             ,out int rowCardinalityTotalView
