@@ -15,6 +15,7 @@ namespace Entity_materie.BusinessEntities
         private int rowPerChunk;
         private int chunkRequired;
         private int cardinalityOfRowsInWholeView;
+        private int lastPage;// updated at every change of chunk size.
 
         public PagingCalculator( 
             int par_chunkRequired
@@ -57,6 +58,7 @@ namespace Entity_materie.BusinessEntities
 
         public void setRowInfSup()
         {
+            this.lastPage = (int)System.Math.Ceiling(((double)this.cardinalityOfRowsInWholeView / (double)this.rowPerChunk));
             this.rowInf = this.rowPerChunk * (this.chunkRequired - 1) + 1;// first row, after the last row of previous chunk.
             this.rowSup = this.rowInf + this.rowPerChunk - 1;//last row of the required chunk; i.e. the first one of the successive chunk minus one.
         }//setRowInfSup
@@ -65,10 +67,12 @@ namespace Entity_materie.BusinessEntities
         public void getRowInfSup(
             out int outParRowInf
             , out int outParRowSup
+            , out int outParLastPage
             )
         {
             outParRowInf = this.rowInf;
             outParRowSup = this.rowSup;
+            outParLastPage = this.lastPage;
         }//getRowInfSup
 
     }// class

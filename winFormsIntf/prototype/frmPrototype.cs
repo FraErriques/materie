@@ -13,6 +13,9 @@ namespace winFormsIntf
 
     public partial class frmPrototype : Form
     {
+        private int rowInf;// coordinates of the current chunk
+        private int rowSup;
+        private int par_lastPage;
 
 
         public frmPrototype()
@@ -29,45 +32,32 @@ namespace winFormsIntf
             //
             //------start example use of Cacher-PagingCalculator-Pager--------------------------
             int rowCardinalityTotalView;
-            //object dt;// System.Data.DataTable
+            string viewName;
+            Entity_materie.BusinessEntities.PagingCalculator pagingCalculator;
+            Entity_materie.BusinessEntities.Cacher cacherInstance;
+            System.Data.DataTable chunkDataSource;
             Process_materie.paginazione.costruzionePager.primaCostruzionePager(
-                "Proto" // view theme.
+                "Proto" // view theme
+                ,"" // whereTail
+                ,this.uscPager.rowXchunk
                 , out rowCardinalityTotalView
+                , out viewName
+                , out rowInf
+                , out rowSup
+                , out par_lastPage
+                , out chunkDataSource
+                , out pagingCalculator
+                , out cacherInstance
             );
-            //Process_materie.paginazione.updatePager.aggiornamentoPaginazione(
-
-
-            //Entity_materie.BusinessEntities.ViewDynamics.accessPoint("Proto");// view theme.
-            //string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;// get the View name
-            //Entity_materie.BusinessEntities.Cacher prototypeCacher = new Entity_materie.BusinessEntities.Cacher(
-            //    new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
-            //        Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore
-            //    )
-            //    , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator( designedViewName)
-            //    , "" // no whereTail
-            //);
-            //this.pager1.Init(prototypeCacher.get_rowCardinalityTotalView());// configure interface-Pager
-            //Entity_materie.BusinessEntities.PagingCalculator pagingCalc = new Entity_materie.BusinessEntities.PagingCalculator(
-            //    1 // #chunk
-            //    , 2 // row x chunk
-            //    , this.pager1.lastPage
-            //);
-            //pagingCalc.updateRequest(
-            //    2
-            //    , 2
-            //    );
-            //int rowInf;
-            //int rowSup;
-            //pagingCalc.getRowInfSup(
-            //    out rowInf
-            //    , out rowSup
-            //);
-            //this.dataGridView1.DataSource = Entity_materie.Proxies.usp_ViewGetChunk_SERVICE.usp_ViewGetChunk(
-            //    Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(designedViewName)
-            //    , rowInf
-            //    , rowSup
-            //);
-            //
+            this.dataGridView1.DataSource = chunkDataSource;// fill dataGrid
+            this.uscPager.Init(
+                par_lastPage
+                ,rowCardinalityTotalView
+                ,viewName
+                ,pagingCalculator
+                ,cacherInstance
+                ,this.dataGridView1
+             );// callBack in Interface::Pager
         }// Ctor()
 
 
@@ -130,15 +120,47 @@ namespace winFormsIntf
                     , 3
                     , 6
                     );
-        }
+        }//lblChunkDue_Click
 
 
 
-    }
-}
+    }//class
+}// nmsp
 
 
 # region cantina
+//Process_materie.paginazione.updatePager.aggiornamentoPaginazione(
+//Entity_materie.BusinessEntities.ViewDynamics.accessPoint("Proto");// view theme.
+//string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;// get the View name
+//Entity_materie.BusinessEntities.Cacher prototypeCacher = new Entity_materie.BusinessEntities.Cacher(
+//    new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
+//        Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore
+//    )
+//    , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator( designedViewName)
+//    , "" // no whereTail
+//);
+//this.pager1.Init(prototypeCacher.get_rowCardinalityTotalView());// configure interface-Pager
+//Entity_materie.BusinessEntities.PagingCalculator pagingCalc = new Entity_materie.BusinessEntities.PagingCalculator(
+//    1 // #chunk
+//    , 2 // row x chunk
+//    , this.pager1.lastPage
+//);
+//pagingCalc.updateRequest(
+//    2
+//    , 2
+//    );
+//int rowInf;
+//int rowSup;
+//pagingCalc.getRowInfSup(
+//    out rowInf
+//    , out rowSup
+//);
+//this.dataGridView1.DataSource = Entity_materie.Proxies.usp_ViewGetChunk_SERVICE.usp_ViewGetChunk(
+//    Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(designedViewName)
+//    , rowInf
+//    , rowSup
+//);
+//
 
 //this.comboBox1.Items.Add("comboBox1_primo");
 //this.comboBox1.Items.Add("comboBox1_secondo");

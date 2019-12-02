@@ -36,7 +36,7 @@
             this.Read = new System.Windows.Forms.DataGridViewImageColumn();
             this.UpdateAbstract = new System.Windows.Forms.DataGridViewImageColumn();
             this.uscTimbro = new winFormsIntf.Timbro();
-            this.pager1 = new winFormsIntf.Pager();
+            this.uscPager = new winFormsIntf.Pager();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,19 +104,19 @@
             this.uscTimbro.Size = new System.Drawing.Size(911, 60);
             this.uscTimbro.TabIndex = 0;
             // 
-            // pager1
+            // uscPager
             // 
-            this.pager1.Location = new System.Drawing.Point(208, 429);
-            this.pager1.Name = "pager1";
-            this.pager1.Size = new System.Drawing.Size(505, 127);
-            this.pager1.TabIndex = 6;
+            this.uscPager.Location = new System.Drawing.Point(208, 429);
+            this.uscPager.Name = "uscPager";
+            this.uscPager.Size = new System.Drawing.Size(505, 127);
+            this.uscPager.TabIndex = 6;
             // 
             // frmPrototype
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(981, 581);
-            this.Controls.Add(this.pager1);
+            this.Controls.Add(this.uscPager);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.uscTimbro);
             this.Name = "frmPrototype";
@@ -136,6 +136,6 @@
         private System.Windows.Forms.DataGridViewImageColumn imbDoSomething;
         private System.Windows.Forms.DataGridViewImageColumn Read;
         private System.Windows.Forms.DataGridViewImageColumn UpdateAbstract;
-        private Pager pager1;
+        private Pager uscPager;
     }
 }

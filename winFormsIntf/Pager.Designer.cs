@@ -39,6 +39,8 @@
             this.txtGoToPage = new System.Windows.Forms.TextBox();
             this.txtChunkSize = new System.Windows.Forms.TextBox();
             this.btnChangeParams = new System.Windows.Forms.Button();
+            this.lblRowsInView = new System.Windows.Forms.Label();
+            this.lblViewName = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblFirstPage
@@ -126,6 +128,7 @@
             this.txtGoToPage.Name = "txtGoToPage";
             this.txtGoToPage.Size = new System.Drawing.Size(70, 20);
             this.txtGoToPage.TabIndex = 8;
+            this.txtGoToPage.Text = "1";
             // 
             // txtChunkSize
             // 
@@ -133,6 +136,7 @@
             this.txtChunkSize.Name = "txtChunkSize";
             this.txtChunkSize.Size = new System.Drawing.Size(70, 20);
             this.txtChunkSize.TabIndex = 9;
+            this.txtChunkSize.Text = "5";
             // 
             // btnChangeParams
             // 
@@ -145,10 +149,30 @@
             this.btnChangeParams.UseVisualStyleBackColor = false;
             this.btnChangeParams.Click += new System.EventHandler(this.btnChangeBoth_Click);
             // 
+            // lblRowsInView
+            // 
+            this.lblRowsInView.AutoSize = true;
+            this.lblRowsInView.Location = new System.Drawing.Point(308, 58);
+            this.lblRowsInView.Name = "lblRowsInView";
+            this.lblRowsInView.Size = new System.Drawing.Size(124, 13);
+            this.lblRowsInView.TabIndex = 12;
+            this.lblRowsInView.Text = "Rows In the whole View:";
+            // 
+            // lblViewName
+            // 
+            this.lblViewName.AutoSize = true;
+            this.lblViewName.Location = new System.Drawing.Point(194, 37);
+            this.lblViewName.Name = "lblViewName";
+            this.lblViewName.Size = new System.Drawing.Size(70, 13);
+            this.lblViewName.TabIndex = 13;
+            this.lblViewName.Text = "View Name:  ";
+            // 
             // Pager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblViewName);
+            this.Controls.Add(this.lblRowsInView);
             this.Controls.Add(this.btnChangeParams);
             this.Controls.Add(this.txtChunkSize);
             this.Controls.Add(this.txtGoToPage);
@@ -180,5 +204,7 @@
         private System.Windows.Forms.TextBox txtGoToPage;
         private System.Windows.Forms.TextBox txtChunkSize;
         private System.Windows.Forms.Button btnChangeParams;
+        private System.Windows.Forms.Label lblRowsInView;
+        private System.Windows.Forms.Label lblViewName;
     }
 }
