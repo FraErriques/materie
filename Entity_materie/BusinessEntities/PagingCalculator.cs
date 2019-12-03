@@ -56,11 +56,28 @@ namespace Entity_materie.BusinessEntities
         }// updateRequest
 
 
-        public void setRowInfSup()
+        private void setRowInfSup()
         {
             this.lastPage = (int)System.Math.Ceiling(((double)this.cardinalityOfRowsInWholeView / (double)this.rowPerChunk));
             this.rowInf = this.rowPerChunk * (this.chunkRequired - 1) + 1;// first row, after the last row of previous chunk.
             this.rowSup = this.rowInf + this.rowPerChunk - 1;//last row of the required chunk; i.e. the first one of the successive chunk minus one.
+        }//setRowInfSup
+
+
+        public bool tryEvaluateScenario(
+            int requiredRowXchunk
+            , int requiredPage
+            )
+        {
+            bool res = false;//init to invalid.
+            //
+            int lastPageInScenario = (int)System.Math.Ceiling(((double)this.cardinalityOfRowsInWholeView / (double)requiredRowXchunk));
+            if (requiredPage < +1 || requiredPage > lastPageInScenario)
+            { res = false; }
+            else
+            { res = true; }
+            // ready.
+            return res;
         }//setRowInfSup
 
 

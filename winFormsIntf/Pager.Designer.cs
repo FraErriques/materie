@@ -76,12 +76,12 @@
             // lblCurrentPage
             // 
             this.lblCurrentPage.AutoSize = true;
+            this.lblCurrentPage.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.lblCurrentPage.Location = new System.Drawing.Point(172, 9);
             this.lblCurrentPage.Name = "lblCurrentPage";
             this.lblCurrentPage.Size = new System.Drawing.Size(81, 13);
             this.lblCurrentPage.TabIndex = 3;
             this.lblCurrentPage.Text = "Current Page==";
-            this.lblCurrentPage.Click += new System.EventHandler(this.lblCurrentPage_Click);
             // 
             // lblPageAfter
             // 
@@ -101,7 +101,6 @@
             this.lblGoToPage.Size = new System.Drawing.Size(65, 13);
             this.lblGoToPage.TabIndex = 7;
             this.lblGoToPage.Text = "Go To Page";
-            this.lblGoToPage.Click += new System.EventHandler(this.lblGoToPage_Click);
             // 
             // lblRowXchunk
             // 
@@ -111,7 +110,6 @@
             this.lblRowXchunk.Size = new System.Drawing.Size(72, 13);
             this.lblRowXchunk.TabIndex = 6;
             this.lblRowXchunk.Text = "Row X chunk";
-            this.lblRowXchunk.Click += new System.EventHandler(this.lblRowXchunk_Click);
             // 
             // lblStato
             // 

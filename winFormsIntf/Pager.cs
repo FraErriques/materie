@@ -70,42 +70,42 @@ namespace winFormsIntf
 
         private void lblFirstPage_Click( object sender, EventArgs e )
         {
+            this.tryChangePage(+1);
             this.onFirstPage();
+            this.checkState();// update interface.
         }
 
         private void lblLastPage_Click( object sender, EventArgs e )
         {
+            this.tryChangePage( this.lastPage);
             this.onLastPage();
+            this.checkState();// update interface.
         }
 
         private void lblBefore_Click( object sender, EventArgs e )
         {
-            this.pageUpdater();
-            this.currentPage--;// sx one.
+            this.tryChangePage(
+                --this.currentPage // sx one.
+            );
             this.checkState();
         }
 
-        private void lblCurrentPage_Click( object sender, EventArgs e )
-        {
-
-        }
+        //private void lblCurrentPage_Click( object sender, EventArgs e )
+        //{}// never an active label: no action is required to move to the current page.
 
         private void lblPageAfter_Click( object sender, EventArgs e )
         {
-            this.pageUpdater();
-            this.currentPage++;// dx one.
+            this.tryChangePage(
+                ++this.currentPage // dx one.
+            );
             this.checkState();
         }
 
-        private void lblGoToPage_Click( object sender, EventArgs e )
-        {
+        //private void lblGoToPage_Click( object sender, EventArgs e )
+        //{}
 
-        }
-
-        private void lblRowXchunk_Click( object sender, EventArgs e )
-        {
-
-        }
+        //private void lblRowXchunk_Click( object sender, EventArgs e )
+        //{}
 
 
 
@@ -132,30 +132,142 @@ namespace winFormsIntf
         {
             try
             {
-                this.currentPage = int.Parse(this.txtGoToPage.Text);
-                if (1 > this.currentPage
-                    || this.lastPage < this.currentPage
-                    )
-                { throw new System.Exception("Page out of range. Range is [+1, Last]."); }
+                int requiredPage = int.Parse(this.txtGoToPage.Text);
+                //if (1 > requiredPage
+                //    || this.lastPage < requiredPage
+                //    )
+                //    { throw new System.Exception("Page out of range. Range is [+1, Last==" + this.lastPage.ToString() + "]."); }
+                int required_rowXchunk = int.Parse(this.txtChunkSize.Text);
+                //
+                System.Data.DataTable dt;
+                bool hasPageBeenChanged =
+                Process_materie.paginazione.TryChangePage_SERVICE.TryChangePage(
+                    this.currentPage
+                    , this.lastPage
+                    , required_rowXchunk
+                    , requiredPage
+                    , this.pagingCalculator
+                    , this.cacherInstance
+                    , out this.rowInf
+                    , out this.rowSup
+                    , out this.lastPage
+                    , out dt
+                );
                 this.lblStato.Text = "";
                 this.lblStato.BackColor = System.Drawing.Color.Transparent;
-                //
-                this.rowXchunk = int.Parse(this.txtChunkSize.Text);// throws
-                this.pageUpdater();// refresh calculations with PagingCalculator
-                this.checkState();
+                this.gridInCurrentForm.DataSource = dt;// NB.  DataBind
+                if (hasPageBeenChanged)// TODO : decide
+                {
+                    this.lblLastPage.Text = this.lastPage.ToString();// updated
+                    this.currentPage = requiredPage;// updated
+                    this.txtGoToPage.Text = this.currentPage.ToString();
+                    this.rowXchunk = required_rowXchunk;// updated
+                    this.txtChunkSize.Text = this.rowXchunk.ToString();
+                }
+                else// TODO ????
+                {
+                    this.lblLastPage.Text = this.lastPage.ToString();
+                    //this.currentPage = required_page;
+                    this.txtGoToPage.Text = this.currentPage.ToString();
+                    this.txtChunkSize.Text = this.rowXchunk.ToString();
+                }
+                this.checkState();// update interface.
             }
             catch (System.Exception ex)
             {
                 this.lblStato.Text = ex.Message;
                 this.lblStato.BackColor = System.Drawing.Color.Orange;
             }
+            //
+            //try
+            //{
+            //    this.currentPage = int.Parse(this.txtGoToPage.Text);
+            //    if (1 > this.currentPage
+            //        || this.lastPage < this.currentPage
+            //        )
+            //    { throw new System.Exception("Page out of range. Range is [+1, Last]."); }
+            //    this.lblStato.Text = "";
+            //    this.lblStato.BackColor = System.Drawing.Color.Transparent;
+            //    //
+            //    this.rowXchunk = int.Parse(this.txtChunkSize.Text);// throws
+            //    this.pageUpdater();// refresh calculations with PagingCalculator
+            //    this.checkState();
+            //}
+            //catch (System.Exception ex)
+            //{
+            //    this.lblStato.Text = ex.Message;
+            //    this.lblStato.BackColor = System.Drawing.Color.Orange;
+            //}
+        }// btnChangeBoth_Click
 
-        }
+
+        private bool tryChangePage(
+            int required_page
+          )
+        {
+            bool res = false;
+            try
+            {
+//int required_page = int.Parse(this.txtGoToPage.Text);
+                int required_rowXchunk = int.Parse(this.txtChunkSize.Text);
+                System.Data.DataTable dt;
+                bool hasPageBeenChanged =
+                    Process_materie.paginazione.TryChangePage_SERVICE.TryChangePage(
+                        this.currentPage
+                        , this.lastPage
+                        , required_rowXchunk
+                        , required_page
+                        , this.pagingCalculator
+                        , this.cacherInstance
+                        , out this.rowInf
+                        , out this.rowSup
+                        , out this.lastPage
+                        , out dt
+                    );
+                this.lblStato.Text = "";
+                this.lblStato.BackColor = System.Drawing.Color.Transparent;
+                this.gridInCurrentForm.DataSource = dt;// NB.  DataBind
+                if (hasPageBeenChanged)// TODO : decide
+                {
+                    this.lblLastPage.Text = this.lastPage.ToString();
+                    this.currentPage = required_page;
+                    this.txtGoToPage.Text = this.currentPage.ToString();
+                    this.txtChunkSize.Text = this.rowXchunk.ToString();
+                }
+                else// TODO ????
+                {
+                    this.lblLastPage.Text = this.lastPage.ToString();
+                    //this.currentPage = required_page;
+                    this.txtGoToPage.Text = this.currentPage.ToString();
+                    this.txtChunkSize.Text = this.rowXchunk.ToString();
+                }
+                this.checkState();// update interface.
+            }// try
+            catch (System.Exception ex)
+            {
+                this.lblStato.Text = ex.Message;
+                this.lblStato.BackColor = System.Drawing.Color.Orange;
+            }
+            finally
+            {
+            }
+            // ready.
+            return res;
+        }// tryChangePage()
+
 
 
         private void defaultState()
         {
-            this.rowXchunk = int.Parse(this.txtChunkSize.Text);// default value is present onConstruction
+            try
+            {
+                this.rowXchunk = int.Parse(this.txtChunkSize.Text);// default value is present onConstruction
+            }
+            catch
+            {
+                this.txtChunkSize.Text = "5";// default
+                this.rowXchunk = int.Parse(this.txtChunkSize.Text);
+            }
             this.onFirstPage();
         }
 
@@ -251,12 +363,12 @@ namespace winFormsIntf
             {
                 this.onIntermediatePage();
             }
-            // update the actual data in the grid.
-            this.gridInCurrentForm.DataSource =
-                this.cacherInstance.getChunk(
-                    this.rowInf
-                    , this.rowSup
-                );
+            //// update the actual data in the grid. NO MORE it's done by Process
+            //this.gridInCurrentForm.DataSource =
+            //    this.cacherInstance.getChunk(
+            //        this.rowInf
+            //        , this.rowSup
+            //    );
         }// checkState
 
 

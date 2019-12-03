@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="documento\downloader.cs" />
     <Compile Include="paginazione\costruzionePager.cs" />
+    <Compile Include="paginazione\TryChangePage.cs" />
     <Compile Include="paginazione\updatePager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utente\utente_changePwd.cs" />

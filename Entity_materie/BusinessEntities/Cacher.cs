@@ -18,8 +18,8 @@ namespace Entity_materie.BusinessEntities
                 string view_signature	// the View_name, generally the class Entity_materie.BusinessEntities.ViewDynamics
             );
         private SpecificViewBuilder specificViewBuilder = null;// can point to different viewCreation proxies.
-        private int rowInf;// the chunk inf
-        private int rowSup;// the chunk sup
+//private int rowInf;// the chunk inf
+//private int rowSup;// the chunk sup
 //private int RowsInChunk;// the chunk cardinality
         private int rowCardinalityTotalView;
 
@@ -66,13 +66,13 @@ namespace Entity_materie.BusinessEntities
 
         public System.Data.DataTable getChunk(int parRowInf, int parRowSup)
         {
-            this.rowInf = parRowInf;
-            this.rowSup = parRowSup;// update the chunk coordinates.
+    //this.rowInf = parRowInf;
+    //this.rowSup = parRowSup;// update the chunk coordinates.
             System.Data.DataTable requiredChunk =
                 Entity_materie.Proxies.usp_ViewGetChunk_SERVICE.usp_ViewGetChunk(
                     this.viewName
-                    , this.rowInf
-                    , this.rowSup
+                    , parRowInf
+                    , parRowSup
                 );
             // ready.
             return requiredChunk;
