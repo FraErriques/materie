@@ -96,7 +96,7 @@
             // lblGoToPage
             // 
             this.lblGoToPage.AutoSize = true;
-            this.lblGoToPage.Location = new System.Drawing.Point(29, 44);
+            this.lblGoToPage.Location = new System.Drawing.Point(5, 44);
             this.lblGoToPage.Name = "lblGoToPage";
             this.lblGoToPage.Size = new System.Drawing.Size(65, 13);
             this.lblGoToPage.TabIndex = 7;
@@ -105,7 +105,7 @@
             // lblRowXchunk
             // 
             this.lblRowXchunk.AutoSize = true;
-            this.lblRowXchunk.Location = new System.Drawing.Point(29, 70);
+            this.lblRowXchunk.Location = new System.Drawing.Point(5, 70);
             this.lblRowXchunk.Name = "lblRowXchunk";
             this.lblRowXchunk.Size = new System.Drawing.Size(72, 13);
             this.lblRowXchunk.TabIndex = 6;
@@ -114,7 +114,7 @@
             // lblStato
             // 
             this.lblStato.AutoSize = true;
-            this.lblStato.Location = new System.Drawing.Point(29, 97);
+            this.lblStato.Location = new System.Drawing.Point(172, 103);
             this.lblStato.Name = "lblStato";
             this.lblStato.Size = new System.Drawing.Size(30, 13);
             this.lblStato.TabIndex = 5;
@@ -122,7 +122,7 @@
             // 
             // txtGoToPage
             // 
-            this.txtGoToPage.Location = new System.Drawing.Point(109, 37);
+            this.txtGoToPage.Location = new System.Drawing.Point(77, 37);
             this.txtGoToPage.Name = "txtGoToPage";
             this.txtGoToPage.Size = new System.Drawing.Size(70, 20);
             this.txtGoToPage.TabIndex = 8;
@@ -130,7 +130,7 @@
             // 
             // txtChunkSize
             // 
-            this.txtChunkSize.Location = new System.Drawing.Point(109, 63);
+            this.txtChunkSize.Location = new System.Drawing.Point(77, 63);
             this.txtChunkSize.Name = "txtChunkSize";
             this.txtChunkSize.Size = new System.Drawing.Size(70, 20);
             this.txtChunkSize.TabIndex = 9;
@@ -139,9 +139,9 @@
             // btnChangeParams
             // 
             this.btnChangeParams.BackColor = System.Drawing.Color.Transparent;
-            this.btnChangeParams.Location = new System.Drawing.Point(197, 58);
+            this.btnChangeParams.Location = new System.Drawing.Point(77, 91);
             this.btnChangeParams.Name = "btnChangeParams";
-            this.btnChangeParams.Size = new System.Drawing.Size(105, 25);
+            this.btnChangeParams.Size = new System.Drawing.Size(89, 25);
             this.btnChangeParams.TabIndex = 11;
             this.btnChangeParams.Text = "Change both";
             this.btnChangeParams.UseVisualStyleBackColor = false;
@@ -150,7 +150,7 @@
             // lblRowsInView
             // 
             this.lblRowsInView.AutoSize = true;
-            this.lblRowsInView.Location = new System.Drawing.Point(308, 58);
+            this.lblRowsInView.Location = new System.Drawing.Point(163, 70);
             this.lblRowsInView.Name = "lblRowsInView";
             this.lblRowsInView.Size = new System.Drawing.Size(124, 13);
             this.lblRowsInView.TabIndex = 12;
@@ -159,7 +159,7 @@
             // lblViewName
             // 
             this.lblViewName.AutoSize = true;
-            this.lblViewName.Location = new System.Drawing.Point(194, 37);
+            this.lblViewName.Location = new System.Drawing.Point(163, 44);
             this.lblViewName.Name = "lblViewName";
             this.lblViewName.Size = new System.Drawing.Size(70, 13);
             this.lblViewName.TabIndex = 13;

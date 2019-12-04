@@ -15,6 +15,11 @@ namespace winFormsIntf
         public static System.Collections.Hashtable frmTypeManagement = new System.Collections.Hashtable();
 
         
+        public static int outPars( ref int uno, ref int due, out int res )
+        {
+            return (res = uno + due);
+        }
+
         /// <summary>
         /// The main entry point for the application. This class' static data will be used mostly as Singletons.
         /// NB. due to winForms characteristics, the entry point(i.e. Main) has to be "STAThread". Complex bugs
