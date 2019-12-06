@@ -39,7 +39,7 @@ namespace winFormsIntf
             Process_materie.paginazione.costruzionePager.primaCostruzionePager(
                 "Proto" // view theme
                 ,"" // whereTail
-                ,this.uscPager.rowXchunk
+                ,this.uscPager.actual_rowXchunk 
                 , out rowCardinalityTotalView
                 , out viewName
                 , out rowInf
