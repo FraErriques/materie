@@ -41,6 +41,7 @@
     <Compile Include="BusinessEntities\docMono.cs" />
     <Compile Include="BusinessEntities\docMulti.cs" />
     <Compile Include="BusinessEntities\PagingCalculator.cs" />
+    <Compile Include="BusinessEntities\PagingManager.cs" />
     <Compile Include="BusinessEntities\Permesso.cs" />
     <Compile Include="BusinessEntities\Utente.cs" />
     <Compile Include="BusinessEntities\ViewDynamics.cs" />

@@ -13,9 +13,8 @@ namespace winFormsIntf
 
     public partial class frmPrototype : Form
     {
-        private int rowInf;// coordinates of the current chunk
-        private int rowSup;
-        private int par_lastPage;
+
+
 
 
         public frmPrototype()
@@ -31,34 +30,42 @@ namespace winFormsIntf
             InitializeComponent();
             //
             //------start example use of Cacher-PagingCalculator-Pager--------------------------
-            int rowCardinalityTotalView;
+            int rowCardinalityTotalView;// TODO
             string viewName;
-            Entity_materie.BusinessEntities.PagingCalculator pagingCalculator;
-            Entity_materie.BusinessEntities.Cacher cacherInstance;
+            //
+            //Entity_materie.BusinessEntities.Cacher cacherInstance;
+            int par_lastPage;
             System.Data.DataTable chunkDataSource;
+            Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
+            //
             Process_materie.paginazione.costruzionePager.primaCostruzionePager(
                 "Proto" // view theme
-                ,"" // whereTail
-                ,this.uscPager.actual_rowXchunk 
+                , "" // whereTail
+                , 5 // default
                 , out rowCardinalityTotalView
                 , out viewName
-                , out rowInf
-                , out rowSup
                 , out par_lastPage
                 , out chunkDataSource
-                , out pagingCalculator
-                , out cacherInstance
+                , out pagingManager
             );
+
+            //
+            this.interfacePager1.Init(
+                this.dataGridView1//  backdoor, to give the PagerInterface-control the capability of updating the grid.
+                , pagingManager
+            );// callBack in Interface::Pager
+
+             //   par_lastPage
+             //   , rowCardinalityTotalView
+             //   , viewName
+             //   , this.uscPager.pagingCalculator
+             //   , pm.cacherInstance
+             //   , Entity_materie.BusinessEntities.PagingManager pagingManager;// the InterfacePager will need it.
+             //);
             this.dataGridView1.DataSource = chunkDataSource;// fill dataGrid
-            this.uscPager.Init(
-                par_lastPage
-                ,rowCardinalityTotalView
-                ,viewName
-                ,pagingCalculator
-                ,cacherInstance
-                ,this.dataGridView1
-             );// callBack in Interface::Pager
         }// Ctor()
+
+
 
 
         /// <summary>
@@ -102,33 +109,14 @@ namespace winFormsIntf
         }// frmPrototype_FormClosed
 
 
-        private void lblChunkUno_Click(object sender, EventArgs e)
-        {// Go query for the second chunk
-            this.dataGridView1.DataSource =
-                Entity_materie.Proxies.usp_ViewGetChunk_SERVICE.usp_ViewGetChunk(
-                    Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator("123#test#caching#@_")
-                    , 1
-                    , 3
-                    );
-        }
-
-        private void lblChunkDue_Click(object sender, EventArgs e)
-        {// Go query for the second chunk
-            this.dataGridView1.DataSource =
-                Entity_materie.Proxies.usp_ViewGetChunk_SERVICE.usp_ViewGetChunk(
-                    Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator("123#test#caching#@_")
-                    , 3
-                    , 6
-                    );
-        }//lblChunkDue_Click
-
-
 
     }//class
 }// nmsp
 
 
 # region cantina
+//private int rowInf;// coordinates of the current chunk
+//private int rowSup;
 //Process_materie.paginazione.updatePager.aggiornamentoPaginazione(
 //Entity_materie.BusinessEntities.ViewDynamics.accessPoint("Proto");// view theme.
 //string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;// get the View name

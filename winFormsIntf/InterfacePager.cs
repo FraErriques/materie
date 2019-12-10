@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace winFormsIntf
 {
 
-    public partial class Pager : UserControl
+    public partial class InterfacePager : UserControl
     {
         //--data is all boxed in Entity::BusinessEntities::PagingManager.
         public Entity_materie.BusinessEntities.PagingManager pagingManager;
@@ -25,7 +25,7 @@ namespace winFormsIntf
         /// <summary>
         /// Ctor()
         /// </summary>
-        public Pager()
+        public InterfacePager()
         {
             InitializeComponent();
             // No more You can do here.
@@ -82,8 +82,7 @@ namespace winFormsIntf
             this.changeFromDirectButtons_Click();
         }// lblBefore_Click
 
-        //private void lblCurrentPage_Click( object sender, EventArgs e )
-        //{}// never an active label: no action is required to move to the current page.
+
 
         private void lblPageAfter_Click( object sender, EventArgs e )
         {
@@ -181,9 +180,8 @@ namespace winFormsIntf
                 this.txtChunkSize.BackColor = System.Drawing.Color.White;
                 this.lblStato.Text = "Cambio effettuato.";
                 this.lblStato.BackColor = System.Drawing.Color.LightGreen;
-                this.txtGoToPage.Text = "";
+                this.txtGoToPage.Text = this.pagingManager.pagingCalculator.actual_currentPage.ToString();
                 this.txtChunkSize.Text = this.pagingManager.pagingCalculator.actual_rowXchunk.ToString();
-                this.lblCurrentPage.Text = this.pagingManager.pagingCalculator.actual_currentPage.ToString();
                 this.pagingManager.pagingCalculator.required_currentPage = this.pagingManager.pagingCalculator.actual_currentPage;
                 this.pagingManager.pagingCalculator.required_rowXchunk = this.pagingManager.pagingCalculator.actual_rowXchunk;
                 //---NB. crucial
@@ -224,8 +222,7 @@ namespace winFormsIntf
             this.lblPageBefore.BackColor = System.Drawing.Color.Transparent;
             //
             this.pagingManager.pagingCalculator.actual_currentPage = +1;// NB.---- +1
-            this.lblCurrentPage.Text =
-                this.currentPageText +
+            this.txtGoToPage.Text =
                 this.pagingManager.pagingCalculator.actual_currentPage.ToString();
             this.lblCurrentPage.Enabled = false;
             this.lblCurrentPage.BackColor = System.Drawing.Color.Transparent;
@@ -250,8 +247,7 @@ namespace winFormsIntf
             this.lblPageBefore.BackColor = System.Drawing.Color.GreenYellow;
             //
             this.pagingManager.pagingCalculator.actual_currentPage = this.pagingManager.pagingCalculator.actual_lastPage;// NB.----last
-            this.lblCurrentPage.Text =
-                this.currentPageText +
+            this.txtGoToPage.Text =
                 this.pagingManager.pagingCalculator.actual_currentPage.ToString();
             this.lblCurrentPage.Enabled = false;
             this.lblCurrentPage.BackColor = System.Drawing.Color.Transparent;
@@ -276,8 +272,7 @@ namespace winFormsIntf
             this.lblPageBefore.BackColor = System.Drawing.Color.GreenYellow;
             //
             this.pagingManager.pagingCalculator.actual_currentPage = this.pagingManager.pagingCalculator.required_currentPage;// NB.---- current
-            this.lblCurrentPage.Text =
-                this.currentPageText +
+            this.txtGoToPage.Text =
                 this.pagingManager.pagingCalculator.actual_currentPage.ToString();
             this.lblCurrentPage.Enabled = false;
             this.lblCurrentPage.BackColor = System.Drawing.Color.Transparent;

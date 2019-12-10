@@ -28,15 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrototype));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.idAutore = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nominativoAutore = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.imbDoSomething = new System.Windows.Forms.DataGridViewImageColumn();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nominativo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RowNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Read = new System.Windows.Forms.DataGridViewImageColumn();
+            this.imbDoSomething = new System.Windows.Forms.DataGridViewImageColumn();
             this.UpdateAbstract = new System.Windows.Forms.DataGridViewImageColumn();
             this.uscTimbro = new winFormsIntf.Timbro();
-            this.uscPager = new winFormsIntf.Pager();
+            this.interfacePager1 = new winFormsIntf.InterfacePager();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,10 +50,12 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idAutore,
-            this.nominativoAutore,
-            this.imbDoSomething,
+            this.id,
+            this.nominativo,
+            this.note,
+            this.RowNumber,
             this.Read,
+            this.imbDoSomething,
             this.UpdateAbstract});
             this.dataGridView1.Location = new System.Drawing.Point(12, 64);
             this.dataGridView1.Name = "dataGridView1";
@@ -57,20 +63,60 @@
             this.dataGridView1.Size = new System.Drawing.Size(883, 349);
             this.dataGridView1.TabIndex = 5;
             // 
-            // idAutore
+            // id
             // 
-            this.idAutore.DataPropertyName = "id";
-            this.idAutore.HeaderText = "ID Materia";
-            this.idAutore.Name = "idAutore";
-            this.idAutore.ReadOnly = true;
-            this.idAutore.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "id Autore";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.id.Width = 70;
             // 
-            // nominativoAutore
+            // nominativo
             // 
-            this.nominativoAutore.DataPropertyName = "nomeMateria";
-            this.nominativoAutore.HeaderText = "Materia";
-            this.nominativoAutore.Name = "nominativoAutore";
-            this.nominativoAutore.ReadOnly = true;
+            this.nominativo.DataPropertyName = "nominativo";
+            this.nominativo.HeaderText = "nominativo Autore";
+            this.nominativo.Name = "nominativo";
+            this.nominativo.ReadOnly = true;
+            this.nominativo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.nominativo.Width = 70;
+            // 
+            // note
+            // 
+            this.note.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.note.DataPropertyName = "note";
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.note.DefaultCellStyle = dataGridViewCellStyle3;
+            this.note.HeaderText = "note Autore";
+            this.note.Name = "note";
+            this.note.ReadOnly = true;
+            this.note.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.note.Width = 61;
+            // 
+            // RowNumber
+            // 
+            this.RowNumber.DataPropertyName = "RowNumber";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = null;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.RowNumber.DefaultCellStyle = dataGridViewCellStyle4;
+            this.RowNumber.HeaderText = "RowNumber in View";
+            this.RowNumber.Name = "RowNumber";
+            this.RowNumber.ReadOnly = true;
+            this.RowNumber.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.RowNumber.Width = 70;
+            // 
+            // Read
+            // 
+            this.Read.HeaderText = "Read";
+            this.Read.Image = ((System.Drawing.Image)(resources.GetObject("Read.Image")));
+            this.Read.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Read.Name = "Read";
+            this.Read.ReadOnly = true;
+            this.Read.Width = 40;
             // 
             // imbDoSomething
             // 
@@ -80,14 +126,6 @@
             this.imbDoSomething.Name = "imbDoSomething";
             this.imbDoSomething.ReadOnly = true;
             this.imbDoSomething.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Read
-            // 
-            this.Read.HeaderText = "Read";
-            this.Read.Image = ((System.Drawing.Image)(resources.GetObject("Read.Image")));
-            this.Read.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.Read.Name = "Read";
-            this.Read.ReadOnly = true;
             // 
             // UpdateAbstract
             // 
@@ -104,19 +142,19 @@
             this.uscTimbro.Size = new System.Drawing.Size(911, 60);
             this.uscTimbro.TabIndex = 0;
             // 
-            // uscPager
+            // interfacePager1
             // 
-            this.uscPager.Location = new System.Drawing.Point(208, 429);
-            this.uscPager.Name = "uscPager";
-            this.uscPager.Size = new System.Drawing.Size(505, 127);
-            this.uscPager.TabIndex = 6;
+            this.interfacePager1.Location = new System.Drawing.Point(158, 419);
+            this.interfacePager1.Name = "interfacePager1";
+            this.interfacePager1.Size = new System.Drawing.Size(472, 107);
+            this.interfacePager1.TabIndex = 6;
             // 
             // frmPrototype
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(981, 581);
-            this.Controls.Add(this.uscPager);
+            this.Controls.Add(this.interfacePager1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.uscTimbro);
             this.Name = "frmPrototype";
@@ -131,11 +169,13 @@
 
         private Timbro uscTimbro;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idAutore;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nominativoAutore;
-        private System.Windows.Forms.DataGridViewImageColumn imbDoSomething;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nominativo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn note;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RowNumber;
         private System.Windows.Forms.DataGridViewImageColumn Read;
+        private System.Windows.Forms.DataGridViewImageColumn imbDoSomething;
         private System.Windows.Forms.DataGridViewImageColumn UpdateAbstract;
-        private Pager uscPager;
+        private InterfacePager interfacePager1;
     }
 }

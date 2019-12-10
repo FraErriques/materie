@@ -10,38 +10,50 @@ namespace Entity_materie.BusinessEntities
     /// </summary>
     public class PagingCalculator
     {
-        private int rowInf;
-        private int rowSup;
-        private int rowPerChunk;
-        private int chunkRequired;
-        private int cardinalityOfRowsInWholeView;
-        private int lastPage;// updated at every change of chunk size.
+        public int actual_currentPage;
+        public int actual_rowXchunk;
+        public int actual_lastPage;
+        //
+        public int required_currentPage;// for validation
+        public int required_rowXchunk;// for validation
+        public int required_lastPage;
+        //
+        public int rowInf;// for the query of the required chunk.
+        public int rowSup;
+        //---the following data are permanent and for that they have only one version.
+        public string viewName;
+        public int cardinalityOfRowsInWholeView;
 
+
+        //Ctor
         public PagingCalculator( 
             int par_chunkRequired
             , int par_rowPerChunk
             , int par_cardinalityOfRowsInWholeView
           )
         {
-            this.rowPerChunk = par_rowPerChunk;
-            this.chunkRequired = par_chunkRequired;
+            this.actual_rowXchunk = this.required_rowXchunk = par_rowPerChunk;
+            this.required_currentPage = this.actual_currentPage = +1;// on Ctor().
             this.cardinalityOfRowsInWholeView = par_cardinalityOfRowsInWholeView;
             //
             this.setRowInfSup();
         }
 
+
+        // Ctor
         public PagingCalculator(
             int par_chunkRequired
             , double par_percentageOfViewPerChunk // eg. the chunk is desired to be the 16,32%(ViewRow cardinality)
             , int par_cardinalityOfRowsInWholeView
           )
         {
-            this.rowPerChunk = (int)System.Math.Ceiling(par_percentageOfViewPerChunk * par_cardinalityOfRowsInWholeView);
-            this.chunkRequired = par_chunkRequired;
+            this.actual_rowXchunk = (int)System.Math.Ceiling(par_percentageOfViewPerChunk * par_cardinalityOfRowsInWholeView);
+            this.required_currentPage = this.actual_currentPage = +1;// on Ctor().
             this.cardinalityOfRowsInWholeView = par_cardinalityOfRowsInWholeView;
             //
             this.setRowInfSup();
         }
+
 
 
         public void updateRequest(
@@ -50,28 +62,33 @@ namespace Entity_materie.BusinessEntities
             // , int par_cardinalityOfRowsInWholeView this is fixed, on the same View.
         )
         {
-            this.chunkRequired = par_chunkRequired;
-            this.rowPerChunk = par_rowPerChunk;
+            this.required_currentPage = par_chunkRequired;
+            this.actual_rowXchunk = par_rowPerChunk;
             this.setRowInfSup();// update rowBoundaries (Inf, Sup).
         }// updateRequest
 
 
+
         private void setRowInfSup()
         {
-            this.lastPage = (int)System.Math.Ceiling(((double)this.cardinalityOfRowsInWholeView / (double)this.rowPerChunk));
-            this.rowInf = this.rowPerChunk * (this.chunkRequired - 1) + 1;// first row, after the last row of previous chunk.
-            this.rowSup = this.rowInf + this.rowPerChunk - 1;//last row of the required chunk; i.e. the first one of the successive chunk minus one.
+            
+            this.actual_lastPage = (int)System.Math.Ceiling(((double)this.cardinalityOfRowsInWholeView / (double)this.actual_rowXchunk ));
+            this.rowInf = this.actual_rowXchunk * (this.required_currentPage - 1) + 1;// first row, after the last row of previous chunk.
+            this.rowSup = this.rowInf + this.actual_rowXchunk - 1;//last row of the required chunk; i.e. the first one of the
+            // successive chunk minus one.
         }//setRowInfSup
 
 
+        // evaluate the feasibility of a request.
         public bool tryEvaluateScenario(
             int requiredRowXchunk
             , int requiredPage
+            , int par_cardinalityOfRowsInWholeView
             )
         {
             bool res = false;//init to invalid.
             //
-            int lastPageInScenario = (int)System.Math.Ceiling(((double)this.cardinalityOfRowsInWholeView / (double)requiredRowXchunk));
+            int lastPageInScenario = (int)System.Math.Ceiling(((double)par_cardinalityOfRowsInWholeView / (double)requiredRowXchunk));
             if (requiredPage < +1 || requiredPage > lastPageInScenario)
             { res = false; }
             else
@@ -81,6 +98,7 @@ namespace Entity_materie.BusinessEntities
         }//setRowInfSup
 
 
+        // get the picture of present scenario.
         public void getRowInfSup(
             out int outParRowInf
             , out int outParRowSup
@@ -89,8 +107,9 @@ namespace Entity_materie.BusinessEntities
         {
             outParRowInf = this.rowInf;
             outParRowSup = this.rowSup;
-            outParLastPage = this.lastPage;
+            outParLastPage = this.actual_lastPage;
         }//getRowInfSup
+
 
     }// class
 
