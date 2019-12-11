@@ -56,10 +56,10 @@
     <Compile Include="InterfacePager.Designer.cs">
       <DependentUpon>InterfacePager.cs</DependentUpon>
     </Compile>
-    <Compile Include="Pager.cs">
+    <Compile Include="prototype\Pager.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Pager.Designer.cs">
+    <Compile Include="prototype\Pager.Designer.cs">
       <DependentUpon>Pager.cs</DependentUpon>
     </Compile>
     <Compile Include="zonaRiservata\frmMappa.cs">
@@ -152,7 +152,7 @@
     <EmbeddedResource Include="InterfacePager.resx">
       <DependentUpon>InterfacePager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pager.resx">
+    <EmbeddedResource Include="prototype\Pager.resx">
       <DependentUpon>Pager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="zonaRiservata\frmMappa.resx">

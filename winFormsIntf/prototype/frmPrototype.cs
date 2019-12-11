@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 
 
-namespace winFormsIntf
+namespace winFormsIntf.prototype
 {
 
 
@@ -30,10 +30,9 @@ namespace winFormsIntf
             InitializeComponent();
             //
             //------start example use of Cacher-PagingCalculator-Pager--------------------------
-            int rowCardinalityTotalView;// TODO
+            int rowCardinalityTotalView;
             string viewName;
             //
-            //Entity_materie.BusinessEntities.Cacher cacherInstance;
             int par_lastPage;
             System.Data.DataTable chunkDataSource;
             Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
@@ -44,6 +43,9 @@ namespace winFormsIntf
                 , 5 // default
                 , out rowCardinalityTotalView
                 , out viewName
+                , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
+                    Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore
+                  )
                 , out par_lastPage
                 , out chunkDataSource
                 , out pagingManager
@@ -54,14 +56,6 @@ namespace winFormsIntf
                 this.dataGridView1//  backdoor, to give the PagerInterface-control the capability of updating the grid.
                 , pagingManager
             );// callBack in Interface::Pager
-
-             //   par_lastPage
-             //   , rowCardinalityTotalView
-             //   , viewName
-             //   , this.uscPager.pagingCalculator
-             //   , pm.cacherInstance
-             //   , Entity_materie.BusinessEntities.PagingManager pagingManager;// the InterfacePager will need it.
-             //);
             this.dataGridView1.DataSource = chunkDataSource;// fill dataGrid
         }// Ctor()
 

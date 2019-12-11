@@ -148,7 +148,7 @@ namespace winFormsIntf
             }
             else if (curWinType == winFormsIntf.windowWarehouse.CurrentWindowType.frmPrototype)
             {
-                res = new winFormsIntf.frmPrototype();
+                res = new winFormsIntf.prototype.frmPrototype();
             }
             else if (curWinType == winFormsIntf.windowWarehouse.CurrentWindowType.frmUpdateAbstract)
             {

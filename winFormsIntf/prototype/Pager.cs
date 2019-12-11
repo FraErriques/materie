@@ -6,7 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-namespace winFormsIntf
+namespace winFormsIntf.prototype
 {
 
     public partial class Pager : UserControl

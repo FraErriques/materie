@@ -71,7 +71,6 @@ namespace Entity_materie.BusinessEntities
 
         private void setRowInfSup()
         {
-            
             this.actual_lastPage = (int)System.Math.Ceiling(((double)this.cardinalityOfRowsInWholeView / (double)this.actual_rowXchunk ));
             this.rowInf = this.actual_rowXchunk * (this.required_currentPage - 1) + 1;// first row, after the last row of previous chunk.
             this.rowSup = this.rowInf + this.actual_rowXchunk - 1;//last row of the required chunk; i.e. the first one of the

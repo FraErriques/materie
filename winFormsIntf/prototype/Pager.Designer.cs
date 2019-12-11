@@ -1,4 +1,4 @@
-﻿namespace winFormsIntf
+﻿namespace winFormsIntf.prototype
 {
     partial class Pager
     {

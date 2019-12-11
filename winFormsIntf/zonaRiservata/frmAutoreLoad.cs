@@ -209,12 +209,15 @@ namespace winFormsIntf
         }// btnPublishMateriaFromCombo_Click
 
 
+
+
         /// <summary>
         /// this method populates the grdView by means of a Proxy which loads all Authors who published at least one
         /// paper on the subject( i.e. Materia) selected in the Combo. From the grid the user will be able to select the Materia-id
         /// for writing it down in the DoubleKey. Each row in the grd selects the same Materia, since all rows contain papers on that subject.
         /// It is exactly the same as selecting the Materia from the combo( with the upper button). The auxiliary grid on the right is intended as 
         /// a help to the user, to remember who wrote on the specified subject matter( i.e. Materia).
+        /// The whereTail to pass to the View_creator is:   "and dm.ref_materia_id=int_sector  and mate.id=int_sector"
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -223,7 +226,7 @@ namespace winFormsIntf
             int int_sector = default(int);
             try//---if ddlMaterie.SelectedItem==null will throw.
             {
-                int_sector = ((winFormsIntf.App_Code.GenericCoupleKeyValue)(this.ddlMaterie.SelectedItem)).getId(); 
+                int_sector = ((winFormsIntf.App_Code.GenericCoupleKeyValue)(this.ddlMaterie.SelectedItem)).getId();
             }
             catch (System.Exception ex)
             {
@@ -233,10 +236,52 @@ namespace winFormsIntf
             finally
             {   // NB. int_sector = -1;// int_sector<0 means search Authors who wrote on whatever Subject.
                 // on index==0 query su tutte le materie. The id starts from 1. 0 is "seleziona materia".
-                System.Data.DataTable dt = Entity_materie.Proxies.usp_autore_LOAD_whoWroteOnMateria_SERVICE.usp_autore_LOAD_whoWroteOnMateria(int_sector);
-                this.grdAutoriMateria.DataSource = dt;
+                string where_tail;
+                if (int_sector > 0)
+                {
+                    where_tail = "and dm.ref_materia_id="
+                        + int_sector.ToString()
+                        + " and mate.id="
+                        + int_sector.ToString();
+                }
+                else
+                {
+                    where_tail = "";
+                }
+                //string viewName = 
+                //------start example use of Cacher-PagingCalculator-Pager--------------------------
+                int rowCardinalityTotalView;
+                string viewName;// out par
+                //
+                //Entity_materie.BusinessEntities.Cacher cacherInstance;
+                int par_lastPage;
+                System.Data.DataTable chunkDataSource;
+                Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
+                //
+                Process_materie.paginazione.costruzionePager.primaCostruzionePager(
+                    "AutoriByArticoliPubblicati" // view theme
+                    , where_tail
+                    , 5 // default
+                    , out rowCardinalityTotalView
+                    , out viewName
+                    , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
+                        Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autoreOnMateria_SERVICE.usp_ViewCacher_specific_CREATE_autoreOnMateria
+                      )
+                    , out par_lastPage
+                    , out chunkDataSource
+                    , out pagingManager
+                );
+
+                //
+                this.uscInterfacePager_AutoreOnMateria.Init(
+                    this.grdAutoriMateria//  backdoor, to give the PagerInterface-control the capability of updating the grid.
+                    , pagingManager
+                );// callBack in Interface::Pager
+                this.grdAutoriMateria.DataSource = chunkDataSource;// fill dataGrid
             }
         }// btnAutoriByArticoliPubblicati_Click()
+
+
 
 
         /// <summary>

@@ -16,6 +16,7 @@ namespace Process_materie.paginazione
             //---out
             , out int rowCardinalityTotalView
             , out string viewName // the actual whole name in the db. Useful for db-administrators.
+            , Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder proxyPointer // the ProxyPointer
             , out int par_lastPage
             , out System.Data.DataTable chunkDataSource
             , out Entity_materie.BusinessEntities.PagingManager pm
@@ -24,8 +25,7 @@ namespace Process_materie.paginazione
             pm = new Entity_materie.BusinessEntities.PagingManager(//----NB. out--------------------
                 viewTheme
                 , ViewWhereTail
-                , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
-                    Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore)
+                , proxyPointer
                 , rowXchunk // default rowXchunk, on first call.
             );
             //--- out -----
