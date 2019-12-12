@@ -58,7 +58,8 @@ namespace winFormsIntf
         private void goProxyQueryAutoriByNominativoNote( object sender, EventArgs e)
         {
             string queryTail;
-            // Esempio di come deve diventare la queryTail: predisporre due textBox multiline per raccogliere "note" e "nominativo" like% ed "and".
+            // Esempio di come deve diventare la queryTail: predisporre due textBox multiline 
+            // per raccogliere "note" e "nominativo" like% ed "and".
             /*  	where 
 					note like '%cant%'
 					and nominativo like '%Galil%'
@@ -85,26 +86,54 @@ namespace winFormsIntf
                 queryTail += "%' ";
             }// else the field queryTail stays as queryTail = "";// init or as set by the previous statement.
             //
-            //---manage the Cacher here.
-            Entity_materie.BusinessEntities.ViewDynamics.accessPoint("Autore");// view theme.
-            string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;// get the View name
-            CacherDbView cacherDbView = new CacherDbView(
-                queryTail
-                ,Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator( designedViewName)
-                ,new CacherDbView.SpecificViewBuilder(// delegate to the right View Proxy.
+            //
+            //------start example use of Cacher-PagingCalculator-Pager--------------------------
+            int rowCardinalityTotalView;// out par
+            string viewName;// out par
+            int par_lastPage;// out par
+            System.Data.DataTable chunkDataSource;// out par
+            Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
+            //
+            Process_materie.paginazione.costruzionePager.primaCostruzionePager(
+                "AutOnNomeNote" // view theme
+                , queryTail // whereTail
+                , 5 // default
+                , out rowCardinalityTotalView
+                , out viewName
+                , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
                     Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore
-                )
+                  )
+                , out par_lastPage
+                , out chunkDataSource
+                , out pagingManager
             );
-            if (null != cacherDbView)
-            {
-                this.grdAutoriNominativoNote.DataSource = cacherDbView.GetChunk(
-                    1 // NB : does not paginate; so you will get all the View in a single chunk.
-                );
-            }
-            else
-            {
-                throw new System.Exception("Presentation::autoreLoad::goProxyQueryAutoriByNominativoNote() failed CacherDbView Ctor. ");
-            }
+            this.uscInterfacePager_AutoriNominativoNote.Init(
+                this.grdAutoriNominativoNote//  backdoor, to give the PagerInterface-control the capability of updating the grid.
+                , pagingManager
+            );// callBack in Interface::Pager
+            this.grdAutoriNominativoNote.DataSource = chunkDataSource;// fill dataGrid
+            //
+
+            ////-ex--manage the Cacher here.
+            //Entity_materie.BusinessEntities.ViewDynamics.accessPoint("Autore");// view theme.
+            //string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;// get the View name
+            //CacherDbView cacherDbView = new CacherDbView(
+            //    queryTail
+            //    ,Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator( designedViewName)
+            //    ,new CacherDbView.SpecificViewBuilder(// delegate to the right View Proxy.
+            //        Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autore_SERVICE.usp_ViewCacher_specific_CREATE_autore
+            //    )
+            //);
+            //if (null != cacherDbView)
+            //{
+            //    this.grdAutoriNominativoNote.DataSource = cacherDbView.GetChunk(
+            //        1 // NB : does not paginate; so you will get all the View in a single chunk.
+            //    );
+            //}
+            //else
+            //{
+            //    throw new System.Exception("Presentation::autoreLoad::goProxyQueryAutoriByNominativoNote() failed CacherDbView Ctor. ");
+            //}
         }// end goProxyQueryAutoriByNominativoNote()
 
 
@@ -212,12 +241,24 @@ namespace winFormsIntf
 
 
         /// <summary>
-        /// this method populates the grdView by means of a Proxy which loads all Authors who published at least one
+        /// NB. the View-caching technique is implemented in two phases here. The viewName_one contains the AutoreOnMateria
+        /// selected distinct, since each Autore can publish multiple papers on the same subject but we want only a row, like
+        /// Eulero on Analysis. The "distinct" mechanism is not compatible with the RowNumber addition since the RowNumber
+        /// renders every row unique. So I implemented this into two phases: a first view selectedDistinct and a second one which
+        /// adds the RowNumber, which is necessaty for caching&paging.
+        /// An immportant note: subqueries support the use of a primary query, whose resultset is usable in the "where" clause.
+        /// If one instead needs to use such resultset in the "from" clause, a view is necessary to store such resultset. So we did.
+        /// 
+        /// This method populates the grdView by means of a Proxy which loads all Authors who published at least one
         /// paper on the subject( i.e. Materia) selected in the Combo. From the grid the user will be able to select the Materia-id
-        /// for writing it down in the DoubleKey. Each row in the grd selects the same Materia, since all rows contain papers on that subject.
-        /// It is exactly the same as selecting the Materia from the combo( with the upper button). The auxiliary grid on the right is intended as 
+        /// for writing it down in the DoubleKey. 
+        /// Each row in the grd selects the same Materia, since all rows contain papers on that subject.
+        /// It is exactly the same as selecting the Materia from the combo( with the upper button).
+        /// The auxiliary grid on the right is intended as 
         /// a help to the user, to remember who wrote on the specified subject matter( i.e. Materia).
-        /// The whereTail to pass to the View_creator is:   "and dm.ref_materia_id=int_sector  and mate.id=int_sector"
+        /// 
+        /// The whereTail to pass to the View_creator_one is:   "and dm.ref_materia_id=int_sector  and mate.id=int_sector"
+        /// The View_creator_two takes the viewName both of the viewOne and of the viewTwo. There's no "whereTail" here.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -237,47 +278,56 @@ namespace winFormsIntf
             {   // NB. int_sector = -1;// int_sector<0 means search Authors who wrote on whatever Subject.
                 // on index==0 query su tutte le materie. The id starts from 1. 0 is "seleziona materia".
                 string where_tail;
-                if (int_sector > 0)
-                {
+                if (int_sector > 0)// elif (int_sector <= 0) we are requiring:"alla Authors who wrote
+                {// at least one paper on whatever subject." 
                     where_tail = "and dm.ref_materia_id="
                         + int_sector.ToString()
                         + " and mate.id="
                         + int_sector.ToString();
                 }
                 else
-                {
+                {//NB. do not pass null to the Proxy.
                     where_tail = "";
                 }
-                //string viewName = 
-                //------start example use of Cacher-PagingCalculator-Pager--------------------------
-                int rowCardinalityTotalView;
-                string viewName;// out par
                 //
-                //Entity_materie.BusinessEntities.Cacher cacherInstance;
+                Entity_materie.BusinessEntities.ViewDynamics.accessPoint("autOnMat_uno");
+                string viewName_uno = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;
+                int resCreationView_one =
+                Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autOnMat_uno_SERVICE.usp_ViewCacher_specific_CREATE_autOnMat_uno(
+                    where_tail
+                    , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator( viewName_uno)
+                );
+                //---view_due will be build adding RowNumber to view_uno record.
+                int rowCardinalityTotalView;
                 int par_lastPage;
+                string viewName_due;// out par
                 System.Data.DataTable chunkDataSource;
                 Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
                 //
-                Process_materie.paginazione.costruzionePager.primaCostruzionePager(
-                    "AutoriByArticoliPubblicati" // view theme
-                    , where_tail
+                where_tail = viewName_uno;// NB.!! a necessary trick, to use a standard call!!
+                Process_materie.paginazione.costruzionePager.primaCostruzionePager_inDoubleSplit(
+                    Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(viewName_uno)
+                    // , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(viewName_due) down
                     , 5 // default
                     , out rowCardinalityTotalView
-                    , out viewName
+                    , out viewName_due
                     , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
-                        Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autoreOnMateria_SERVICE.usp_ViewCacher_specific_CREATE_autoreOnMateria
+                        Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_autOnMat_due_SERVICE.
+                        usp_ViewCacher_specific_CREATE_autOnMat_due
                       )
                     , out par_lastPage
                     , out chunkDataSource
                     , out pagingManager
+                    //------
+                    ,true  // is in DoubleSplit
                 );
-
                 //
                 this.uscInterfacePager_AutoreOnMateria.Init(
                     this.grdAutoriMateria//  backdoor, to give the PagerInterface-control the capability of updating the grid.
                     , pagingManager
                 );// callBack in Interface::Pager
-                this.grdAutoriMateria.DataSource = chunkDataSource;// fill dataGrid
+                
+                this.grdAutoriMateria.DataSource = chunkDataSource;// fill dataGrid with View_due !
             }
         }// btnAutoriByArticoliPubblicati_Click()
 

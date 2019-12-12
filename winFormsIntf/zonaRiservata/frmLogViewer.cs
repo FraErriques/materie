@@ -34,5 +34,44 @@ namespace winFormsIntf
         }// frmLogViewer_FormClosed
 
 
+
+        /// <summary>
+        ///  sintassi richiesta dalla whereClause della stored che crea la viewLog
+        ///  si chiama [usp_ViewCacher_specific_CREATE_logLocalhost]
+        ///  
+        ///  ' where 
+        ///     convert(datetime,substring([when],1,8))>=convert(datetime,''20191204'')
+        ///     and convert(datetime,substring([when],1,8))<=convert(datetime,''20191205'') 
+        ///    order by [when] desc '
+        ///  
+        ///  
+        /// 
+        /// 
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnLogQuery_Click(object sender, EventArgs e)
+        {
+            System.DateTime startDate;
+            System.DateTime endDate;
+            //
+            startDate = this.dtpStartDate.Value;
+            endDate = System.DateTime.Now;
+            //
+            string[] startStr = startDate.ToShortDateString().Split('/');
+            string startStr_F_ = startStr[2] + startStr[1] + startStr[0];
+            //
+            string[] endStr = endDate.ToShortDateString().Split('/');
+            string endStr_F_ = endStr[2] + endStr[1] + endStr[0];
+            //
+            this.grdLoggingDb.DataSource =
+                Entity_materie.Proxies.LogViewer_win_materie_SERVICE.LogViewer_win_materie(
+                    startStr_F_
+                    ,endStr_F_
+                );// dataBound.
+        }// QueryCommit
+
+
     }// class
 }// nmsp

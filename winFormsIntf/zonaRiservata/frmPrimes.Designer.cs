@@ -30,6 +30,7 @@
         {
             this.uscTimbro = new winFormsIntf.Timbro();
             this.grdPrimes = new System.Windows.Forms.DataGridView();
+            this.uscInterfacePager_Prime = new winFormsIntf.InterfacePager();
             ((System.ComponentModel.ISupportInitialize)(this.grdPrimes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,11 +49,19 @@
             this.grdPrimes.Size = new System.Drawing.Size(915, 402);
             this.grdPrimes.TabIndex = 1;
             // 
+            // uscInterfacePager_Prime
+            // 
+            this.uscInterfacePager_Prime.Location = new System.Drawing.Point(135, 483);
+            this.uscInterfacePager_Prime.Name = "uscInterfacePager_Prime";
+            this.uscInterfacePager_Prime.Size = new System.Drawing.Size(591, 107);
+            this.uscInterfacePager_Prime.TabIndex = 2;
+            // 
             // frmPrimes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(980, 489);
+            this.ClientSize = new System.Drawing.Size(980, 608);
+            this.Controls.Add(this.uscInterfacePager_Prime);
             this.Controls.Add(this.grdPrimes);
             this.Controls.Add(this.uscTimbro);
             this.Name = "frmPrimes";
@@ -66,6 +75,8 @@
         #endregion
 
         private Timbro uscTimbro;
+        private InterfacePager uscInterfacePager_Prime;
         private System.Windows.Forms.DataGridView grdPrimes;
-    }
-}
+        
+    }// class
+}// nmsp

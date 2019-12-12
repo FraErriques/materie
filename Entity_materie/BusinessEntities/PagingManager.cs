@@ -53,6 +53,43 @@ namespace Entity_materie.BusinessEntities
         }// Ctor
 
 
+        public PagingManager(
+            string view_one
+            // , string view_two DON'T ask for it. Here is the place of its creation.
+            , Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder viewBuilderProxyFpointer
+            , int rowXchunk
+            //-------
+            , bool isInDoubleSplit
+         )
+        {//--------- isInDoubleSplit---------------------
+            string view_two = "AutOnM_due_";// theme
+            Entity_materie.BusinessEntities.ViewDynamics.accessPoint(view_two);// view theme. NB. decorate it!
+            this.viewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;// get the View name
+            cacherInstance = new Entity_materie.BusinessEntities.Cacher(
+                 viewBuilderProxyFpointer
+                , view_one// this one already has [..]
+                , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(this.viewName)
+                , true // isInDoubleSplit
+            );
+            this.rowCardinalityTotalView = cacherInstance.get_rowCardinalityTotalView();
+            this.pagingCalculator = new PagingCalculator(
+                1 // first chunk required, onCtor()
+                , rowXchunk
+                , cacherInstance.get_rowCardinalityTotalView()
+            );
+            //
+            this.pagingCalculator.getRowInfSup(
+                out pagingCalculator.rowInf,
+                out pagingCalculator.rowSup,
+                out pagingCalculator.actual_lastPage);
+            this.pagingCalculator.required_lastPage = this.pagingCalculator.actual_lastPage;// align.
+            this.chunkDataSource = cacherInstance.getChunk(
+                1 // first row
+                , rowXchunk // last row: in the first chunk lastRow==rowXchunk
+            );
+        }// Ctor
+
+
 
     }// class
 

@@ -22,6 +22,36 @@ namespace winFormsIntf
             //
             //// init graphics
             InitializeComponent();
+            //
+            //---load Primes just onFormLoad ,so onCtor().
+            //
+            //------start example use of Cacher-PagingCalculator-Pager--------------------------
+            int rowCardinalityTotalView;// out par
+            string viewName;// out par
+            int par_lastPage;// out par
+            System.Data.DataTable chunkDataSource;// out par
+            Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
+            string queryTail = "";
+            //
+            Process_materie.paginazione.costruzionePager.primaCostruzionePager(
+                "Prime" // view theme
+                , queryTail // whereTail
+                , 5 // default
+                , out rowCardinalityTotalView
+                , out viewName
+                , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
+                    Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_Primes_SERVICE.usp_ViewCacher_specific_CREATE_Primes
+                  )
+                , out par_lastPage
+                , out chunkDataSource
+                , out pagingManager
+            );
+            this.uscInterfacePager_Prime.Init(
+                this.grdPrimes //  backdoor, to give the PagerInterface-control the capability of updating the grid.
+                , pagingManager
+            );// callBack in Interface::Pager
+            this.grdPrimes.DataSource = chunkDataSource;// fill dataGrid
+            //
         }// Ctor()
 
 

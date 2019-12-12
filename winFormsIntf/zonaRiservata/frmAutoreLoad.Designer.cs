@@ -47,6 +47,7 @@
             this.grpDoubleKey = new System.Windows.Forms.GroupBox();
             this.uscTimbro = new winFormsIntf.Timbro();
             this.uscInterfacePager_AutoreOnMateria = new winFormsIntf.InterfacePager();
+            this.uscInterfacePager_AutoriNominativoNote = new winFormsIntf.InterfacePager();
             ((System.ComponentModel.ISupportInitialize)(this.grdAutoriNominativoNote)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdAutoriMateria)).BeginInit();
             this.grpDoubleKey.SuspendLayout();
@@ -221,10 +222,17 @@
             // 
             // uscInterfacePager_AutoreOnMateria
             // 
-            this.uscInterfacePager_AutoreOnMateria.Location = new System.Drawing.Point(448, 383);
+            this.uscInterfacePager_AutoreOnMateria.Location = new System.Drawing.Point(413, 382);
             this.uscInterfacePager_AutoreOnMateria.Name = "uscInterfacePager_AutoreOnMateria";
-            this.uscInterfacePager_AutoreOnMateria.Size = new System.Drawing.Size(473, 107);
+            this.uscInterfacePager_AutoreOnMateria.Size = new System.Drawing.Size(542, 107);
             this.uscInterfacePager_AutoreOnMateria.TabIndex = 23;
+            // 
+            // uscInterfacePager_AutoriNominativoNote
+            // 
+            this.uscInterfacePager_AutoriNominativoNote.Location = new System.Drawing.Point(390, 799);
+            this.uscInterfacePager_AutoriNominativoNote.Name = "uscInterfacePager_AutoriNominativoNote";
+            this.uscInterfacePager_AutoriNominativoNote.Size = new System.Drawing.Size(591, 107);
+            this.uscInterfacePager_AutoriNominativoNote.TabIndex = 24;
             // 
             // frmAutoreLoad
             // 
@@ -232,6 +240,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSkyBlue;
             this.ClientSize = new System.Drawing.Size(1004, 968);
+            this.Controls.Add(this.uscInterfacePager_AutoriNominativoNote);
             this.Controls.Add(this.uscInterfacePager_AutoreOnMateria);
             this.Controls.Add(this.grpDoubleKey);
             this.Controls.Add(this.grdAutoriMateria);
@@ -261,6 +270,8 @@
 
         private Timbro uscTimbro;
         private InterfacePager uscInterfacePager_AutoreOnMateria;
+        private InterfacePager uscInterfacePager_AutoriNominativoNote;
+        //
         private System.Windows.Forms.Button btnAutoriNominativoNote;
         private System.Windows.Forms.Label lblNoteAutore;
         private System.Windows.Forms.Label lblNominativoAutore;
@@ -279,6 +290,7 @@
         private System.Windows.Forms.Label lblChiaveAutore;
         private System.Windows.Forms.GroupBox grpDoubleKey;
         
+        
 
-    }
-}
+    }// class
+}// nmsp

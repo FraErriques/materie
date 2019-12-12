@@ -140,7 +140,7 @@
             // lblRowsInView
             // 
             this.lblRowsInView.AutoSize = true;
-            this.lblRowsInView.Location = new System.Drawing.Point(258, 14);
+            this.lblRowsInView.Location = new System.Drawing.Point(359, 14);
             this.lblRowsInView.Name = "lblRowsInView";
             this.lblRowsInView.Size = new System.Drawing.Size(124, 13);
             this.lblRowsInView.TabIndex = 12;
@@ -172,7 +172,7 @@
             this.Controls.Add(this.lblLastPage);
             this.Controls.Add(this.lblFirstPage);
             this.Name = "InterfacePager";
-            this.Size = new System.Drawing.Size(473, 107);
+            this.Size = new System.Drawing.Size(591, 107);
             this.ResumeLayout(false);
             this.PerformLayout();
 

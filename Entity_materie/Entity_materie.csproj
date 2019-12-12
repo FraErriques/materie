@@ -50,6 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxies\directSql_createView_.cs" />
     <Compile Include="Proxies\LogViewer_web_materie_SERVICE.cs" />
+    <Compile Include="Proxies\LogViewer_win_materie_SERVICE.cs" />
     <Compile Include="Proxies\usp_autore_INSERT_SERVICE.cs" />
     <Compile Include="Proxies\usp_autore_LOAD_nominativo_SERVICE.cs" />
     <Compile Include="Proxies\usp_autore_LOAD_SERVICE.cs" />
@@ -80,7 +81,8 @@
     <Compile Include="Proxies\usp_ViewCacher_generic_DROP_SERVICE.cs" />
     <Compile Include="Proxies\usp_ViewCacher_generic_LOAD_interval_SERVICE.cs" />
     <Compile Include="Proxies\usp_ViewCacher_generic_LOAD_length_SERVICE.cs" />
-    <Compile Include="Proxies\usp_ViewCacher_specific_CREATE_autoreOnMateria_SERVICE.cs" />
+    <Compile Include="Proxies\usp_ViewCacher_specific_CREATE_autOnMat_due_SERVICE.cs" />
+    <Compile Include="Proxies\usp_ViewCacher_specific_CREATE_autOnMat_uno_SERVICE.cs" />
     <Compile Include="Proxies\usp_ViewCacher_specific_CREATE_autore_SERVICE.cs" />
     <Compile Include="Proxies\usp_ViewCacher_specific_CREATE_documento_SERVICE.cs" />
     <Compile Include="Proxies\usp_ViewCacher_specific_CREATE_Primes_SERVICE.cs" />

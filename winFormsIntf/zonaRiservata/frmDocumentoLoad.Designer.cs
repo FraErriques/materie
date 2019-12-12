@@ -44,6 +44,7 @@
             this.lblMaterie = new System.Windows.Forms.Label();
             this.lblPageLogic = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.uscInterfacePager_Documento = new winFormsIntf.InterfacePager();
             ((System.ComponentModel.ISupportInitialize)(this.grdDocumento)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,7 +63,7 @@
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(9, 665);
+            this.lblStatus.Location = new System.Drawing.Point(27, 748);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(30, 13);
             this.lblStatus.TabIndex = 2;
@@ -186,11 +187,19 @@
             this.textBox1.Text = "Tutti i filtri di ricerca sono opzionali e combinati fra loro in \"AND\". Altriment" +
     "i si verificano prodotti cartesiani, dato il tipo di query.";
             // 
+            // uscInterfacePager_Documento
+            // 
+            this.uscInterfacePager_Documento.Location = new System.Drawing.Point(113, 654);
+            this.uscInterfacePager_Documento.Name = "uscInterfacePager_Documento";
+            this.uscInterfacePager_Documento.Size = new System.Drawing.Size(591, 107);
+            this.uscInterfacePager_Documento.TabIndex = 15;
+            // 
             // frmDocumentoLoad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(978, 696);
+            this.ClientSize = new System.Drawing.Size(978, 774);
+            this.Controls.Add(this.uscInterfacePager_Documento);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lblPageLogic);
             this.Controls.Add(this.lblMaterie);
@@ -219,6 +228,8 @@
 
         private System.Windows.Forms.DataGridView grdDocumento;
         private Timbro uscTimbro;
+        private InterfacePager uscInterfacePager_Documento;
+        //
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.TextBox txtNominativoAutore;
         private System.Windows.Forms.TextBox txtNoteAutore;
@@ -233,5 +244,6 @@
         private System.Windows.Forms.Label lblMaterie;
         private System.Windows.Forms.Label lblPageLogic;
         private System.Windows.Forms.TextBox textBox1;
+        
     }
 }
