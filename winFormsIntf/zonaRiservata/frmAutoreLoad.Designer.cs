@@ -28,6 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAutoreLoad));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnAutoriNominativoNote = new System.Windows.Forms.Button();
             this.lblNoteAutore = new System.Windows.Forms.Label();
             this.lblNominativoAutore = new System.Windows.Forms.Label();
@@ -45,9 +50,15 @@
             this.lblChiaveMateria = new System.Windows.Forms.Label();
             this.lblChiaveAutore = new System.Windows.Forms.Label();
             this.grpDoubleKey = new System.Windows.Forms.GroupBox();
-            this.uscTimbro = new winFormsIntf.Timbro();
-            this.uscInterfacePager_AutoreOnMateria = new winFormsIntf.InterfacePager();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nominativo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.write = new System.Windows.Forms.DataGridViewImageColumn();
+            this.update = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Row = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uscInterfacePager_AutoriNominativoNote = new winFormsIntf.InterfacePager();
+            this.uscInterfacePager_AutoreOnMateria = new winFormsIntf.InterfacePager();
+            this.uscTimbro = new winFormsIntf.Timbro();
             ((System.ComponentModel.ISupportInitialize)(this.grdAutoriNominativoNote)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdAutoriMateria)).BeginInit();
             this.grpDoubleKey.SuspendLayout();
@@ -100,12 +111,19 @@
             // grdAutoriNominativoNote
             // 
             this.grdAutoriNominativoNote.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdAutoriNominativoNote.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.id,
+            this.nominativo,
+            this.note,
+            this.write,
+            this.update,
+            this.Row});
             this.grdAutoriNominativoNote.Location = new System.Drawing.Point(12, 616);
             this.grdAutoriNominativoNote.Name = "grdAutoriNominativoNote";
             this.grdAutoriNominativoNote.ReadOnly = true;
             this.grdAutoriNominativoNote.Size = new System.Drawing.Size(909, 163);
             this.grdAutoriNominativoNote.TabIndex = 11;
-            this.grdAutoriNominativoNote.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdAutoriNominativoNote_CellDoubleClick);
+            this.grdAutoriNominativoNote.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdAutoriNominativoNote_CellClick);
             // 
             // txtChiaveMateria
             // 
@@ -213,12 +231,89 @@
             this.grpDoubleKey.TabStop = false;
             this.grpDoubleKey.Text = "DoubleKey building and verification";
             // 
-            // uscTimbro
+            // id
             // 
-            this.uscTimbro.Location = new System.Drawing.Point(12, 12);
-            this.uscTimbro.Name = "uscTimbro";
-            this.uscTimbro.Size = new System.Drawing.Size(926, 47);
-            this.uscTimbro.TabIndex = 0;
+            this.id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.id.DataPropertyName = "id";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.id.DefaultCellStyle = dataGridViewCellStyle1;
+            this.id.HeaderText = "id";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.id.Width = 21;
+            // 
+            // nominativo
+            // 
+            this.nominativo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.nominativo.DataPropertyName = "nominativo";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.nominativo.DefaultCellStyle = dataGridViewCellStyle2;
+            this.nominativo.HeaderText = "Autore";
+            this.nominativo.MinimumWidth = 40;
+            this.nominativo.Name = "nominativo";
+            this.nominativo.ReadOnly = true;
+            this.nominativo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.nominativo.Width = 44;
+            // 
+            // note
+            // 
+            this.note.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.note.DataPropertyName = "note";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.Format = "some notes as example";
+            dataGridViewCellStyle3.NullValue = null;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.note.DefaultCellStyle = dataGridViewCellStyle3;
+            this.note.HeaderText = "note Autore";
+            this.note.MinimumWidth = 80;
+            this.note.Name = "note";
+            this.note.ReadOnly = true;
+            this.note.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.note.Width = 80;
+            // 
+            // write
+            // 
+            this.write.HeaderText = "write";
+            this.write.Image = ((System.Drawing.Image)(resources.GetObject("write.Image")));
+            this.write.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.write.Name = "write";
+            this.write.ReadOnly = true;
+            this.write.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // update
+            // 
+            this.update.HeaderText = "update";
+            this.update.Image = ((System.Drawing.Image)(resources.GetObject("update.Image")));
+            this.update.Name = "update";
+            this.update.ReadOnly = true;
+            // 
+            // Row
+            // 
+            this.Row.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Row.DataPropertyName = "RowNumber";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = null;
+            this.Row.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Row.HeaderText = "Row";
+            this.Row.MinimumWidth = 20;
+            this.Row.Name = "Row";
+            this.Row.ReadOnly = true;
+            this.Row.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Row.Width = 35;
+            // 
+            // uscInterfacePager_AutoriNominativoNote
+            // 
+            this.uscInterfacePager_AutoriNominativoNote.Location = new System.Drawing.Point(390, 799);
+            this.uscInterfacePager_AutoriNominativoNote.Name = "uscInterfacePager_AutoriNominativoNote";
+            this.uscInterfacePager_AutoriNominativoNote.Size = new System.Drawing.Size(591, 107);
+            this.uscInterfacePager_AutoriNominativoNote.TabIndex = 24;
             // 
             // uscInterfacePager_AutoreOnMateria
             // 
@@ -227,12 +322,12 @@
             this.uscInterfacePager_AutoreOnMateria.Size = new System.Drawing.Size(542, 107);
             this.uscInterfacePager_AutoreOnMateria.TabIndex = 23;
             // 
-            // uscInterfacePager_AutoriNominativoNote
+            // uscTimbro
             // 
-            this.uscInterfacePager_AutoriNominativoNote.Location = new System.Drawing.Point(390, 799);
-            this.uscInterfacePager_AutoriNominativoNote.Name = "uscInterfacePager_AutoriNominativoNote";
-            this.uscInterfacePager_AutoriNominativoNote.Size = new System.Drawing.Size(591, 107);
-            this.uscInterfacePager_AutoriNominativoNote.TabIndex = 24;
+            this.uscTimbro.Location = new System.Drawing.Point(12, 12);
+            this.uscTimbro.Name = "uscTimbro";
+            this.uscTimbro.Size = new System.Drawing.Size(926, 47);
+            this.uscTimbro.TabIndex = 0;
             // 
             // frmAutoreLoad
             // 
@@ -255,6 +350,7 @@
             this.Controls.Add(this.txtNominativoAutore);
             this.Controls.Add(this.uscTimbro);
             this.Name = "frmAutoreLoad";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmAutoreLoad";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAutoreLoad_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.grdAutoriNominativoNote)).EndInit();
@@ -289,6 +385,12 @@
         private System.Windows.Forms.Label lblChiaveMateria;
         private System.Windows.Forms.Label lblChiaveAutore;
         private System.Windows.Forms.GroupBox grpDoubleKey;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nominativo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn note;
+        private System.Windows.Forms.DataGridViewImageColumn write;
+        private System.Windows.Forms.DataGridViewImageColumn update;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Row;
         
         
 

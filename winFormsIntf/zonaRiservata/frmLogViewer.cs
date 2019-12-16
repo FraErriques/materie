@@ -44,7 +44,14 @@ namespace winFormsIntf
         ///     and convert(datetime,substring([when],1,8))<=convert(datetime,''20191205'') 
         ///    order by [when] desc '
         ///  
-        ///  
+        ///   " where 
+        ///          " convert(datetime,substring([when],1,8))>=convert(datetime,"
+        ///          + startStr_F_
+        ///         ")"
+        ///          " and convert(datetime,substring([when],1,8))<=convert(datetime,"
+        ///          + endStr_F_
+        ///         ")"
+        ///          " order by [when] desc "
         /// 
         /// 
         /// 
@@ -53,24 +60,73 @@ namespace winFormsIntf
         /// <param name="e"></param>
         private void btnLogQuery_Click(object sender, EventArgs e)
         {
-            System.DateTime startDate;
-            System.DateTime endDate;
+            string startStr_F_ = this.convertDateToSqlDateString(this.dtpStartDate.Value);
+            string endStr_F_ = this.convertDateToSqlDateString(this.dtpEndDate.Value);
+            string queryTail = 
+                " where "
+                + " convert(datetime,substring([when],1,8))>=convert(datetime,'" // NB. essenziale l'apice singolo di Sql prima di chiudere la C#str.
+                + startStr_F_
+                + "')" // NB. essenziale l'apice singolo di Sql come primo carattere della C#str.
+                + " and convert(datetime,substring([when],1,8))<=convert(datetime,'" // NB. essenziale l'apice singolo di Sql prima di chiudere la C#str.
+                + endStr_F_
+                + "')" // NB. essenziale l'apice singolo di Sql come primo carattere della C#str.
+                + " order by [when] desc ";
             //
-            startDate = this.dtpStartDate.Value;
-            endDate = System.DateTime.Now;
+            //------start example use of Cacher-PagingCalculator-Pager--------------------------
+            int rowCardinalityTotalView;// out par
+            string viewName;// out par
+            int par_lastPage;// out par
+            System.Data.DataTable chunkDataSource;// out par
+            Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
             //
-            string[] startStr = startDate.ToShortDateString().Split('/');
-            string startStr_F_ = startStr[2] + startStr[1] + startStr[0];
+            Process_materie.paginazione.costruzionePager.primaCostruzionePager(
+                "LogWinForm" // view theme
+                , queryTail // whereTail
+                , 5 // default
+                , out rowCardinalityTotalView
+                , out viewName
+                , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
+                    Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_logLocalhost_SERVICE.usp_ViewCacher_specific_CREATE_logLocalhost
+                  )
+                , out par_lastPage
+                , out chunkDataSource
+                , out pagingManager
+            );
+            this.uscInterfacePager_logLocalhost.Init(
+                this.grdLoggingDb //  backdoor,to give the PagerInterface-control the capability of updating the grid.
+                , pagingManager
+            );// callBack in Interface::Pager
+            this.grdLoggingDb.DataSource = chunkDataSource;// fill dataGrid
             //
-            string[] endStr = endDate.ToShortDateString().Split('/');
-            string endStr_F_ = endStr[2] + endStr[1] + endStr[0];
+            //this.grdLoggingDb.DataSource =
+
+
+
             //
-            this.grdLoggingDb.DataSource =
-                Entity_materie.Proxies.LogViewer_win_materie_SERVICE.LogViewer_win_materie(
-                    startStr_F_
-                    ,endStr_F_
-                );// dataBound.
+            //this.grdLoggingDb.DataSource =
+            //    Entity_materie.Proxies.LogViewer_win_materie_SERVICE.LogViewer_win_materie(
+            //        startStr_F_
+            //        ,endStr_F_
+            //    );// dataBound.
         }// QueryCommit
+
+
+        /// <summary>
+        /// the dateTimePicker is an interface control that exposes a calendar, to let the user pick a date.
+        /// The selected value is of type System.DateTime. The programmer has to pass this method the frm.Control.Value.
+        /// The return value is a string, as Sql wants it, which is "20191201" to mean 2019/December/01
+        /// </summary>
+        /// <param name="inputDate"></param>
+        /// <returns></returns>
+        private string convertDateToSqlDateString(System.DateTime selectedDate)
+        {// pass the param as : this.dtpStartDate.Value;
+            string res;
+            string[] tokenizedStr = selectedDate.ToShortDateString().Split('/');
+            res = tokenizedStr[2] + tokenizedStr[1] + tokenizedStr[0];
+            //ready.
+            return res;
+        }// convertDateToSqlDateString
+
 
 
     }// class

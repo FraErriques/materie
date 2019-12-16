@@ -44,6 +44,7 @@
             this.lsbMaterie.FormattingEnabled = true;
             this.lsbMaterie.Location = new System.Drawing.Point(22, 19);
             this.lsbMaterie.Name = "lsbMaterie";
+            this.lsbMaterie.ScrollAlwaysVisible = true;
             this.lsbMaterie.Size = new System.Drawing.Size(442, 316);
             this.lsbMaterie.TabIndex = 1;
             // 
@@ -95,7 +96,7 @@
             this.grbMateriaInsert.Size = new System.Drawing.Size(508, 420);
             this.grbMateriaInsert.TabIndex = 6;
             this.grbMateriaInsert.TabStop = false;
-            this.grbMateriaInsert.Text = "Materia Insert";
+            this.grbMateriaInsert.Text = "Elenco delle Materie ad oggi censite";
             // 
             // uscTimbro
             // 

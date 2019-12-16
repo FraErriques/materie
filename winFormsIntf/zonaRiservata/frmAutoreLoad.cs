@@ -372,31 +372,18 @@ namespace winFormsIntf
         enum tblAutoriColumns
         {//NB. enums cannot be declared into methods.
             Invalid = -1
-            ,RowNumber = 0
-            ,idAutore = 1
-            ,nominativo = 2
-            ,note = 3
+            ,idAutore = 3
+            ,nominativo = 4 // 1
+            ,note = 2
+            ,action_write = 0 // 3
+            ,action_update = 1 // 4
+            , RowNumber = 5
         }// NB. modify, in case of record layout modification.
         //
-        private void grdAutoriNominativoNote_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try// inside here there's an int.Parse that throws.
-            {
-                DataGridViewRow selRowDirect = this.grdAutoriNominativoNote.Rows[e.RowIndex];
-                DataGridViewCell selCellDirect = selRowDirect.Cells[(int)(winFormsIntf.frmAutoreLoad.tblAutoriColumns.idAutore)];//compulsory.
-                string tmpSelectedAutoreIdDirect = selCellDirect.Value.ToString();
-                int selectedAutoreIdDirect = int.Parse(tmpSelectedAutoreIdDirect);// throws
-                //
-                this.txtChiaveAutore.Text = selectedAutoreIdDirect.ToString();// report the selected DoubleKey portion.
-                this.lblStatus.Text = "";// everything went ok.
-                this.lblStatus.BackColor = System.Drawing.Color.Transparent;
-            }// try
-            catch( System.Exception ex)
-            {
-                this.lblStatus.Text = "trouble: " + ex.Message;
-                this.lblStatus.BackColor = System.Drawing.Color.Red;
-            }
-        }// grdAutoriNominativoNote_CellDoubleClick
+        //private void grdAutoriNominativoNote_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        //{
+
+        //}// grdAutoriNominativoNote_CellDoubleClick
 
 
         enum tblAutoriOnMateriaColumns
@@ -428,6 +415,41 @@ namespace winFormsIntf
                 this.lblStatus.BackColor = System.Drawing.Color.Red;
             }
         }// grdAutoriMateria_CellDoubleClick
+
+
+        // TEST : should obscurate the DoubleClick event
+        private void grdAutoriNominativoNote_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rigaSelezionata = e.RowIndex;// coordinate della selezione da parte dell'utente.
+            int colonnaSelezionata = e.ColumnIndex;
+            //
+            if (colonnaSelezionata == (int)(winFormsIntf.frmAutoreLoad.tblAutoriColumns.action_write) )
+            {
+                string msg = "selezione dell'azione write: select singleKey_Autore.";
+            }
+            else if (colonnaSelezionata == (int)(winFormsIntf.frmAutoreLoad.tblAutoriColumns.action_update) )
+            {
+                string msg = "selezione dell'azione update: update abstract-Autore.";
+            }
+            else
+            {
+                string msg = "selezione di una colonna che non ha azione associata";
+            }
+            //
+            //
+            int idAutore_CellValue_int;
+            try
+            {
+                object idAutore_CellValue_obj = this.grdAutoriNominativoNote["id", e.RowIndex].Value;
+                idAutore_CellValue_int = (int)(this.grdAutoriNominativoNote["id", e.RowIndex].Value);
+            }
+            catch (System.Exception ex)
+            {
+                string msg = ex.Message;
+            }
+            // test
+            this.lblStatus.Text = colonnaSelezionata.ToString();
+        }
 
 
     }// class

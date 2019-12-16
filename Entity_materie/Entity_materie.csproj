@@ -85,6 +85,7 @@
     <Compile Include="Proxies\usp_ViewCacher_specific_CREATE_autOnMat_uno_SERVICE.cs" />
     <Compile Include="Proxies\usp_ViewCacher_specific_CREATE_autore_SERVICE.cs" />
     <Compile Include="Proxies\usp_ViewCacher_specific_CREATE_documento_SERVICE.cs" />
+    <Compile Include="Proxies\usp_ViewCacher_specific_CREATE_logLocalhost_SERVICE.cs" />
     <Compile Include="Proxies\usp_ViewCacher_specific_CREATE_Primes_SERVICE.cs" />
     <Compile Include="Proxies\usp_ViewGetChunk_SERVICE.cs" />
   </ItemGroup>

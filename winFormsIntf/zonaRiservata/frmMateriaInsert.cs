@@ -93,10 +93,10 @@ namespace winFormsIntf
         private bool canGoDb()
         {
             bool res = false;
-            if (null != this.txtMateriaNew.Text
-                && null != this.txtMateriaNew
-                && "" != this.txtMateriaNew.Text.Trim()
-                )
+            if(     null != this.txtMateriaNew
+                 && null != this.txtMateriaNew.Text
+                 && "" != this.txtMateriaNew.Text.Trim()
+              )
             {
                 res = true;
             }// else stay false.

@@ -22,6 +22,7 @@ namespace winFormsIntf
             //
             //// init graphics
             InitializeComponent();
+            // TODO : only "writers" could get here. Check whether a reader got here, kindly let him out.
         }// Ctor()
 
 
@@ -32,6 +33,17 @@ namespace winFormsIntf
         {
             winFormsIntf.windowWarehouse.removeSpecifiedWin(this);
         }// frmUpdateAbstract_FormClosed
+
+
+        /// <summary>
+        /// keep in mind the need for locks, due to the presence of multiple clients, which are concurrent in such write-activity on the db.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCommit_Click(object sender, EventArgs e)
+        {
+
+        }// btnCommit_Click
 
 
     }

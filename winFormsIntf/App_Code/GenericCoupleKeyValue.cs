@@ -19,14 +19,14 @@ namespace winFormsIntf.App_Code
 
         public override string ToString()
         {
-            return this.fieldName;
+            return (" id==" + this.getId() + " ____\t " + this.fieldName);
         }
 
         public int getId()
         {
             return this.fieldId;
         }
-    };
 
+    }// class
 
 }// nmsp
