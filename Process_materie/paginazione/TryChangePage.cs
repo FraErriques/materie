@@ -20,6 +20,10 @@ namespace Process_materie.paginazione
             //----### NB. if the user erroneously asked for the same page with same chunk size, it's surely a mistake and a round trip to the 
             //            server has to be avoided. Such check has not to be placed in each single interface; it's an architectural principle
             //            and has to be placed as a common factor in Process::.
+            //-----preliminary stability check--------
+            if (null == pagingManager)
+                { return false; }
+            //
             if(  pagingManager.pagingCalculator.required_rowXchunk == pagingManager.pagingCalculator.actual_rowXchunk
                 && pagingManager.pagingCalculator.required_currentPage == pagingManager.pagingCalculator.actual_currentPage )
             {

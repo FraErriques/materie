@@ -41,6 +41,7 @@ namespace winFormsIntf
         /// <param name="par_lastPage"></param>
         public void Init(
             System.Windows.Forms.DataGridView theGrid // a backDoor to the frmContainer::Grid; necessary for successive DataBind().
+            , int defaultChunkSizeForThisGrid 
             ,Entity_materie.BusinessEntities.PagingManager pagingManager // the InterfacePager will need it.
           )
         {
@@ -60,34 +61,46 @@ namespace winFormsIntf
             this.pagingManager.pagingCalculator.required_rowXchunk = this.pagingManager.pagingCalculator.actual_rowXchunk;
             this.pagingManager.pagingCalculator.required_lastPage = this.pagingManager.pagingCalculator.actual_lastPage;
             // ready.
-            this.defaultState();// not yet ready in Ctor().
+            this.defaultState( defaultChunkSizeForThisGrid );// not yet ready in Ctor().
         }// Init()
 
 
         private void lblFirstPage_Click( object sender, EventArgs e )
         {
-            this.pagingManager.pagingCalculator.required_currentPage = +1;
-            this.changeFromDirectButtons_Click();
+            if (null != this.pagingManager)
+            {
+                this.pagingManager.pagingCalculator.required_currentPage = +1;
+                this.changeFromDirectButtons_Click();
+            }// else skip, since the control is not yet initialized.
         }// lblFirstPage_Click
 
         private void lblLastPage_Click( object sender, EventArgs e )
         {
-            this.pagingManager.pagingCalculator.required_currentPage = this.pagingManager.pagingCalculator.actual_lastPage;
-            this.changeFromDirectButtons_Click();
+            if (null != this.pagingManager)
+            {
+                this.pagingManager.pagingCalculator.required_currentPage = this.pagingManager.pagingCalculator.actual_lastPage;
+                this.changeFromDirectButtons_Click();
+            }// else skip, since the control is not yet initialized.
         }// lblLastPage_Click
 
         private void lblBefore_Click( object sender, EventArgs e )
         {
-            this.pagingManager.pagingCalculator.required_currentPage = this.pagingManager.pagingCalculator.actual_currentPage - 1;  // sx one.
-            this.changeFromDirectButtons_Click();
+            if (null != this.pagingManager)
+            {
+                this.pagingManager.pagingCalculator.required_currentPage = this.pagingManager.pagingCalculator.actual_currentPage - 1;  // sx one.
+                this.changeFromDirectButtons_Click();
+            }
         }// lblBefore_Click
 
 
 
         private void lblPageAfter_Click( object sender, EventArgs e )
         {
-            this.pagingManager.pagingCalculator.required_currentPage = this.pagingManager.pagingCalculator.actual_currentPage + 1;  // dx one.
-            this.changeFromDirectButtons_Click();
+            if (null != this.pagingManager)
+            {
+                this.pagingManager.pagingCalculator.required_currentPage = this.pagingManager.pagingCalculator.actual_currentPage + 1;  // dx one.
+                this.changeFromDirectButtons_Click();
+            }// else skip, since the control is not yet initialized.
         }// lblPageAfter_Click
 
 
@@ -127,42 +140,71 @@ namespace winFormsIntf
             //
             try
             {
-                this.pagingManager.pagingCalculator.required_currentPage = int.Parse(this.txtGoToPage.Text);
-                isPageChangeFeasibleUntilNow = true;
-            }
-            catch (System.Exception ex)
-            {
-                isPageChangeFeasibleUntilNow = false;
-                lblStato.Text = ex.Message;
-                lblStato.BackColor = System.Drawing.Color.Orange;
-            }
-            try//--parse the second one even if the first fails, since we need a complete response for the user.
-            {
-                this.pagingManager.pagingCalculator.required_rowXchunk = int.Parse(this.txtChunkSize.Text);
-                isPageChangeFeasibleUntilNow &= true;// keep in account the preceding result.
-            }
-            catch (System.Exception ex)
-            {
-                isPageChangeFeasibleUntilNow &= false;// keep in account the preceding result.
-                lblStato.Text += ex.Message;// second message TODO pass to a txtBox multiline.
-                lblStato.BackColor = System.Drawing.Color.Orange;
-            }
-            finally// this finally block serves both try-catch pairs.
-            {// other validation in process.
-                System.Data.DataTable updatedDataSource = null;
-                if (isPageChangeFeasibleUntilNow)
+                if (int.Parse(this.txtChunkSize.Text) == pagingManager.pagingCalculator.actual_rowXchunk
+                    && int.Parse(this.txtGoToPage.Text) == pagingManager.pagingCalculator.actual_currentPage)
                 {
-                    isPageChangeFeasibleUntilNow &=
-                        Process_materie.paginazione.TryChangePage_SERVICE.TryChangePage(
-                            ref this.pagingManager
-                            , out updatedDataSource
-                        );
-                }// else don't even go to Process::
-                this.intefaceAfterPageChange(
-                    isPageChangeFeasibleUntilNow
-                    ,updatedDataSource );
+                    // cange both curPage and chunkSize with values identical to the present ones: don't do anything.
+                    this.lblCurrentPage.BackColor =
+                        System.Drawing.Color.LightCoral;
+                    return;// on page.
+                }// else proceed analyzing request in Process::
+                else
+                {
+                    this.lblCurrentPage.BackColor =
+                        System.Drawing.Color.Transparent;
+                }
             }
-            this.checkState();
+            catch (System.Exception ex)
+            {
+                // cange both curPage and chunkSize with parsing errors in the text: don't do anything.
+                this.lblCurrentPage.BackColor =
+                    System.Drawing.Color.LightCoral;
+                this.lblStato.Text = ex.Message;
+                return;// on page.
+            }
+            //----###
+            //
+            if (null != this.pagingManager)
+            {
+                try
+                {
+                    this.pagingManager.pagingCalculator.required_currentPage = int.Parse(this.txtGoToPage.Text);
+                    isPageChangeFeasibleUntilNow = true;
+                }
+                catch (System.Exception ex)
+                {
+                    isPageChangeFeasibleUntilNow = false;
+                    lblStato.Text = ex.Message;
+                    lblStato.BackColor = System.Drawing.Color.Orange;
+                }
+                try//--parse the second one even if the first fails, since we need a complete response for the user.
+                {
+                    this.pagingManager.pagingCalculator.required_rowXchunk = int.Parse(this.txtChunkSize.Text);
+                    isPageChangeFeasibleUntilNow &= true;// keep in account the preceding result.
+                }
+                catch (System.Exception ex)
+                {
+                    isPageChangeFeasibleUntilNow &= false;// keep in account the preceding result.
+                    lblStato.Text += ex.Message;// second message TODO pass to a txtBox multiline.
+                    lblStato.BackColor = System.Drawing.Color.Orange;
+                }
+            finally// this finally block serves both try-catch pairs.
+                {// other validation in process.
+                    System.Data.DataTable updatedDataSource = null;
+                    if (isPageChangeFeasibleUntilNow)
+                    {
+                        isPageChangeFeasibleUntilNow &=
+                            Process_materie.paginazione.TryChangePage_SERVICE.TryChangePage(
+                                ref this.pagingManager
+                                , out updatedDataSource
+                            );
+                    }// else don't even go to Process::
+                    this.intefaceAfterPageChange(
+                        isPageChangeFeasibleUntilNow
+                        , updatedDataSource);
+                }
+                this.checkState();
+            }// else skip, since the control is not yet initialized.
             //ready.
         }// btnChangeBoth_Click
 
@@ -206,12 +248,13 @@ namespace winFormsIntf
 
 
 
-        private void defaultState()
+        private void defaultState( int defaultChunkSizeForThisGrid )
         {
-            this.txtChunkSize.Text = "5";// default
+            this.txtChunkSize.Text = defaultChunkSizeForThisGrid.ToString();// default for current gridType.
             this.pagingManager.pagingCalculator.actual_rowXchunk = int.Parse(this.txtChunkSize.Text);// default
             this.onFirstPage();
         }
+
 
         private void onFirstPage()
         {
@@ -227,14 +270,30 @@ namespace winFormsIntf
             this.lblCurrentPage.Enabled = false;
             this.lblCurrentPage.BackColor = System.Drawing.Color.Transparent;
             //
-            this.lblPageAfter.Enabled = true;
-            this.lblPageAfter.BackColor = System.Drawing.Color.GreenYellow;
+            if (this.pagingManager.pagingCalculator.actual_lastPage > +1)
+            {
+                this.lblPageAfter.Enabled = true;
+                this.lblPageAfter.BackColor = System.Drawing.Color.GreenYellow;
+            }
+            else
+            {
+                this.lblPageAfter.Enabled = false;
+                this.lblPageAfter.BackColor = System.Drawing.Color.Transparent;
+            }
             //
             this.lblLastPage.Text =
                 this.lastPageText +
                 this.pagingManager.pagingCalculator.actual_lastPage.ToString();
-            this.lblLastPage.BackColor = System.Drawing.Color.GreenYellow;
-            this.lblLastPage.Enabled = true;
+            if (this.pagingManager.pagingCalculator.actual_lastPage > +1)
+            {
+                this.lblLastPage.BackColor = System.Drawing.Color.GreenYellow;
+                this.lblLastPage.Enabled = true;
+            }
+            else
+            {
+                this.lblLastPage.BackColor = System.Drawing.Color.Transparent;
+                this.lblLastPage.Enabled = false;
+            }
         }// onFirstPage
 
 
@@ -283,7 +342,7 @@ namespace winFormsIntf
             this.lblLastPage.Text =
                 this.lastPageText +
                 this.pagingManager.pagingCalculator.actual_lastPage.ToString();
-            this.lblLastPage.BackColor = System.Drawing.Color.Transparent;
+            this.lblLastPage.BackColor = System.Drawing.Color.GreenYellow;
             this.lblLastPage.Enabled = true;
         }// onIntermediatePage
 

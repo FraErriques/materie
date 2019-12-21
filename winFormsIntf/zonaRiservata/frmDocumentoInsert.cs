@@ -153,7 +153,7 @@ namespace winFormsIntf
         private void frmDocumentoInsert_FormClosed( object sender, FormClosedEventArgs e )
         {// call Timbro menu manager, for removing the instance of the form that is in the proces of being closed.
             winFormsIntf.windowWarehouse.removeSpecifiedWin(this);
-            // NB. specific to this form : clean up the DoubleKey. Thi insertion is over.
+            // NB. specific to this form : clean up the DoubleKey. This insertion is over.
             (Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["chiaveDoppiaMateria"]) = null;
             Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["chiaveDoppiaAutore"] = null;
         }// frmDocumentoInsert_FormClosed

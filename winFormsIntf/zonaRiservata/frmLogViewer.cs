@@ -79,10 +79,11 @@ namespace winFormsIntf
             System.Data.DataTable chunkDataSource;// out par
             Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
             //
+            int defaultChunkSizeForThisGrid = 25;
             Process_materie.paginazione.costruzionePager.primaCostruzionePager(
                 "LogWinForm" // view theme
                 , queryTail // whereTail
-                , 5 // default
+                , defaultChunkSizeForThisGrid // default
                 , out rowCardinalityTotalView
                 , out viewName
                 , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
@@ -94,6 +95,7 @@ namespace winFormsIntf
             );
             this.uscInterfacePager_logLocalhost.Init(
                 this.grdLoggingDb //  backdoor,to give the PagerInterface-control the capability of updating the grid.
+                , defaultChunkSizeForThisGrid // defaultChunkSizeForThisGrid
                 , pagingManager
             );// callBack in Interface::Pager
             this.grdLoggingDb.DataSource = chunkDataSource;// fill dataGrid

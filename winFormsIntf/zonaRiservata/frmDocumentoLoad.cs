@@ -168,10 +168,11 @@ namespace winFormsIntf
             System.Data.DataTable chunkDataSource;// out par
             Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
             //
+            int defaultChunkSizeForThisGrid = 14;
             Process_materie.paginazione.costruzionePager.primaCostruzionePager(
                 "Document" // view theme
                 , queryTail // whereTail
-                , 5 // default
+                , defaultChunkSizeForThisGrid // default
                 , out rowCardinalityTotalView
                 , out viewName
                 , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
@@ -183,33 +184,11 @@ namespace winFormsIntf
             );
             this.uscInterfacePager_Documento.Init(
                 this.grdDocumento//  backdoor, to give the PagerInterface-control the capability of updating the grid.
+                , defaultChunkSizeForThisGrid // defaultChunkSizeForThisGrid
                 , pagingManager
             );// callBack in Interface::Pager
             this.grdDocumento.DataSource = chunkDataSource;// fill dataGrid
             //
-            
-
-            // TODO eliminare
-            ////-- ex---manage the Cacher here.
-            //Entity_materie.BusinessEntities.ViewDynamics.accessPoint("Documento");// view theme.
-            //string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;// get the View name
-            //CacherDbView cacherDbView = new CacherDbView(
-            //    queryTail
-            //    ,Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(designedViewName)
-            //    ,new CacherDbView.SpecificViewBuilder(// create the delegate which points to the appropriate Proxy().
-            //        Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_documento_SERVICE.usp_ViewCacher_specific_CREATE_documento
-            //    )
-            //);
-            //if (null != cacherDbView)
-            //{
-            //    this.grdDocumento.DataSource = cacherDbView.GetChunk(
-            //        1 // NB : does not paginate; so you will get all the View in a single chunk.
-            //    );
-            //}
-            //else
-            //{
-            //    throw new System.Exception("Presentation::queryDocumento::loadData() failed CacherDbView Ctor. ");
-            //}
         }// end btnDoPostback()
 
 
@@ -243,3 +222,30 @@ namespace winFormsIntf
 
     }//class
 }//nmsp
+
+
+# region cantina 
+            
+
+// TODO eliminare
+////-- ex---manage the Cacher here.
+//Entity_materie.BusinessEntities.ViewDynamics.accessPoint("Documento");// view theme.
+//string designedViewName = Entity_materie.BusinessEntities.ViewDynamics.Finalise.lastGeneratedView;// get the View name
+//CacherDbView cacherDbView = new CacherDbView(
+//    queryTail
+//    ,Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(designedViewName)
+//    ,new CacherDbView.SpecificViewBuilder(// create the delegate which points to the appropriate Proxy().
+//        Entity_materie.Proxies.usp_ViewCacher_specific_CREATE_documento_SERVICE.usp_ViewCacher_specific_CREATE_documento
+//    )
+//);
+//if (null != cacherDbView)
+//{
+//    this.grdDocumento.DataSource = cacherDbView.GetChunk(
+//        1 // NB : does not paginate; so you will get all the View in a single chunk.
+//    );
+//}
+//else
+//{
+//    throw new System.Exception("Presentation::queryDocumento::loadData() failed CacherDbView Ctor. ");
+//}
+# endregion cantina 

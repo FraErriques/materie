@@ -33,12 +33,21 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAutoreLoad));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnAutoriNominativoNote = new System.Windows.Forms.Button();
             this.lblNoteAutore = new System.Windows.Forms.Label();
             this.lblNominativoAutore = new System.Windows.Forms.Label();
             this.txtNoteAutore = new System.Windows.Forms.TextBox();
             this.txtNominativoAutore = new System.Windows.Forms.TextBox();
             this.grdAutoriNominativoNote = new System.Windows.Forms.DataGridView();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nominativo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.write = new System.Windows.Forms.DataGridViewImageColumn();
+            this.updateNoteAutore = new System.Windows.Forms.DataGridViewImageColumn();
+            this.updateNameAutore = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Row = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtChiaveMateria = new System.Windows.Forms.TextBox();
             this.txtChiaveAutore = new System.Windows.Forms.TextBox();
             this.lblStatus = new System.Windows.Forms.Label();
@@ -50,15 +59,22 @@
             this.lblChiaveMateria = new System.Windows.Forms.Label();
             this.lblChiaveAutore = new System.Windows.Forms.Label();
             this.grpDoubleKey = new System.Windows.Forms.GroupBox();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nominativo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.write = new System.Windows.Forms.DataGridViewImageColumn();
-            this.update = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Row = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn3 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn4 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn5 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.lblStatusAonMat = new System.Windows.Forms.Label();
             this.uscInterfacePager_AutoriNominativoNote = new winFormsIntf.InterfacePager();
             this.uscInterfacePager_AutoreOnMateria = new winFormsIntf.InterfacePager();
             this.uscTimbro = new winFormsIntf.Timbro();
+            this.idAutore = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nomeAutore = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idMateria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nomeMateria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.singleKeyMateria = new System.Windows.Forms.DataGridViewImageColumn();
+            this.updateNomeMateria = new System.Windows.Forms.DataGridViewImageColumn();
+            this.RowNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdAutoriNominativoNote)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdAutoriMateria)).BeginInit();
             this.grpDoubleKey.SuspendLayout();
@@ -116,7 +132,8 @@
             this.nominativo,
             this.note,
             this.write,
-            this.update,
+            this.updateNoteAutore,
+            this.updateNameAutore,
             this.Row});
             this.grdAutoriNominativoNote.Location = new System.Drawing.Point(12, 616);
             this.grdAutoriNominativoNote.Name = "grdAutoriNominativoNote";
@@ -124,6 +141,96 @@
             this.grdAutoriNominativoNote.Size = new System.Drawing.Size(909, 163);
             this.grdAutoriNominativoNote.TabIndex = 11;
             this.grdAutoriNominativoNote.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdAutoriNominativoNote_CellClick);
+            // 
+            // id
+            // 
+            this.id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.id.DataPropertyName = "id";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle1.Format = "N0";
+            dataGridViewCellStyle1.NullValue = null;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.id.DefaultCellStyle = dataGridViewCellStyle1;
+            this.id.HeaderText = "id";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.id.Width = 21;
+            // 
+            // nominativo
+            // 
+            this.nominativo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.nominativo.DataPropertyName = "nominativo";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.nominativo.DefaultCellStyle = dataGridViewCellStyle2;
+            this.nominativo.HeaderText = "Autore";
+            this.nominativo.MinimumWidth = 40;
+            this.nominativo.Name = "nominativo";
+            this.nominativo.ReadOnly = true;
+            this.nominativo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.nominativo.Width = 44;
+            // 
+            // note
+            // 
+            this.note.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.note.DataPropertyName = "note";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.Format = "some notes as example";
+            dataGridViewCellStyle3.NullValue = null;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.note.DefaultCellStyle = dataGridViewCellStyle3;
+            this.note.HeaderText = "note Autore";
+            this.note.MinimumWidth = 160;
+            this.note.Name = "note";
+            this.note.ReadOnly = true;
+            this.note.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.note.Width = 520;
+            // 
+            // write
+            // 
+            this.write.HeaderText = "singleKey idAutore";
+            this.write.Image = ((System.Drawing.Image)(resources.GetObject("write.Image")));
+            this.write.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.write.Name = "write";
+            this.write.ReadOnly = true;
+            this.write.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.write.Width = 70;
+            // 
+            // updateNoteAutore
+            // 
+            this.updateNoteAutore.HeaderText = "update noteAutore";
+            this.updateNoteAutore.Image = ((System.Drawing.Image)(resources.GetObject("updateNoteAutore.Image")));
+            this.updateNoteAutore.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.updateNoteAutore.Name = "updateNoteAutore";
+            this.updateNoteAutore.ReadOnly = true;
+            this.updateNoteAutore.Width = 70;
+            // 
+            // updateNameAutore
+            // 
+            this.updateNameAutore.HeaderText = "update Autore";
+            this.updateNameAutore.Image = ((System.Drawing.Image)(resources.GetObject("updateNameAutore.Image")));
+            this.updateNameAutore.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.updateNameAutore.Name = "updateNameAutore";
+            this.updateNameAutore.ReadOnly = true;
+            this.updateNameAutore.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.updateNameAutore.Width = 70;
+            // 
+            // Row
+            // 
+            this.Row.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Row.DataPropertyName = "RowNumber";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = null;
+            this.Row.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Row.HeaderText = "Row";
+            this.Row.MinimumWidth = 20;
+            this.Row.Name = "Row";
+            this.Row.ReadOnly = true;
+            this.Row.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Row.Width = 35;
             // 
             // txtChiaveMateria
             // 
@@ -190,13 +297,21 @@
             // grdAutoriMateria
             // 
             this.grdAutoriMateria.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdAutoriMateria.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idAutore,
+            this.nomeAutore,
+            this.idMateria,
+            this.nomeMateria,
+            this.singleKeyMateria,
+            this.updateNomeMateria,
+            this.RowNumber});
             this.grdAutoriMateria.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.grdAutoriMateria.Location = new System.Drawing.Point(413, 169);
             this.grdAutoriMateria.Name = "grdAutoriMateria";
             this.grdAutoriMateria.ReadOnly = true;
             this.grdAutoriMateria.Size = new System.Drawing.Size(508, 194);
             this.grdAutoriMateria.TabIndex = 19;
-            this.grdAutoriMateria.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdAutoriMateria_CellDoubleClick);
+            this.grdAutoriMateria.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdAutoriMateria_CellClick);
             // 
             // lblChiaveMateria
             // 
@@ -231,82 +346,57 @@
             this.grpDoubleKey.TabStop = false;
             this.grpDoubleKey.Text = "DoubleKey building and verification";
             // 
-            // id
+            // dataGridViewImageColumn1
             // 
-            this.id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.id.DataPropertyName = "id";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.id.DefaultCellStyle = dataGridViewCellStyle1;
-            this.id.HeaderText = "id";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.id.Width = 21;
+            this.dataGridViewImageColumn1.HeaderText = "singleKey idAutore";
+            this.dataGridViewImageColumn1.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn1.Image")));
+            this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.ReadOnly = true;
+            this.dataGridViewImageColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn1.Width = 70;
             // 
-            // nominativo
+            // dataGridViewImageColumn2
             // 
-            this.nominativo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.nominativo.DataPropertyName = "nominativo";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.nominativo.DefaultCellStyle = dataGridViewCellStyle2;
-            this.nominativo.HeaderText = "Autore";
-            this.nominativo.MinimumWidth = 40;
-            this.nominativo.Name = "nominativo";
-            this.nominativo.ReadOnly = true;
-            this.nominativo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.nominativo.Width = 44;
+            this.dataGridViewImageColumn2.HeaderText = "update noteAutore";
+            this.dataGridViewImageColumn2.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn2.Image")));
+            this.dataGridViewImageColumn2.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
+            this.dataGridViewImageColumn2.ReadOnly = true;
+            this.dataGridViewImageColumn2.Width = 70;
             // 
-            // note
+            // dataGridViewImageColumn3
             // 
-            this.note.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.note.DataPropertyName = "note";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.Format = "some notes as example";
-            dataGridViewCellStyle3.NullValue = null;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.note.DefaultCellStyle = dataGridViewCellStyle3;
-            this.note.HeaderText = "note Autore";
-            this.note.MinimumWidth = 80;
-            this.note.Name = "note";
-            this.note.ReadOnly = true;
-            this.note.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.note.Width = 80;
+            this.dataGridViewImageColumn3.HeaderText = "update Autore";
+            this.dataGridViewImageColumn3.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn3.Image")));
+            this.dataGridViewImageColumn3.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.dataGridViewImageColumn3.Name = "dataGridViewImageColumn3";
+            this.dataGridViewImageColumn3.ReadOnly = true;
+            this.dataGridViewImageColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn3.Width = 70;
             // 
-            // write
+            // dataGridViewImageColumn4
             // 
-            this.write.HeaderText = "write";
-            this.write.Image = ((System.Drawing.Image)(resources.GetObject("write.Image")));
-            this.write.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.write.Name = "write";
-            this.write.ReadOnly = true;
-            this.write.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn4.HeaderText = "singleKeyMateria";
+            this.dataGridViewImageColumn4.Image = global::winFormsIntf.Properties.Resources.btnAddDoc;
+            this.dataGridViewImageColumn4.Name = "dataGridViewImageColumn4";
+            this.dataGridViewImageColumn4.ReadOnly = true;
             // 
-            // update
+            // dataGridViewImageColumn5
             // 
-            this.update.HeaderText = "update";
-            this.update.Image = ((System.Drawing.Image)(resources.GetObject("update.Image")));
-            this.update.Name = "update";
-            this.update.ReadOnly = true;
+            this.dataGridViewImageColumn5.HeaderText = "update Nome Materia";
+            this.dataGridViewImageColumn5.Image = global::winFormsIntf.Properties.Resources.btnUpdateAbstract;
+            this.dataGridViewImageColumn5.Name = "dataGridViewImageColumn5";
+            this.dataGridViewImageColumn5.ReadOnly = true;
             // 
-            // Row
+            // lblStatusAonMat
             // 
-            this.Row.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Row.DataPropertyName = "RowNumber";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle4.Format = "N0";
-            dataGridViewCellStyle4.NullValue = null;
-            this.Row.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Row.HeaderText = "Row";
-            this.Row.MinimumWidth = 20;
-            this.Row.Name = "Row";
-            this.Row.ReadOnly = true;
-            this.Row.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Row.Width = 35;
+            this.lblStatusAonMat.AutoSize = true;
+            this.lblStatusAonMat.Location = new System.Drawing.Point(410, 492);
+            this.lblStatusAonMat.Name = "lblStatusAonMat";
+            this.lblStatusAonMat.Size = new System.Drawing.Size(67, 13);
+            this.lblStatusAonMat.TabIndex = 25;
+            this.lblStatusAonMat.Text = "statoAonMat";
             // 
             // uscInterfacePager_AutoriNominativoNote
             // 
@@ -329,12 +419,75 @@
             this.uscTimbro.Size = new System.Drawing.Size(926, 47);
             this.uscTimbro.TabIndex = 0;
             // 
+            // idAutore
+            // 
+            this.idAutore.DataPropertyName = "idAutore";
+            this.idAutore.HeaderText = "id Aut";
+            this.idAutore.Name = "idAutore";
+            this.idAutore.ReadOnly = true;
+            this.idAutore.Width = 30;
+            // 
+            // nomeAutore
+            // 
+            this.nomeAutore.DataPropertyName = "nomeAutore";
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.nomeAutore.DefaultCellStyle = dataGridViewCellStyle5;
+            this.nomeAutore.HeaderText = "nome Autore";
+            this.nomeAutore.Name = "nomeAutore";
+            this.nomeAutore.ReadOnly = true;
+            this.nomeAutore.Width = 110;
+            // 
+            // idMateria
+            // 
+            this.idMateria.DataPropertyName = "idMateria";
+            this.idMateria.HeaderText = "id Mat";
+            this.idMateria.Name = "idMateria";
+            this.idMateria.ReadOnly = true;
+            this.idMateria.Width = 30;
+            // 
+            // nomeMateria
+            // 
+            this.nomeMateria.DataPropertyName = "nomeMateria";
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.nomeMateria.DefaultCellStyle = dataGridViewCellStyle6;
+            this.nomeMateria.HeaderText = "nome Materia";
+            this.nomeMateria.Name = "nomeMateria";
+            this.nomeMateria.ReadOnly = true;
+            this.nomeMateria.Width = 130;
+            // 
+            // singleKeyMateria
+            // 
+            this.singleKeyMateria.HeaderText = "sKey Mat";
+            this.singleKeyMateria.Image = global::winFormsIntf.Properties.Resources.btnAddDoc;
+            this.singleKeyMateria.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.singleKeyMateria.Name = "singleKeyMateria";
+            this.singleKeyMateria.ReadOnly = true;
+            this.singleKeyMateria.Width = 70;
+            // 
+            // updateNomeMateria
+            // 
+            this.updateNomeMateria.HeaderText = "update Nome Materia";
+            this.updateNomeMateria.Image = global::winFormsIntf.Properties.Resources.btnUpdateAbstract;
+            this.updateNomeMateria.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.updateNomeMateria.Name = "updateNomeMateria";
+            this.updateNomeMateria.ReadOnly = true;
+            this.updateNomeMateria.Width = 70;
+            // 
+            // RowNumber
+            // 
+            this.RowNumber.DataPropertyName = "RowNumber";
+            this.RowNumber.HeaderText = "Row";
+            this.RowNumber.Name = "RowNumber";
+            this.RowNumber.ReadOnly = true;
+            this.RowNumber.Width = 30;
+            // 
             // frmAutoreLoad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSkyBlue;
             this.ClientSize = new System.Drawing.Size(1004, 968);
+            this.Controls.Add(this.lblStatusAonMat);
             this.Controls.Add(this.uscInterfacePager_AutoriNominativoNote);
             this.Controls.Add(this.uscInterfacePager_AutoreOnMateria);
             this.Controls.Add(this.grpDoubleKey);
@@ -389,8 +542,22 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nominativo;
         private System.Windows.Forms.DataGridViewTextBoxColumn note;
         private System.Windows.Forms.DataGridViewImageColumn write;
-        private System.Windows.Forms.DataGridViewImageColumn update;
+        private System.Windows.Forms.DataGridViewImageColumn updateNoteAutore;
+        private System.Windows.Forms.DataGridViewImageColumn updateNameAutore;
         private System.Windows.Forms.DataGridViewTextBoxColumn Row;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn3;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn4;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn5;
+        private System.Windows.Forms.Label lblStatusAonMat;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idAutore;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nomeAutore;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idMateria;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nomeMateria;
+        private System.Windows.Forms.DataGridViewImageColumn singleKeyMateria;
+        private System.Windows.Forms.DataGridViewImageColumn updateNomeMateria;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RowNumber;
         
         
 

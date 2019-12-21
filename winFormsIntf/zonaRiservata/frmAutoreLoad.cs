@@ -94,10 +94,11 @@ namespace winFormsIntf
             System.Data.DataTable chunkDataSource;// out par
             Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
             //
+            int defaultChunkSizeForThisGrid = 4;
             Process_materie.paginazione.costruzionePager.primaCostruzionePager(
                 "AutOnNomeNote" // view theme
                 , queryTail // whereTail
-                , 5 // default
+                , defaultChunkSizeForThisGrid // default
                 , out rowCardinalityTotalView
                 , out viewName
                 , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
@@ -109,6 +110,7 @@ namespace winFormsIntf
             );
             this.uscInterfacePager_AutoriNominativoNote.Init(
                 this.grdAutoriNominativoNote//  backdoor, to give the PagerInterface-control the capability of updating the grid.
+                , defaultChunkSizeForThisGrid // defaultChunkSizeForThisGrid
                 , pagingManager
             );// callBack in Interface::Pager
             this.grdAutoriNominativoNote.DataSource = chunkDataSource;// fill dataGrid
@@ -304,11 +306,12 @@ namespace winFormsIntf
                 System.Data.DataTable chunkDataSource;
                 Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
                 //
-                where_tail = viewName_uno;// NB.!! a necessary trick, to use a standard call!!
+                int defaultChunkSizeForThisGrid = 3;
+//where_tail = viewName_uno;// NB.!! a necessary trick, to use a standard call!!
                 Process_materie.paginazione.costruzionePager.primaCostruzionePager_inDoubleSplit(
                     Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(viewName_uno)
                     // , Entity_materie.FormatConverters.ViewNameDecorator_SERVICE.ViewNameDecorator(viewName_due) down
-                    , 5 // default
+                    , defaultChunkSizeForThisGrid // default
                     , out rowCardinalityTotalView
                     , out viewName_due
                     , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
@@ -324,6 +327,7 @@ namespace winFormsIntf
                 //
                 this.uscInterfacePager_AutoreOnMateria.Init(
                     this.grdAutoriMateria//  backdoor, to give the PagerInterface-control the capability of updating the grid.
+                    , defaultChunkSizeForThisGrid // defaultChunkSizeForThisGrid
                     , pagingManager
                 );// callBack in Interface::Pager
                 
@@ -369,88 +373,246 @@ namespace winFormsIntf
 
 
 
-        enum tblAutoriColumns
+
+        public enum TblAutoriColumns
         {//NB. enums cannot be declared into methods.
-            Invalid = -1
-            ,idAutore = 3
-            ,nominativo = 4 // 1
-            ,note = 2
-            ,action_write = 0 // 3
-            ,action_update = 1 // 4
-            , RowNumber = 5
+            Invalid = -1 // invalid entry
+            ,            idAutore = 4    //----
+            ,            nominativo = 5  //----
+            ,            note = 6        //----
+            ,            action_writeSingleKeyAutore = 0 //--System starts ordinals, on first ActionColumn
+            ,            action_updateNoteAut = 1 //
+            ,            action_updateAutNome = 2 //
+            , RowNumber = 3 // until last column.
         }// NB. modify, in case of record layout modification.
         //
-        //private void grdAutoriNominativoNote_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        //{
-
-        //}// grdAutoriNominativoNote_CellDoubleClick
-
-
-        enum tblAutoriOnMateriaColumns
-        {//NB. enums cannot be declared into methods.
-            Invalid = -1
-            // NB. no RowNumber in this query: it's not a View.
-            ,idAutore = 0
-            ,nomeAutore = 1
-            ,idMateria = 2
-            ,nomeMateria = 3
-        }// NB. modify, in case of record layout modification.
-        //
-        private void grdAutoriMateria_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try// inside here there's an int.Parse that throws.
-            {
-                DataGridViewRow selRowDirect = this.grdAutoriMateria.Rows[e.RowIndex];
-                DataGridViewCell selCellDirect = selRowDirect.Cells[(int)(winFormsIntf.frmAutoreLoad.tblAutoriOnMateriaColumns.idMateria)];//compulsory.
-                string tmpSelectedMateriaIdDirect = selCellDirect.Value.ToString();
-                int selectedMateriaIdDirect = int.Parse(tmpSelectedMateriaIdDirect);// throws
-                //
-                this.txtChiaveMateria.Text = selectedMateriaIdDirect.ToString();// report the selected DoubleKey portion.
-                this.lblStatus.Text = "";// everything went ok.
-                this.lblStatus.BackColor = System.Drawing.Color.Transparent;
-            }// try
-            catch (System.Exception ex)
-            {
-                this.lblStatus.Text = "trouble: " + ex.Message;
-                this.lblStatus.BackColor = System.Drawing.Color.Red;
-            }
-        }// grdAutoriMateria_CellDoubleClick
-
-
-        // TEST : should obscurate the DoubleClick event
         private void grdAutoriNominativoNote_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            TblAutoriColumns selectedColumnGridAutoreOnNote = TblAutoriColumns.Invalid;// init to invalid.
             int rigaSelezionata = e.RowIndex;// coordinate della selezione da parte dell'utente.
             int colonnaSelezionata = e.ColumnIndex;
+            selectedColumnGridAutoreOnNote = (TblAutoriColumns)colonnaSelezionata;
             //
-            if (colonnaSelezionata == (int)(winFormsIntf.frmAutoreLoad.tblAutoriColumns.action_write) )
+            if (colonnaSelezionata == (int)(winFormsIntf.frmAutoreLoad.TblAutoriColumns.action_writeSingleKeyAutore ) )
             {
                 string msg = "selezione dell'azione write: select singleKey_Autore.";
+                this.lblStatus.Text = msg;
+                this.lblStatus.BackColor = System.Drawing.Color.LightGreen;
             }
-            else if (colonnaSelezionata == (int)(winFormsIntf.frmAutoreLoad.tblAutoriColumns.action_update) )
+            else if (colonnaSelezionata == (int)(winFormsIntf.frmAutoreLoad.TblAutoriColumns.action_updateNoteAut ) )
             {
                 string msg = "selezione dell'azione update: update abstract-Autore.";
+                this.lblStatus.Text = msg;
+                this.lblStatus.BackColor = System.Drawing.Color.LightGreen;
+            }
+            else if (colonnaSelezionata == (int)(winFormsIntf.frmAutoreLoad.TblAutoriColumns.action_updateAutNome ) )
+            {
+                string msg = "selezione dell'azione update: update nome-Autore.";
+                this.lblStatus.Text = msg;
+                this.lblStatus.BackColor = System.Drawing.Color.LightGreen;
             }
             else
             {
                 string msg = "selezione di una colonna che non ha azione associata";
+                this.lblStatus.Text = msg;
+                this.lblStatus.BackColor = System.Drawing.Color.LightSalmon;
+                //--NB. each non-action column is an invalid choice.
+                selectedColumnGridAutoreOnNote = TblAutoriColumns.Invalid;
             }
             //
             //
-            int idAutore_CellValue_int;
-            try
+            int idAutore_CellValue_int = -1;// init to invalid.
+            if (selectedColumnGridAutoreOnNote == TblAutoriColumns.Invalid)
             {
-                object idAutore_CellValue_obj = this.grdAutoriNominativoNote["id", e.RowIndex].Value;
-                idAutore_CellValue_int = (int)(this.grdAutoriNominativoNote["id", e.RowIndex].Value);
+                return;// on page, sin a non-action column has been chose.
             }
-            catch (System.Exception ex)
+            else// an action button has been chosen
             {
-                string msg = ex.Message;
+                try
+                {
+                    object idAutore_CellValue_obj = this.grdAutoriNominativoNote["id", e.RowIndex].Value;
+                    idAutore_CellValue_int = (int)(this.grdAutoriNominativoNote["id", e.RowIndex].Value);
+                }
+                catch (System.Exception ex)
+                {
+                    string msg = ex.Message;
+                }
             }
-            // test
-            this.lblStatus.Text = colonnaSelezionata.ToString();
-        }
+            // notify on lblStatus
+            this.lblStatus.Text += "_" + colonnaSelezionata.ToString();
+            // idAutore_CellValue_int idAutoreSelected
+            Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["idAutoreSelected"] = idAutore_CellValue_int;//Session
+            if (selectedColumnGridAutoreOnNote == TblAutoriColumns.action_updateAutNome)
+            {
+                Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["update_action"] =
+                    UpdateContentActions.AutoreNome;//Session
+                //
+                // this is the only accessPoint to the form frmUpdateAbstract. No menu-voice is present for it, since the
+                // user has to choose from GridViews, to access there.
+                bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmUpdateAbstract );
+            }
+            else if (selectedColumnGridAutoreOnNote == TblAutoriColumns.action_updateNoteAut)
+            {
+                Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["update_action"] =
+                    UpdateContentActions.AutoreAbstract;//Session
+                //
+                // this is the only accessPoint to the form frmUpdateAbstract. No menu-voice is present for it, since the
+                // user has to choose from GridViews, to access there.
+                bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmUpdateAbstract);
+            }
+            else if (selectedColumnGridAutoreOnNote == TblAutoriColumns.action_writeSingleKeyAutore)
+            {
+                // no Session : just transcript the SingleKey_Autore
+                this.txtChiaveAutore.Text = idAutore_CellValue_int.ToString();// and return on page, to complete the DoubleKey.
+            }
+            else
+            {
+                throw new System.Exception(" Invalid action : Debug frmAutoreLoad::grdAutoriNominativoNote_CellClick");
+            }
+        }// grdAutoriNominativoNote_CellClick
+
+
+
+        //---------------------------------------################------------------------//
+        public enum UpdateContentActions
+        {//NB. enums cannot be declared into methods.
+            Invalid = -1, // invalid entry
+            AutoreNome = 0,
+            AutoreAbstract = 1,
+            MateriaNome = 2,
+            DocumentoAbstract = 3
+        }// NB. modify, in case of acrion-imageButton modification.
+
+        
+        public enum TblAutoriOnMateriaColumns
+        {//NB. enums cannot be declared into methods.
+            Invalid = -1, // invalid entry            
+            idAutore = 3,
+            nomeAutore = 4,
+            idMateria = 5,
+            nomeMateria = 6,
+            action_writeDoubleKeyAutoreMateria = 0, //-- ? System starts ordinals, on first ActionColumn
+            action_updateNomeMateria = 1, //
+            RowNumber = 2 // until last column.
+        }// NB. modify, in case of record layout modification.
+        //
+        private void grdAutoriMateria_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            TblAutoriOnMateriaColumns selectedColumnGridAutoreOnMateria = TblAutoriOnMateriaColumns.Invalid;// init to invalid.
+            int rigaSelezionata = e.RowIndex;// coordinate della selezione da parte dell'utente.
+            int colonnaSelezionata = e.ColumnIndex;
+            selectedColumnGridAutoreOnMateria = (TblAutoriOnMateriaColumns)colonnaSelezionata;
+            //
+            if (colonnaSelezionata == (int)(winFormsIntf.frmAutoreLoad.TblAutoriOnMateriaColumns.action_writeDoubleKeyAutoreMateria))
+            {
+                string msg = "selezione dell'azione write: select doubleKey_AutoreMateria.";
+                this.lblStatusAonMat.Text = msg;
+                this.lblStatusAonMat.BackColor = System.Drawing.Color.LightGreen;
+            }
+            else if (colonnaSelezionata == (int)(winFormsIntf.frmAutoreLoad.TblAutoriOnMateriaColumns.action_updateNomeMateria ))
+            {
+                string msg = "selezione dell'azione update: update nome-Materia.";
+                this.lblStatusAonMat.Text = msg;
+                this.lblStatusAonMat.BackColor = System.Drawing.Color.LightGreen;
+            }
+            else
+            {
+                string msg = "selezione di una colonna che non ha azione associata";
+                this.lblStatusAonMat.Text = msg;
+                this.lblStatusAonMat.BackColor = System.Drawing.Color.LightSalmon;
+                //--NB. each non-action column is an invalid choice.
+                selectedColumnGridAutoreOnMateria = TblAutoriOnMateriaColumns.Invalid;
+            }
+            //
+            //
+            int idAutore_CellValue_int = -1;// init to invalid.
+            int idMateria_CellValue_int = -1;// init to invalid.
+            if (selectedColumnGridAutoreOnMateria == TblAutoriOnMateriaColumns.Invalid)
+            {
+                return;// on page, sin a non-action column has been chose.
+            }
+            else// an action button has been chosen
+            {
+                try
+                {
+                    object idAutore_CellValue_obj = this.grdAutoriMateria["idAutore", e.RowIndex].Value;
+                    idAutore_CellValue_int = (int)(this.grdAutoriMateria["idAutore", e.RowIndex].Value);
+                    //
+                    object idMateria_CellValue_obj = this.grdAutoriMateria["idMateria", e.RowIndex].Value;
+                    idMateria_CellValue_int = (int)(this.grdAutoriMateria["idMateria", e.RowIndex].Value);
+                }
+                catch (System.Exception ex)
+                {
+                    string msg = ex.Message;
+                }
+            }
+            // notify on lblStatus
+            this.lblStatusAonMat.Text += "_" + colonnaSelezionata.ToString();
+            // idAutore_CellValue_int idAutoreSelected
+            Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["idAutoreSelected"] = idAutore_CellValue_int;// Session
+            Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["idMateriaSelected"] = idMateria_CellValue_int;// Session
+            if (selectedColumnGridAutoreOnMateria == TblAutoriOnMateriaColumns.action_updateNomeMateria)
+            {
+                Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["update_action"] =
+                    UpdateContentActions.MateriaNome;//Session
+                //
+                // this is the only accessPoint to the form frmUpdateAbstract. No menu-voice is present for it, since the
+                // user has to choose from GridViews, to access there.
+                bool res = winFormsIntf.windowWarehouse.subscribeNewFrm(windowWarehouse.CurrentWindowType.frmUpdateAbstract);
+            }
+            else if (selectedColumnGridAutoreOnMateria == TblAutoriOnMateriaColumns.action_writeDoubleKeyAutoreMateria)
+            {
+                // no Session : just transcript the SingleKey_Autore
+                this.txtChiaveAutore.Text = idAutore_CellValue_int.ToString();// and return on page, to complete the DoubleKey.
+            }
+            else
+            {
+                throw new System.Exception(" Invalid action : Debug frmAutoreLoad::grdAutoriMateria_CellClick");
+            }
+        }// grdAutoriMateria_CellClick
+
 
 
     }// class
 }// nmsp
+
+
+
+
+# region cantina
+
+
+// TODO : rivedere
+//enum tblAutoriOnMateriaColumns
+//{//NB. enums cannot be declared into methods.
+//    Invalid = -1
+//    // NB. no RowNumber in this query: it's not a View.
+//    ,idAutore = 0
+//    ,nomeAutore = 1
+//    ,idMateria = 2
+//    ,nomeMateria = 3
+//}// NB. modify, in case of record layout modification.
+////
+//private void grdAutoriMateria_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+//{
+//    try// inside here there's an int.Parse that throws.
+//    {
+//        DataGridViewRow selRowDirect = this.grdAutoriMateria.Rows[e.RowIndex];
+//        DataGridViewCell selCellDirect = selRowDirect.Cells[(int)(winFormsIntf.frmAutoreLoad.tblAutoriOnMateriaColumns.idMateria)];//compulsory.
+//        string tmpSelectedMateriaIdDirect = selCellDirect.Value.ToString();
+//        int selectedMateriaIdDirect = int.Parse(tmpSelectedMateriaIdDirect);// throws
+//        //
+//        this.txtChiaveMateria.Text = selectedMateriaIdDirect.ToString();// report the selected DoubleKey portion.
+//        this.lblStatus.Text = "";// everything went ok.
+//        this.lblStatus.BackColor = System.Drawing.Color.Transparent;
+//    }// try
+//    catch (System.Exception ex)
+//    {
+//        this.lblStatus.Text = "trouble: " + ex.Message;
+//        this.lblStatus.BackColor = System.Drawing.Color.Red;
+//    }
+//}// grdAutoriMateria_CellDoubleClick
+
+
+
+# endregion cantina

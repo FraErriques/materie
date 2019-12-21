@@ -233,7 +233,20 @@
       <Name>Process_materie</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\btnAddDoc.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnUpdateAbstract.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\btnAddDoc.bmp" />
+    <Content Include="img\btnLogin.bmp" />
+    <Content Include="img\btnMailRead.bmp" />
+    <Content Include="img\btnUpdateAbstract.bmp" />
+    <Content Include="img\btnUpdateNameAutore.bmp" />
+    <Content Include="img\logo.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -124,7 +124,6 @@
             this.txtChunkSize.Name = "txtChunkSize";
             this.txtChunkSize.Size = new System.Drawing.Size(70, 20);
             this.txtChunkSize.TabIndex = 9;
-            this.txtChunkSize.Text = "5";
             // 
             // btnChangeParams
             // 

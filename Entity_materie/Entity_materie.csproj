@@ -72,6 +72,7 @@
     <Compile Include="Proxies\usp_lCrash_LOADSINGLE_SERVICE.cs" />
     <Compile Include="Proxies\usp_lCrash_UPDATE_SERVICE.cs" />
     <Compile Include="Proxies\usp_materia_LOOKUP_INSERT_SERVICE.cs" />
+    <Compile Include="Proxies\usp_materia_LOOKUP_LOADWHERE_SERVICE.cs" />
     <Compile Include="Proxies\usp_materia_LOOKUP_LOAD_SERVICE.cs" />
     <Compile Include="Proxies\usp_permesso_LOADSINGLE_SERVICE.cs" />
     <Compile Include="Proxies\usp_utente_ChangePwd_SERVICE.cs" />

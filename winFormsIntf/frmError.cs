@@ -111,6 +111,7 @@ namespace winFormsIntf
         private void frmError_FormClosed(object sender, FormClosedEventArgs e)
         {
             winFormsIntf.windowWarehouse.removeSpecifiedWin(this);
+            Common.Template_Singleton.TSingletonNotIDispose<System.Collections.Hashtable>.instance()["errore"] = null;// clean
         }// frmError_FormClosed
 
 

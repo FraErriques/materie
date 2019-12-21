@@ -33,10 +33,11 @@ namespace winFormsIntf
             Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
             string queryTail = "";
             //
+            int defaultChunkSizeForThisGrid = 20;
             Process_materie.paginazione.costruzionePager.primaCostruzionePager(
                 "Prime" // view theme
                 , queryTail // whereTail
-                , 5 // default
+                , defaultChunkSizeForThisGrid // default
                 , out rowCardinalityTotalView
                 , out viewName
                 , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
@@ -48,6 +49,7 @@ namespace winFormsIntf
             );
             this.uscInterfacePager_Prime.Init(
                 this.grdPrimes //  backdoor, to give the PagerInterface-control the capability of updating the grid.
+                , defaultChunkSizeForThisGrid // defaultChunkSizeForThisGrid
                 , pagingManager
             );// callBack in Interface::Pager
             this.grdPrimes.DataSource = chunkDataSource;// fill dataGrid

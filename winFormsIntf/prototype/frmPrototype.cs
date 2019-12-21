@@ -37,10 +37,11 @@ namespace winFormsIntf.prototype
             System.Data.DataTable chunkDataSource;
             Entity_materie.BusinessEntities.PagingManager pagingManager;// out par
             //
+            int defaultChunkSizeForThisGrid = 25;
             Process_materie.paginazione.costruzionePager.primaCostruzionePager(
                 "Proto" // view theme
                 , "" // whereTail
-                , 5 // default
+                , defaultChunkSizeForThisGrid // default
                 , out rowCardinalityTotalView
                 , out viewName
                 , new Entity_materie.BusinessEntities.Cacher.SpecificViewBuilder(
@@ -54,6 +55,7 @@ namespace winFormsIntf.prototype
             //
             this.interfacePager1.Init(
                 this.dataGridView1//  backdoor, to give the PagerInterface-control the capability of updating the grid.
+                , defaultChunkSizeForThisGrid // defaultChunkSizeForThisGrid
                 , pagingManager
             );// callBack in Interface::Pager
             this.dataGridView1.DataSource = chunkDataSource;// fill dataGrid
