@@ -78,7 +78,14 @@ namespace winFormsIntf
                 int selected_Doc_IdDirect = int.Parse(tmpSelected_Doc_IdDirect);// throws
                 //
                 string extractionPath;
-                Downloader.DownloadButton_Click( selected_Doc_IdDirect, out extractionPath);
+//Downloader.DownloadButton_Click( selected_Doc_IdDirect, out extractionPath);
+                string filename;// out
+                Process_materie.documento.downloader_service.downloader(
+                    selected_Doc_IdDirect
+                    , "forms on localhost"
+                    , out extractionPath
+                    , out filename
+                );
                 this.openFileDialog1.InitialDirectory = extractionPath;
                 this.lblExtractedDoc.Text = "Doc is : " + extractionPath;
                 this.lblExtractedDoc.BackColor = System.Drawing.Color.LimeGreen;

@@ -34,18 +34,18 @@ public static class PageStateChecker
          * 
          */
         if (
-            ! IsPostBack//------------------------------------------------------false
-            && ! ((bool)(Session["IsReEntrant"]))//-----------------------------false
+            !IsPostBack//------------------------------------------------------false
+            && !((bool)(Session["IsReEntrant"]))//-----------------------------false
             )
         {// first absolute entrance
             LoggingToolsContainerNamespace.LoggingToolsContainer.LogBothSinks_DbFs(
                 PageSignature + " : IsPostBack, IsReEntrant = false, false. "
                 , 0
             );
-            RunTimeDebugger.RunTimeDebugger_SERVICE( Session);
+            RunTimeDebugger.RunTimeDebugger_SERVICE(Session);
         }
         else if (
-            ! IsPostBack//----------------------------------------------------false
+            !IsPostBack//----------------------------------------------------false
             && (bool)(Session["IsReEntrant"])//-_-----------------------------true
             )
         {// coming from html-numbers of pager
@@ -53,7 +53,7 @@ public static class PageStateChecker
                 PageSignature + " : IsPostBack, IsReEntrant = false, true. "
                 , 0
             );
-            RunTimeDebugger.RunTimeDebugger_SERVICE( Session);
+            RunTimeDebugger.RunTimeDebugger_SERVICE(Session);
             // needed combo-refresh, but re-select combo-Value from Session --------
         }
         else if (
@@ -65,7 +65,7 @@ public static class PageStateChecker
                 PageSignature + " : IsPostBack, IsReEntrant = true, false. "
                 , 0
             );
-            RunTimeDebugger.RunTimeDebugger_SERVICE( Session);
+            RunTimeDebugger.RunTimeDebugger_SERVICE(Session);
         }
         else if (
             IsPostBack//------------------------------------------------------true
@@ -76,7 +76,7 @@ public static class PageStateChecker
                 PageSignature + " : IsPostBack, IsReEntrant = true, true. "
                 , 0
             );
-            RunTimeDebugger.RunTimeDebugger_SERVICE( Session);
+            RunTimeDebugger.RunTimeDebugger_SERVICE(Session);
         }// no "else" possible: case mapping is complete.
     }// end SERVICE
 

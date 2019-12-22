@@ -490,6 +490,11 @@ public partial class zonaRiservata_queryDocumento : System.Web.UI.Page
                     {// let it default to -1
                         string dbg = ex.Message;
                         string stack_dbg = ex.StackTrace;
+                        LoggingToolsContainerNamespace.LoggingToolsContainer.LogBothSinks_DbFs(
+                            " exception while downloading from web : " + ex.Message
+                            + "  " + ex.StackTrace
+                            ,5 // keep it high
+                        );
                     }
                     break;
                 }
@@ -603,12 +608,17 @@ public partial class zonaRiservata_queryDocumento : System.Web.UI.Page
     /// <param name="sender"></param>
     /// <param name="e"></param>
     protected void downloadButton_Click(int id_doc_multi)
-    {
-        // query for blob at id, by means of Entity_materie::Doc_multi.
-        Downloader.DownloadButton_Click(
+    {// query for blob at id, by means of Entity_materie::Doc_multi.
+        
+        webOnlyPortionDownloader_SERVICE.webOnlyPortionDownloader(
             id_doc_multi,
             this.Context
         );
+
+        //Downloader.DownloadButton_Click(
+        //    id_doc_multi,
+        //    this.Context
+        //);
     }//
 
 

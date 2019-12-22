@@ -239,10 +239,10 @@ public partial class zonaRiservata_docMultiRead : System.Web.UI.Page
     protected void downloadButton_Click(int id_doc_multi)
     {
         // query for blob at id, by means of Entity_materie::Doc_multi.
-        Downloader.DownloadButton_Click(
-            id_doc_multi,
-            this.Context
-        );
+        //Downloader.DownloadButton_Click(
+        //    id_doc_multi,
+        //    this.Context
+        //);
     }//
 
 
