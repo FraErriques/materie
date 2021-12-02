@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity_materie", "Entity_ma
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "materie", "http://localhost/materie", "{538FBECE-9117-40AC-A60E-D3F03FAFA275}"
 	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
 		ProjectReferences = "{A8FD6DFC-3C34-4DB1-85E3-FB1BAA74A691}|Common.dll;{8308BEB1-E231-4466-9CE7-B4C6E4B0BFE3}|Entity_materie.dll;{F4AF2E80-429C-4AF8-8C75-C9101C1AC314}|Process_materie.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/materie"
