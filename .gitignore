@@ -7,6 +7,7 @@ Debug/
 Release/
 .vs/
 winFormsIntf/banco/
+log/
 
 
 #let's continue with file cathegories
@@ -23,3 +24,5 @@ winFormsIntf/banco/
 *.props
 *.targets
 mintty.exe.stackdump
+*.suo
+*.log
