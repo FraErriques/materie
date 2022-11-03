@@ -1,0 +1,18 @@
+
+ £=start, $=content, ^=close -=separator
+
+-
+£   LoginSquareClient_______start
+$      inside LoginSquareClient: 2021_12_02_15_25_52 Login valido per l'utente q
+^   closing____LoginSquareClient_______end
+
+ £=start, $=content, ^=close -=separator
+
+-
+£   LoginSquareClient_______start
+$      inside LoginSquareClient: 2021_12_02_15_54_23 Login fallito per l'utente  tradotto in 
+^   closing____LoginSquareClient_______end
+-
+£   LoginSquareClient_______start
+$      inside LoginSquareClient: 2021_12_02_15_54_37 Login valido per l'utente admin
+^   closing____LoginSquareClient_______end

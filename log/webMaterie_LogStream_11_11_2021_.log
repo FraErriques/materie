@@ -1,0 +1,11 @@
+
+ £=start, $=content, ^=close -=separator
+
+$inside unspecified: 2021_11_11_17_34_53 Prima chiamata dopo il riavvio del WebServer IIS  
+$inside unspecified: 2021_11_11_17_34_53 Apertura della Sessione per   IP client=::1 SessionId=eeuwh1550uvsgg55h423q4jj
+-
+£   LoginSquareClient_______start
+$      inside LoginSquareClient: 2021_11_11_17_35_01 Login valido per l'utente admin IP client=::1 SessionId=eeuwh1550uvsgg55h423q4jj
+^   closing____LoginSquareClient_______end
+$inside unspecified: 2021_11_11_17_55_16 Chiusura della Sessione per   SessionId=eeuwh1550uvsgg55h423q4jj
+$inside unspecified: 2021_11_11_17_55_16 Arresto del WebServer IIS  

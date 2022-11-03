@@ -8,7 +8,9 @@ namespace winFormsIntf
 {
 
 
-
+    /// <summary>
+    /// this client-interface is intended to privide access to the database, from localhost.
+    /// </summary>
     static class Program
     {
         public static System.Collections.ArrayList activeInstancesFormList = new System.Collections.ArrayList();

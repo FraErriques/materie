@@ -1,0 +1,7 @@
+
+ £=start, $=content, ^=close -=separator
+
+-
+£   LoginSquareClient_______start
+$      inside LoginSquareClient: 2021_11_11_17_30_04 Login valido per l'utente q
+^   closing____LoginSquareClient_______end
