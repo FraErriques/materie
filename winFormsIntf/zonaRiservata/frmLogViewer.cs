@@ -98,13 +98,10 @@ namespace winFormsIntf
                 , defaultChunkSizeForThisGrid // defaultChunkSizeForThisGrid
                 , pagingManager
             );// callBack in Interface::Pager
-            this.grdLoggingDb.DataSource = chunkDataSource;// fill dataGrid
+            this.grdLoggingDb.DataSource = chunkDataSource;// fill dataGrid. On WinForms the assignement of DataSource
+            // performs the DataBind.
             //
-            //this.grdLoggingDb.DataSource =
-
-
-
-            //
+            // the following is an alternative, without View-creation:
             //this.grdLoggingDb.DataSource =
             //    Entity_materie.Proxies.LogViewer_win_materie_SERVICE.LogViewer_win_materie(
             //        startStr_F_
@@ -122,9 +119,18 @@ namespace winFormsIntf
         /// <returns></returns>
         private string convertDateToSqlDateString(System.DateTime selectedDate)
         {// pass the param as : this.dtpStartDate.Value;
-            string res;
-            string[] tokenizedStr = selectedDate.ToShortDateString().Split('/');
-            res = tokenizedStr[2] + tokenizedStr[1] + tokenizedStr[0];
+            int selectedMonth = selectedDate.Month;
+            int selectedYear = selectedDate.Year;
+            int selectedDay = selectedDate.Day;
+            string res = selectedYear.ToString();
+            if (10 > selectedMonth) { res += "0"; }
+            res += selectedMonth.ToString();
+            if (10 > selectedDay) { res += "0"; }
+            res += selectedDay.ToString();
+            // NB. don't do the following way, since it depends on Locale.
+            //string[] tokenizedStr = selectedDate.ToShortDateString().Split('/');
+            //res = tokenizedStr[2] + tokenizedStr[0] + tokenizedStr[1];
+            //res = tokenizedStr[2] + tokenizedStr[1] + tokenizedStr[0];
             //ready.
             return res;
         }// convertDateToSqlDateString

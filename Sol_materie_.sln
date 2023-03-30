@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2003
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{A8FD6DFC-3C34-4DB1-85E3-FB1BAA74A691}"
 EndProject
@@ -13,14 +13,14 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "materie", "http://localhost
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
 		ProjectReferences = "{A8FD6DFC-3C34-4DB1-85E3-FB1BAA74A691}|Common.dll;{8308BEB1-E231-4466-9CE7-B4C6E4B0BFE3}|Entity_materie.dll;{F4AF2E80-429C-4AF8-8C75-C9101C1AC314}|Process_materie.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/materie"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\Riemann\Sol_materie\materie\"
+		Debug.AspNetCompiler.PhysicalPath = "materie\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\materie\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/materie"
-		Release.AspNetCompiler.PhysicalPath = "..\..\Riemann\Sol_materie\materie\"
+		Release.AspNetCompiler.PhysicalPath = "materie\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\materie\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
