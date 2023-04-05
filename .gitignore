@@ -26,3 +26,5 @@ log/
 mintty.exe.stackdump
 *.suo
 *.log
+*.sln
+*.csproj
