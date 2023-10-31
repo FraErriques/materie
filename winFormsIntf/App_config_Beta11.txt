@@ -117,4 +117,5 @@
     </CryptoService>
   </Criptazione>
   
-<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8"/></startup></configuration>
+<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8"/></startup>
+</configuration>

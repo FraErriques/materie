@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>winFormsIntf</RootNamespace>
     <AssemblyName>winFormsIntf</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -232,6 +232,9 @@
     <EmbeddedResource Include="Timbro.resx">
       <DependentUpon>Timbro.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="App_config_Beta11.txt">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
