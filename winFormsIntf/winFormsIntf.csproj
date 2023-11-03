@@ -232,6 +232,9 @@
     <EmbeddedResource Include="Timbro.resx">
       <DependentUpon>Timbro.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="App_config_Beta11.txt">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
