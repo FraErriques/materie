@@ -24,7 +24,4 @@ log/
 *.props
 *.targets
 mintty.exe.stackdump
-*.suo
 *.log
-*.sln
-*.csproj
