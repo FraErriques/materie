@@ -16,6 +16,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "materie", "materie\", "{303E96B6-90E2-47CA-9796-845D0818B235}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		ProjectReferences = "{a8fd6dfc-3c34-4db1-85e3-fb1baa74a691}|Common.dll;{8308beb1-e231-4466-9ce7-b4c6e4b0bfe3}|Entity_materie.dll;{f4af2e80-429c-4af8-8c75-c9101c1ac314}|Process_materie.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_52294"
 		Debug.AspNetCompiler.PhysicalPath = "materie\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52294\"
