@@ -1,3 +1,5 @@
+TODO : aggiungere view_delLog per app winLocalhost.
+
 USE [materie]
 GO
 /****** Object:  User [materieUser]    Script Date: 22/12/2019 20:32:40 ******/

@@ -13,7 +13,7 @@ namespace Entity_materie.Proxies
 
 
         public static int usp_ViewCacher_specific_CREATE_logLocalhost(
-			string where_tail,
+            string where_tail,
 			string view_signature		//
 		)
 		{
