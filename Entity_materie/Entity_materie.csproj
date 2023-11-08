@@ -122,7 +122,9 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="db_currentScript\query_RowNumber_.txt" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="db_currentScript\db_materie_2019#12#22_.txt" />
   </ItemGroup>

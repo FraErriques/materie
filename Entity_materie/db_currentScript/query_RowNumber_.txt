@@ -1,0 +1,27 @@
+﻿SELECT
+	ROW_NUMBER() OVER (ORDER BY log.[when] asc) AS  RowNumber
+	,log.[when] 
+	,log.[row_nature] 
+	,log.[stack_depth] 
+	,log.[function_name] 
+	,log.[content] 	
+from
+	[Logging].[dbo].[materie_log] log
+
+---
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT 
+	  [RowNumber]
+      ,[when]
+      ,[row_nature]
+      ,[stack_depth]
+      ,[function_name]
+      ,[content]
+  FROM [materie].[dbo].[test_log_Localhost_20231108_10:09]
+--	queryTail	-----------------NB C# generated ----------
+ where  
+ convert(datetime,substring([when],1,8))>=convert(datetime,'20231107') 
+ and 
+ convert(datetime,substring([when],1,8))<=convert(datetime,'20231108') 
+ order by [when] desc 
+
