@@ -34,7 +34,7 @@ namespace Entity_materie.Proxies
 			//
             System.Data.SqlClient.SqlParameter parwhere_tail = new SqlParameter();
             parwhere_tail.Direction = ParameterDirection.Input;
-            parwhere_tail.DbType = DbType.String;
+            parwhere_tail.DbType = DbType.String;// TODO bug in query_TAIL ! 
             parwhere_tail.ParameterName = "@where_tail";
 			cmd.Parameters.Add( parwhere_tail);// add to command
 			parwhere_tail.Value = where_tail;// checks ok -> ProxyParemeter value assigned to the SqlParameter.
@@ -48,7 +48,7 @@ namespace Entity_materie.Proxies
 
             //
             try
-            {
+            {// TODO bug in query_TAIL ! 
 				//
                 int rowsWritten =
                     cmd.ExecuteNonQuery();
