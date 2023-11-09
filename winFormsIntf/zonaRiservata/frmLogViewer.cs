@@ -64,14 +64,18 @@ namespace winFormsIntf
             string endStr_F_ = this.convertDateToSqlDateString(this.dtpEndDate.Value);
             string queryTail = 
                 " where "
-                + " convert(datetime,substring([when],1,8))>=convert(datetime,'" // NB. essenziale l'apice singolo di Sql prima di chiudere la C#str.
+                + " convert(datetime,substring([when],1,8))>=convert(datetime,''" // NB. essenziale l'apice singolo di Sql prima di chiudere la C#str.
                 + startStr_F_
-                + "')" // NB. essenziale l'apice singolo di Sql come primo carattere della C#str.
-                + " and convert(datetime,substring([when],1,8))<=convert(datetime,'" // NB. essenziale l'apice singolo di Sql prima di chiudere la C#str.
+                + "'')" // NB. essenziale l'apice singolo di Sql come primo carattere della C#str.
+                + " and convert(datetime,substring([when],1,8))<=convert(datetime,''" // NB. essenziale l'apice singolo di Sql prima di chiudere la C#str.
                 + endStr_F_
-                + "')" // NB. essenziale l'apice singolo di Sql come primo carattere della C#str.
+                + "'')" // NB. essenziale l'apice singolo di Sql come primo carattere della C#str.
                 + " order by [when] desc ";
             //
+            LogSinkFs.Wrappers.LogWrappers.SectionContent(
+                queryTail
+                , 0
+                );
             //------start example use of Cacher-PagingCalculator-Pager--------------------------
             int rowCardinalityTotalView;// out par
             string viewName;// out par
