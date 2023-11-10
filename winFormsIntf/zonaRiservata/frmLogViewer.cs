@@ -62,15 +62,15 @@ namespace winFormsIntf
         {
             string startStr_F_ = this.convertDateToSqlDateString(this.dtpStartDate.Value);
             string endStr_F_ = this.convertDateToSqlDateString(this.dtpEndDate.Value);
-            string queryTail = 
+            string queryTail =
                 " where "
-                + " convert(datetime,substring([when],1,8))>=convert(datetime,''" // NB. essenziale l'apice singolo di Sql prima di chiudere la C#str.
+                + " convert(datetime,substring([when],1,8))>=convert(datetime,'" // NB. essenziale l'apice singolo di Sql prima di chiudere la C#str.
                 + startStr_F_
-                + "'')" // NB. essenziale l'apice singolo di Sql come primo carattere della C#str.
-                + " and convert(datetime,substring([when],1,8))<=convert(datetime,''" // NB. essenziale l'apice singolo di Sql prima di chiudere la C#str.
+                + "')" // NB. essenziale l'apice singolo di Sql come primo carattere della C#str.
+                + " and convert(datetime,substring([when],1,8))<=convert(datetime,'" // NB. essenziale l'apice singolo di Sql prima di chiudere la C#str.
                 + endStr_F_
-                + "'')" // NB. essenziale l'apice singolo di Sql come primo carattere della C#str.
-                + " order by [when] desc ";
+                + "')"; // NB. essenziale l'apice singolo di Sql come primo carattere della C#str.
+                // NB. no ORDER BY admited in VIEWS+ " order by [when] desc ";
             //
             LogSinkFs.Wrappers.LogWrappers.SectionContent(
                 queryTail
