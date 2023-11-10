@@ -139,7 +139,9 @@ namespace winFormsIntf
             return res;
         }// convertDateToSqlDateString
 
-
-
+        private void grdLoggingDb_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // do nothing
+        }
     }// class
 }// nmsp

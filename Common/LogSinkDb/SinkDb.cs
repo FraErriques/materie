@@ -425,7 +425,7 @@ namespace LogSinkDb.Library
 			tableNamePar.Direction = System.Data.ParameterDirection.Input;
 			tableNamePar.DbType = System.Data.DbType.String;
 			tableNamePar.ParameterName = "@logname";
-			tableNamePar.Value = tableName;
+			tableNamePar.Value = tableName;//NB. no single apex added
 
             System.Data.SqlClient.SqlParameter whenPar = new System.Data.SqlClient.SqlParameter();
             whenPar.Direction = System.Data.ParameterDirection.Input;
@@ -448,9 +448,9 @@ namespace LogSinkDb.Library
 			rowNaturePar.Direction = System.Data.ParameterDirection.Input;
 			rowNaturePar.DbType = System.Data.DbType.String;
 			rowNaturePar.ParameterName = "@row_nature";
-			rowNaturePar.Value = "'"+row_nature+"'";
+			rowNaturePar.Value = "'"+row_nature+"'";//NB. single apex ADDED
 
-			System.Data.SqlClient.SqlParameter stackDepthPar = new System.Data.SqlClient.SqlParameter();
+            System.Data.SqlClient.SqlParameter stackDepthPar = new System.Data.SqlClient.SqlParameter();
 			stackDepthPar.Direction = System.Data.ParameterDirection.Input;
 			stackDepthPar.DbType = System.Data.DbType.String;//NB. dynamic sql e' solo stringa. I tipi numerici vanno resi literals(i.e. costanti di testo).
 			stackDepthPar.ParameterName = "@stack_depth";

@@ -53,7 +53,7 @@ namespace winFormsIntf
             {
                 this.pagingManager = pagingManager;// get it and keep it.
             }
-            this.lblViewName.Text += pagingManager.cacherInstance.get_viewName();
+            this.lblViewName.Text = pagingManager.cacherInstance.get_viewName();
             this.pagingManager.viewName = pagingManager.cacherInstance.get_viewName();
             this.lblRowsInView.Text += pagingManager.cacherInstance.get_rowCardinalityTotalView().ToString();//label has a prefix. Don't overwrite it.
             this.gridInCurrentForm = theGrid;

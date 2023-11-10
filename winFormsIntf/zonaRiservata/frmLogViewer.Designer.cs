@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.grdLoggingDb = new System.Windows.Forms.DataGridView();
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
             this.lblDateStart = new System.Windows.Forms.Label();
@@ -37,7 +36,6 @@
             this.lblDateEnd = new System.Windows.Forms.Label();
             this.uscInterfacePager_logLocalhost = new winFormsIntf.InterfacePager();
             this.uscTimbro = new winFormsIntf.Timbro();
-            this.anno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdLoggingDb)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,12 +43,12 @@
             // 
             this.grdLoggingDb.BackgroundColor = System.Drawing.Color.Goldenrod;
             this.grdLoggingDb.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdLoggingDb.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.anno});
             this.grdLoggingDb.Location = new System.Drawing.Point(19, 107);
             this.grdLoggingDb.Name = "grdLoggingDb";
+            this.grdLoggingDb.ReadOnly = true;
             this.grdLoggingDb.Size = new System.Drawing.Size(905, 494);
             this.grdLoggingDb.TabIndex = 1;
+            this.grdLoggingDb.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdLoggingDb_CellContentClick);
             // 
             // dtpStartDate
             // 
@@ -109,15 +107,6 @@
             this.uscTimbro.Size = new System.Drawing.Size(905, 66);
             this.uscTimbro.TabIndex = 0;
             // 
-            // anno
-            // 
-            this.anno.DataPropertyName = "anno";
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.anno.DefaultCellStyle = dataGridViewCellStyle1;
-            this.anno.HeaderText = "anno";
-            this.anno.Name = "anno";
-            this.anno.ReadOnly = true;
-            // 
             // frmLogViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -151,6 +140,5 @@
         private System.Windows.Forms.Button btnLogQuery;
         private System.Windows.Forms.DateTimePicker dtpEndDate;
         private System.Windows.Forms.Label lblDateEnd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn anno;
     }
 }

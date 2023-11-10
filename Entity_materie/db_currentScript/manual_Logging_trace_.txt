@@ -1,0 +1,23 @@
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) [id]
+      ,[when]
+      ,[row_nature]
+      ,[stack_depth]
+      ,[function_name]
+      ,[content]
+  FROM [Logging].[dbo].[materie_log]
+  order by [when] desc
+
+/* NB. no square brackets can be used : only dbName..tableName
+ the table name must be passed from application code without apex, since it will be an object
+ name and not a string, in the code: in this example it's materie_log
+ all the other parameters must be passed with single apex inside the application-level-string
+ example in C# string when_str = "'20231110'" NB. the signle apex inside the C# string "".
+ */
+
+insert into Logging..materie_log(
+    [when],
+    [row_nature],
+    [stack_depth],
+    [function_name],
+    [content] 	  ) values('20010101', 't', '0', 'miaFunzione', 'testo per esteso del mio log' )
