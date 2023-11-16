@@ -57,7 +57,6 @@
       <add key="vkkey_key" value="0"/>
       <!-- active one -->
 	  <add key="materie" value="Database=materie;Server=Beta11\Jacobi;User=appuser;Password=curricula;"/>
-      <!-- <add key="materie" value="Database=materie;Server=Kronecker\Delta;User=applicationuser;Password=curricula;"/> -->
     </strings>
   </ProxyGeneratorConnections>
   
@@ -65,14 +64,13 @@
     <LogSinkFsConfig>
       <!--NB. su Beta11-->
       <add key="path" value="C:\root\LogSinkFs\materie_localhost\winFormsMaterie_"/>
-      <!--NB. su Kronecker-->
-      <!-- <add key="path" value="C:\root\LogSinkFs\materie\log\winFormsMaterie_"/> -->
-		<!-- -->
+      <!-- -->
       <add key="semaphore" value="on"/>
       <add key="verbosity" value="0"/>
     </LogSinkFsConfig>
   </LogSinkFs>
   
+	
   <LogSinkDb>
     <!-- -->
     <connection>
@@ -83,33 +81,27 @@
 	  <add key="db_name" value="Logging"/>
 	  <add key="sql_instance" value="Jacobi"/>
       <add key="usr" value="appuser"/>
-      <!-- <add key="hostname_sql_instance" value="Kronecker\Delta"/> -->
-      <!-- <add key="db_name" value="Logging"/> -->
-      <!-- <add key="sql_instance" value="Delta"/> -->
-      <!-- <add key="usr" value="applicationuser"/> -->
       <add key="pwd" value="curricula"/>
     </connection>
     <logger_application>
       <!-- each application logs on its own table -->
-      <add key="table_name" value="winForms_materie_Beta11"/>
-      <!-- <add key="table_name" value="winForms_materie_Kronecker"/> -->
+      <add key="table_name" value="materie_log"/>
+      <!-- -->
       <add key="semaphore" value="on"/>
       <add key="verbosity" value="0"/>
     </logger_application>
-    <!-- -->
   </LogSinkDb>
   
+	
   <FileTransferTempPath>
     <fullpath>
-		<!--NB. su Beta11 -->
-		<add key="path" value="C:\root\materie_dataTrans"/>
-		<!--NB. the root dir, under which upload and download temp files are stored. -->
-      <!--NB. su Kronecker -->
-      <!-- <add key="path" value="C:\root\LogSinkFs\materie"/> -->
-      <!--NB. su HOST  add key="path" value="bla\Bla"/  -->
+        <!--NB. the root dir, under which upload and download temp files are stored. -->
+        <!--NB. su Beta11 -->
+        <add key="path" value="C:\root\materie_dataTrans"/>
     </fullpath>
   </FileTransferTempPath>
 
+	
   <Criptazione>
     <CryptoService>
       <!-- switch: {"simple", "multi", "off"} -->
@@ -117,5 +109,7 @@
     </CryptoService>
   </Criptazione>
   
+	
 <startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8"/></startup>
+	
 </configuration>
