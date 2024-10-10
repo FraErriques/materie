@@ -49,67 +49,66 @@
 	<connectionStrings/>
 
 
-
-
-	<ProxyGeneratorConnections>
-		<strings>
-			<add key="kkkey_key" value="0"/>
-			<add key="vkkey_key" value="0"/>
-			<!-- active one -->
-			<add key="materie" value="Database=materie;Server=ITFORS1011\SUZE;User=applicationuser;Password=curricula;"/>
-		</strings>
-	</ProxyGeneratorConnections>
-
-	<LogSinkFs>
-		<LogSinkFsConfig>
-			<!--NB. su ITFORS1011-->
-			<add key="path" value="D:\root\src\GitHubSandBox\materie\log\winFormsMaterie_"/>
-			<!-- -->
-			<add key="semaphore" value="on"/>
-			<add key="verbosity" value="0"/>
-		</LogSinkFsConfig>
-	</LogSinkFs>
-
-	<LogSinkDb>
+ 	
+  <ProxyGeneratorConnections>
+    <strings>
+      <add key="kkkey_key" value="0"/>
+      <add key="vkkey_key" value="0"/>
+      <!-- active one -->
+		<add key="materie" value="Database=materie;Server=Kronecker\Delta;User=applicationuser;Password=curricula;"/> 
+    </strings>
+  </ProxyGeneratorConnections>
+	
+	
+  <LogSinkFs>
+    <LogSinkFsConfig>
+		<!-- path for LogSinkFs on the Application-Server -->
+      <!--NB. su Kronecker-->
+      <add key="path" value="C:\root\LogSinkFs\materie\log\webMaterie_"/>
+      <!-- -->
+      <add key="semaphore" value="on"/>
+      <add key="verbosity" value="0"/>
+    </LogSinkFsConfig>
+  </LogSinkFs>
+	
+	
+  <LogSinkDb>
+    <connection>
+      <add key="kkkey_key" value="0"/>
+      <add key="vkkey_key" value="0"/>
+	  <add key="db_name" value="Logging"/>
+	  <add key="hostname_sql_instance" value="Kronecker\Delta"/> 
 		<!-- -->
-		<connection>
-			<!--  Kronecker::SqlExpress::Logging -->
-			<add key="kkkey_key" value="0"/>
-			<add key="vkkey_key" value="0"/>
-			<add key="hostname_sql_instance" value="ITFORS1011\SUZE"/>
-			<add key="db_name" value="Logging"/>
-			<add key="sql_instance" value="SUZE"/>
-			<add key="usr" value="applicationuser"/>
-			<add key="pwd" value="curricula"/>
-		</connection>
-		<logger_application>
-			<!-- each application logs on its own table -->
-			<add key="table_name" value="materie_log"/>
-			<!-- <add key="table_name" value="winForms_materie_Kronecker"/> -->
-			<add key="semaphore" value="on"/>
-			<add key="verbosity" value="0"/>
-		</logger_application>
-		<!-- -->
-	</LogSinkDb>
-
-
-	<FileTransferTempPath>
-		<fullpath>
-			<!--NB. the root dir, under which upload and download temp files are stored. -->
-			<!--NB. su ITFORS1011 -->
-			<add key="path" value="D:\root\src\GitHubSandBox\materie\materie_dataTrans"/>
-		</fullpath>
-	</FileTransferTempPath>
-
-	<Criptazione>
-		<CryptoService>
-			<!-- switch: {"simple", "multi", "off"} -->
-			<add key="switch" value="off"/>
-		</CryptoService>
-	</Criptazione>
-
-	<startup>
-		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8"/>
-	</startup>
-
+		<add key="sql_instance" value="Delta"/>
+		<!--  Linux::Ubuntu::Cantor connection -->
+		<!-- <add key="sql_instance" value=""/>  NB. the empty instance name refers to Cantor, which has a non-nominative instance. -->
+      <add key="usr" value="applicationuser"/> 
+      <add key="pwd" value="curricula"/>
+    </connection>
+    <!-- -->
+    <logger_application>
+     <!-- each application logs on its own table -->
+		 <add key="table_name" value="materie_log"/>
+      <add key="semaphore" value="on"/>
+      <add key="verbosity" value="0"/>
+    </logger_application>
+  </LogSinkDb>
+	
+	
+  <FileTransferTempPath>
+    <fullpath>
+	  <!--NB. the root dir, under which upload and download temp files are stored. -->
+      <!--NB. su Kronecker -->
+      <add key="path" value="C:\root\LogSinkFs\materie"/>
+      <!--NB. su HOST  add key="path" value="D:\root\LogSinkFs\cv"/  -->
+    </fullpath>
+  </FileTransferTempPath>
+	
+  <Criptazione>
+    <CryptoService>
+      <!-- switch: {"simple", "multi", "off"} -->
+      <add key="switch" value="off"/>
+    </CryptoService>
+  </Criptazione>
+	
 </configuration>
