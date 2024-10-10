@@ -103,13 +103,13 @@ namespace winFormsIntf
                 , pagingManager
             );// callBack in Interface::Pager
             this.grdLoggingDb.DataSource = chunkDataSource;// fill dataGrid. On WinForms the assignement of DataSource
-            // performs the DataBind.
+            //performs the DataBind.
             //
             // the following is an alternative, without View-creation:
             //this.grdLoggingDb.DataSource =
             //    Entity_materie.Proxies.LogViewer_win_materie_SERVICE.LogViewer_win_materie(
             //        startStr_F_
-            //        ,endStr_F_
+            //        , endStr_F_
             //    );// dataBound.
         }// QueryCommit
 

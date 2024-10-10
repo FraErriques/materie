@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <!-- 
     Note: ......
 -->
@@ -56,16 +56,16 @@
 			<add key="kkkey_key" value="0"/>
 			<add key="vkkey_key" value="0"/>
 			<!-- active one -->
-			<add key="materie" value="Database=materie;Server=Riemann;User=appuser;Password=application;"/>
-			<!-- <add key="materie" value="Database=materie;Server=Kronecker\Delta;User=applicationuser;Password=curricula;"/> -->
+			<add key="materie" value="Database=materie;Server=Beta11\Jacobi;User=appuser;Password=curricula;"/>
+			<!-- NOT active  -->
 			<!--<add key="materie" value="Database=materie;Server=ITFORS1011\SUZE;User=applicationuser;Password=curricula;"/> -->
+			<!-- <add key="materie" value="Database=materie;Server=ITFORS1011\SUZE;User=sa;Password=M1 Sxpdx;"/> -->
+			<!-- <add key="materie" value="Database=materie;Server=Kronecker\Delta;User=applicationuser;Password=curricula;"/> -->
 		</strings>
 	</ProxyGeneratorConnections>
 
 	<LogSinkFs>
 		<LogSinkFsConfig>
-			<!--NB. su ITFORS1011-->
-			<!-- <add key="path" value="D:\root\src\GitHubSandBox\materie\log\winFormsMaterie_"/> -->
 			<!--NB. su Beta11-->
 			<add key="path" value="C:\root\LogSinkFs\materie_localhost\winFormsMaterie_"/>
 			<!--NB. su Kronecker-->
@@ -79,17 +79,26 @@
 	<LogSinkDb>
 		<!-- -->
 		<connection>
+			<!--  Kronecker::SqlExpress::Logging -->
 			<add key="kkkey_key" value="0"/>
 			<add key="vkkey_key" value="0"/>
-			<add key="hostname_sql_instance" value="Riemann"/>
+			<add key="hostname_sql_instance" value="Beta11\Jacobi"/>
+			<!-- --><add key="hostname_sql_instance" value="ITFORS1011\SUZE"/> -->
 			<add key="db_name" value="Logging"/>
-			<add key="sql_instance" value=""/>
+			<add key="sql_instance" value="Jacobi"/>
 			<add key="usr" value="appuser"/>
-			<add key="pwd" value="application"/>
+			<!--<add key="sql_instance" value="SUZE"/> -->
+			<!-- <add key="usr" value="applicationuser"/> -->
+			<!-- <add key="hostname_sql_instance" value="Kronecker\Delta"/> -->
+			<!-- <add key="db_name" value="Logging"/> -->
+			<!-- <add key="sql_instance" value="Delta"/> -->
+			<!-- <add key="usr" value="applicationuser"/> -->
+			<add key="pwd" value="curricula"/>
 		</connection>
 		<logger_application>
 			<!-- each application logs on its own table -->
-			<add key="table_name" value="materie_uilocalhostBeta11_dbRiemann"/>
+			<add key="table_name" value="winForms_materie_Beta11"/>
+			<!-- <add key="table_name" value="winForms_materie_Kronecker"/> -->
 			<add key="semaphore" value="on"/>
 			<add key="verbosity" value="0"/>
 		</logger_application>
@@ -98,7 +107,6 @@
 
 	<FileTransferTempPath>
 		<fullpath>
-			<!--NB. the root dir, under which upload and download temp files are stored. -->
 			<!--NB. su Beta11 -->
 			<add key="path" value="C:\root\materie_dataTrans"/>
 			<!--NB. the root dir, under which upload and download temp files are stored. -->

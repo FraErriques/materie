@@ -98,7 +98,6 @@
 
 	<FileTransferTempPath>
 		<fullpath>
-			<!--NB. the root dir, under which upload and download temp files are stored. -->
 			<!--NB. su Beta11 -->
 			<add key="path" value="C:\root\materie_dataTrans"/>
 			<!--NB. the root dir, under which upload and download temp files are stored. -->
