@@ -66,6 +66,8 @@ public partial class home : System.Web.UI.Page
         LogSinkFs.Wrappers.LogWrappers.SectionClose();
         LogSinkDb.Wrappers.LogWrappers.SectionClose();
         //
+        //System.Collections.Specialized.NameObjectCollectionBase.KeysCollection session_keys = this.Session.Keys; ?where is web-server-hostname?
+        //
         if (VerificaLasciapassare.CanLogOn(this.Session, this.Request.UserHostAddress))
         {
             try

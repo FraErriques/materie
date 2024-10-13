@@ -185,9 +185,6 @@
     <Content Include="db_currentScript\query_RowNumber_.txt" />
     <Content Include="db_currentScript\TODO_usp_ViewCacher_specific_CREATE_logLocalhost_.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="db_currentScript\db_materie_2019#12#22_.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

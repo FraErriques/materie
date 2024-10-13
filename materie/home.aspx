@@ -39,7 +39,7 @@
                 </tr>
                 <tr align="center">
                     <td align="center">
-                        <p style="font-size: 32px; color: blue;">Web Server = Beta11 <br />DB Server = Riemann</p>
+                        <p style="font-size: 32px; color: blue;">Web Server = Beta11 <br />DB Server = Frechet</p>
                     </td>
                 </tr>
             </table>
