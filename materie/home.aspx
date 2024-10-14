@@ -7,7 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Base dati delle candidature a posizioni lavorative in BBT SE</title>
+    <title>Base dati dei documenti salvati nelle materie censite</title>
         <script language="javascript" type="text/javascript" src="codiceClient/scripts.js"></script>
         <script language="javascript" type="text/javascript" src="codiceClient/date.js"></script>
         <script language="javascript" type="text/javascript" src="codiceClient/LoginSquareClient.js"></script>
@@ -45,6 +45,11 @@
                         <asp:Label id="lblDbHost" runat="server"></asp:Label>
                     </td>
                     </tr>
+                </tr>
+                <tr align="center">
+                    <td align="center">
+                        <p style="font-size: 32px; color: blue;">Web Server = Beta11 <br />DB Server = Frechet</p>
+                    </td>
                 </tr>
             </table>
     </form>

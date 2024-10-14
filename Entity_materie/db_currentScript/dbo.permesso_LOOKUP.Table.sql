@@ -1,0 +1,16 @@
+USE [materie]
+GO
+/****** Object:  Table [dbo].[permesso_LOOKUP]    Script Date: 10/13/2024 8:13:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[permesso_LOOKUP](
+	[id] [int] NOT NULL,
+	[permissionDescription] [varchar](60) NOT NULL,
+ CONSTRAINT [pk_permesso_LOOKUP] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO

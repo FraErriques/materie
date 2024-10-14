@@ -1,9 +1,12 @@
-TODO : aggiungere view_delLog per app winLocalhost.
-
 USE [materie]
 GO
-/****** Object:  User [materieUser]    Script Date: 22/12/2019 20:32:40 ******/
-CREATE USER [materieUser] FOR LOGIN [applicationuser] WITH DEFAULT_SCHEMA=[dbo]
+/****** Object:  User [appuser]    Script Date: 10/13/2024 8:26:01 PM ******/
+CREATE USER [appuser] FOR LOGIN [appuser] WITH DEFAULT_SCHEMA=[dbo]
+GO
+/****** Object:  User [materieUser]    Script Date: 10/13/2024 8:26:01 PM ******/
+CREATE USER [materieUser] WITHOUT LOGIN WITH DEFAULT_SCHEMA=[dbo]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [appuser]
 GO
 ALTER ROLE [db_owner] ADD MEMBER [materieUser]
 GO
@@ -11,7 +14,7 @@ ALTER ROLE [db_datareader] ADD MEMBER [materieUser]
 GO
 ALTER ROLE [db_datawriter] ADD MEMBER [materieUser]
 GO
-/****** Object:  Table [dbo].[autore]    Script Date: 22/12/2019 20:32:40 ******/
+/****** Object:  Table [dbo].[autore]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER ON
@@ -23,14 +26,48 @@ CREATE TABLE [dbo].[autore](
  CONSTRAINT [pk_autore] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
  CONSTRAINT [autore_unique] UNIQUE NONCLUSTERED 
 (
 	[nominativo] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[docMulti]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  View [dbo].[recordLayout_AutNom]    Script Date: 10/13/2024 8:26:02 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+				create view [dbo].[recordLayout_AutNom] as
+						SELECT
+							ROW_NUMBER() OVER (ORDER BY aut.nominativo asc) AS 'RowNumber'
+							,aut.id
+							,aut.nominativo
+							,aut.note
+				from
+					autore aut
+				
+GO
+/****** Object:  Table [dbo].[materia_LOOKUP]    Script Date: 10/13/2024 8:26:02 PM ******/
+SET ANSI_NULLS OFF
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[materia_LOOKUP](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nomeMateria] [varchar](350) NOT NULL,
+ CONSTRAINT [pk_materia] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [materia_unique] UNIQUE NONCLUSTERED 
+(
+	[nomeMateria] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[docMulti]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER ON
@@ -47,10 +84,56 @@ CREATE TABLE [dbo].[docMulti](
  CONSTRAINT [pk_docMulti] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[lCrash]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  View [dbo].[recordLayout_Doc]    Script Date: 10/13/2024 8:26:02 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+				create view [dbo].[recordLayout_Doc] as
+ 		select 
+			ROW_NUMBER() OVER (		order by
+										mat.nomeMateria
+										,aut.nominativo
+										,dm.insertion_time
+										desc) AS 'RowNumber'
+			,dm.id				as id_Documento
+			,mat.nomeMateria    as nome_Materia
+			,aut.nominativo		as nome_Autore
+			,dm.abstract		as note_Documento
+			,CONVERT(varchar, dm.insertion_time, 23)  as data_Inserimento_Doc
+			,dm.sourceName		as sourceName
+		from 
+			docMulti dm
+			, autore aut
+			, materia_LOOKUP mat
+		where 
+			abstract not like '_##__fake_abstract__##_'
+			and aut.id=dm.ref_autore_id
+			and mat.id = dm.ref_materia_id  
+GO
+/****** Object:  View [dbo].[RecordLayout_AutOnMateria_due]    Script Date: 10/13/2024 8:26:02 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+				create view [dbo].[RecordLayout_AutOnMateria_due] as
+					select
+					ROW_NUMBER() OVER (
+						order by
+							viewBase.nomeAutore
+						asc) AS RowNumber
+					,viewBase.idAutore
+					,viewBase.nomeAutore
+					,viewBase.idMateria
+					,viewBase.nomeMateria
+					from materie.dbo.RecordLayout_AutOnMateria_uno viewBase
+GO
+/****** Object:  Table [dbo].[lCrash]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -61,28 +144,10 @@ CREATE TABLE [dbo].[lCrash](
  CONSTRAINT [pk_lCrash] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[materia_LOOKUP]    Script Date: 22/12/2019 20:32:41 ******/
-SET ANSI_NULLS OFF
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[materia_LOOKUP](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[nomeMateria] [varchar](350) NOT NULL,
- CONSTRAINT [pk_materia] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [materia_unique] UNIQUE NONCLUSTERED 
-(
-	[nomeMateria] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[permesso_LOOKUP]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  Table [dbo].[permesso_LOOKUP]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -93,10 +158,10 @@ CREATE TABLE [dbo].[permesso_LOOKUP](
  CONSTRAINT [pk_permesso_LOOKUP] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[utente]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  Table [dbo].[utente]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -111,11 +176,11 @@ CREATE TABLE [dbo].[utente](
  CONSTRAINT [pk_utente_materie] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
 UNIQUE NONCLUSTERED 
 (
 	[username] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[docMulti] ADD  DEFAULT ((0)) FOR [ref_job_id]
@@ -146,11 +211,13 @@ REFERENCES [dbo].[permesso_LOOKUP] ([id])
 GO
 ALTER TABLE [dbo].[utente] CHECK CONSTRAINT [fk_utente_permesso]
 GO
-/****** Object:  StoredProcedure [dbo].[LogViewer_web_materie]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[LogViewer_web_materie]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
+
 
 CREATE procedure [dbo].[LogViewer_web_materie]
 	@startDate varchar(14),
@@ -184,18 +251,19 @@ select
 	row_nature,
 	stack_depth
 from
-	[Logging].[dbo].[materie_log]--hard to let it a parameter; the whole query should become a string of dynamic sql.
+	[Logging].[dbo].[materie_webBeta11_dbFrechet]--hard to let it a parameter; the whole query should become a string of dynamic sql.
 where 
 	convert(datetime,substring([when],1,8))>=convert(datetime,@startDate)
 	and convert(datetime,substring([when],1,8))<=convert(datetime,@endDate)
 	--and row_nature='t'
 order by [when] desc
 GO
-/****** Object:  StoredProcedure [dbo].[LogViewer_win_materie]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[LogViewer_win_materie]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 CREATE procedure [dbo].[LogViewer_win_materie]
@@ -230,7 +298,7 @@ select
 	row_nature,
 	stack_depth
 from
-	[Logging].[dbo].[winForms_materie_log]--hard to let it a parameter; the whole query should become a string of dynamic sql.
+	[Logging].[dbo].[materie_fatClientBeta11_dbFrechet] --hard to let it a parameter; the whole query should become a string of dynamic sql.
 where 
 	convert(datetime,substring([when],1,8))>=convert(datetime,@startDate)
 	and convert(datetime,substring([when],1,8))<=convert(datetime,@endDate)
@@ -238,7 +306,7 @@ where
 order by [when] desc
 
 GO
-/****** Object:  StoredProcedure [dbo].[usp_autore_INSERT]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_autore_INSERT]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -259,7 +327,7 @@ insert into autore(
 	,@note
 )
 GO
-/****** Object:  StoredProcedure [dbo].[usp_autore_LOAD]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_autore_LOAD]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER ON
@@ -285,7 +353,7 @@ select @code =
 + @where_tail
 exec( @code)
 GO
-/****** Object:  StoredProcedure [dbo].[usp_autore_LOAD_nominativo]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_autore_LOAD_nominativo]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -300,7 +368,7 @@ from
 where
 	aut.id = @id
 GO
-/****** Object:  StoredProcedure [dbo].[usp_autore_LOAD_search]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_autore_LOAD_search]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -323,7 +391,7 @@ where
 order by
 	insertion_time desc
 GO
-/****** Object:  StoredProcedure [dbo].[usp_autore_LOAD_whoWroteOnMateria]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_autore_LOAD_whoWroteOnMateria]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -367,7 +435,7 @@ as
 			-- NB. no condition whatsoever, iff @idMateria<0 (i.e. it means on all of the Subjects).		
 		end
 GO
-/****** Object:  StoredProcedure [dbo].[usp_autore_note_LOAD]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_autore_note_LOAD]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -381,7 +449,7 @@ from
 	autore
 where id = @id
 GO
-/****** Object:  StoredProcedure [dbo].[usp_autore_note_UPDATE]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_autore_note_UPDATE]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -396,7 +464,7 @@ as
 		[note]=@note
 	where id = @id
 GO
-/****** Object:  StoredProcedure [dbo].[usp_chiaveDoppia_LOAD]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_chiaveDoppia_LOAD]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -416,7 +484,7 @@ select
 from materie.dbo.autore aut
 order by id
 GO
-/****** Object:  StoredProcedure [dbo].[usp_docMulti_abstract_LOAD]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_docMulti_abstract_LOAD]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -430,7 +498,7 @@ from
 	[docMulti]
 where id = @id
 GO
-/****** Object:  StoredProcedure [dbo].[usp_docMulti_abstract_UPDATE]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_docMulti_abstract_UPDATE]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -445,7 +513,7 @@ as
 		[abstract]=@_abstract
 	where id = @id
 GO
-/****** Object:  StoredProcedure [dbo].[usp_docMulti_dataMining]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_docMulti_dataMining]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -472,7 +540,7 @@ as
 		end
 	--ready
 GO
-/****** Object:  StoredProcedure [dbo].[usp_docMulti_get_sourceName]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_docMulti_get_sourceName]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -483,7 +551,7 @@ create procedure [dbo].[usp_docMulti_get_sourceName]
 as
 select sourceName from docMulti where id=@id
 GO
-/****** Object:  StoredProcedure [dbo].[usp_docMulti_getBlobAtId]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_docMulti_getBlobAtId]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -496,7 +564,7 @@ as
 	select * from docMulti where id=@id_required_phase
 	--ready
 GO
-/****** Object:  StoredProcedure [dbo].[usp_docMulti_getDobleKey_at_DocId]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_docMulti_getDobleKey_at_DocId]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -511,7 +579,7 @@ ref_materia_id as idMateria
 where
 doc.id = @DocId 
 GO
-/****** Object:  StoredProcedure [dbo].[usp_docMulti_getId_at_refAutoreId]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_docMulti_getId_at_refAutoreId]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -536,7 +604,7 @@ where
 	and aut.id=dm.ref_autore_id
 	and mat.id = dm.ref_materia_id 
 GO
-/****** Object:  StoredProcedure [dbo].[usp_docMulti_INSERT]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_docMulti_INSERT]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -593,7 +661,7 @@ as
 	return @result
 
 GO
-/****** Object:  StoredProcedure [dbo].[usp_docMulti_LOAD_AutoreMateria]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_docMulti_LOAD_AutoreMateria]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -617,7 +685,7 @@ as
 	and aut.id = @idAutore
 	and mate.id = @idMateria
 GO
-/****** Object:  StoredProcedure [dbo].[usp_docMulti_SEARCH_CandidateDocuments]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_docMulti_SEARCH_CandidateDocuments]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -659,7 +727,7 @@ else
 -- ready
 exec (@wholeQuery)
 GO
-/****** Object:  StoredProcedure [dbo].[usp_lCrash_CheckLine]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_lCrash_CheckLine]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -672,7 +740,7 @@ as
 	select @res = (select count(id) from [dbo].[lCrash]	where id=@id)
 	return @res
 GO
-/****** Object:  StoredProcedure [dbo].[usp_lCrash_INSERT]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_lCrash_INSERT]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -703,7 +771,7 @@ as
 			)
 	end
 GO
-/****** Object:  StoredProcedure [dbo].[usp_lCrash_LOADSINGLE]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_lCrash_LOADSINGLE]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -715,7 +783,7 @@ as
 	select card from lCrash
 	where id=@id
 GO
-/****** Object:  StoredProcedure [dbo].[usp_lCrash_UPDATE]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_lCrash_UPDATE]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -729,7 +797,7 @@ as
 		set card=@card
 	where id=@id
 GO
-/****** Object:  StoredProcedure [dbo].[usp_materia_LOOKUP_INSERT]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_materia_LOOKUP_INSERT]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -744,7 +812,7 @@ nomeMateria
 @nomeMateria
 )
 GO
-/****** Object:  StoredProcedure [dbo].[usp_materia_LOOKUP_LOAD]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_materia_LOOKUP_LOAD]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -754,12 +822,11 @@ as
 select * from [dbo].[materia_LOOKUP]
 order by nomeMateria   asc
 GO
-/****** Object:  StoredProcedure [dbo].[usp_materia_LOOKUP_LOADWHERE]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_materia_LOOKUP_LOADWHERE]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
 GO
-
 
 CREATE procedure [dbo].[usp_materia_LOOKUP_LOADWHERE]
 @where_tail varchar(5500)
@@ -779,9 +846,8 @@ select @code =
 + @where_tail
 + ' order by nomeMateria   asc '
 exec( @code)
-
 GO
-/****** Object:  StoredProcedure [dbo].[usp_permesso_LOADSINGLE]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_permesso_LOADSINGLE]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -801,7 +867,7 @@ where
 	ut.username =  @username
 	and ut.ref_permissionLevel_id=p.id
 GO
-/****** Object:  StoredProcedure [dbo].[usp_utente_ChangePwd]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_utente_ChangePwd]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER ON
@@ -820,7 +886,7 @@ SET
 WHERE
 	username=@username
 GO
-/****** Object:  StoredProcedure [dbo].[usp_utente_INSERT]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_utente_INSERT]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -848,7 +914,7 @@ insert into utente(
 @ref_permissionLevel_id
 )
 GO
-/****** Object:  StoredProcedure [dbo].[usp_utente_LOADDECODEDSINGLE]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_utente_LOADDECODEDSINGLE]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -862,7 +928,7 @@ as
 	where id=@id
 
 GO
-/****** Object:  StoredProcedure [dbo].[usp_utente_LOADSINGLE]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_utente_LOADSINGLE]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER ON
@@ -875,7 +941,7 @@ as
 	from utente
 	where username=@username
 GO
-/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_generic_DROP]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_generic_DROP]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -889,7 +955,7 @@ select @cmd = ' drop view ' + @view_signature
 exec( @cmd)
 
 GO
-/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_generic_LOAD_interval]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_generic_LOAD_interval]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -912,7 +978,7 @@ select @cmd = ' select * from '
 exec( @cmd)
 
 GO
-/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_generic_LOAD_length]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_generic_LOAD_length]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -928,7 +994,7 @@ select @cmd =
 exec( @cmd)
 
 GO
-/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_autOnMat_due]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_autOnMat_due]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -978,7 +1044,7 @@ declare @q varchar(7900)
 	end catch
 	-- ready
 GO
-/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_autOnMat_uno]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_autOnMat_uno]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1040,7 +1106,7 @@ declare @q varchar(7900)
 	end catch
 	-- ready
 GO
-/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_autore]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_autore]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1090,7 +1156,7 @@ declare @q varchar(7900)
 	end catch
 	-- ready
 GO
-/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_documento]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_documento]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1152,7 +1218,7 @@ declare @q varchar(7900)
 	-- ready
 
 GO
-/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_logLocalhost]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_logLocalhost]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1214,7 +1280,7 @@ declare @q varchar(7900)
 	row_nature,
 	stack_depth
 from
-	[Logging].[dbo].[winForms_materie_log] '
+	[Logging].[dbo].[materie_fatClientBeta11_dbFrechet] '
 					
 				+ @where_tail
 			exec( @q )
@@ -1227,7 +1293,7 @@ from
 	-- ready
 
 GO
-/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_Primes]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_ViewCacher_specific_CREATE_Primes]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1276,7 +1342,7 @@ declare @q varchar(7900)
 	-- ready
 
 GO
-/****** Object:  StoredProcedure [dbo].[usp_ViewGetChunk]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_ViewGetChunk]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1314,7 +1380,7 @@ declare @q varchar(7900)
 	end catch
 	-- ready
 GO
-/****** Object:  StoredProcedure [dbo].[usp_zPrototipo]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_zPrototipo]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1338,7 +1404,7 @@ where
 	and mat.id = 1
 	and aut.id = 1
 GO
-/****** Object:  StoredProcedure [dbo].[usp_zzProtoDoc]    Script Date: 22/12/2019 20:32:41 ******/
+/****** Object:  StoredProcedure [dbo].[usp_zzProtoDoc]    Script Date: 10/13/2024 8:26:02 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
