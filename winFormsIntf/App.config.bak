@@ -95,7 +95,7 @@
 	<FileTransferTempPath>
 		<fullpath>
 			<!--NB. the root dir, under which upload and download temp files are stored. -->
-			<!--NB. su ITFORS1011 -->
+			<!--NB. su Beta11 -->
 			<add key="path" value="D:\root\src\GitHubSandBox\materie\materie_dataTrans"/>
 		</fullpath>
 	</FileTransferTempPath>

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <!-- 
     Note: ......
 -->
@@ -55,7 +55,6 @@
 		<strings>
 			<add key="kkkey_key" value="0"/>
 			<add key="vkkey_key" value="0"/>
-			<!-- active one -->
 			<add key="materie" value="Database=materie;Server=ITFORS1011\SUZE;User=applicationuser;Password=curricula;"/>
 		</strings>
 	</ProxyGeneratorConnections>
@@ -73,7 +72,6 @@
 	<LogSinkDb>
 		<!-- -->
 		<connection>
-			<!--  Kronecker::SqlExpress::Logging -->
 			<add key="kkkey_key" value="0"/>
 			<add key="vkkey_key" value="0"/>
 			<add key="hostname_sql_instance" value="ITFORS1011\SUZE"/>
@@ -85,7 +83,7 @@
 		<logger_application>
 			<!-- each application logs on its own table -->
 			<add key="table_name" value="materie_log"/>
-			<!-- -->
+			<!-- control the log from the switches below -->
 			<add key="semaphore" value="on"/>
 			<add key="verbosity" value="0"/>
 		</logger_application>
@@ -95,7 +93,7 @@
 	<FileTransferTempPath>
 		<fullpath>
 			<!--NB. the root dir, under which upload and download temp files are stored. -->
-			<!--NB. su ITFORS1011 -->
+			<!-- su ITFORS1011 -->
 			<add key="path" value="D:\root\src\GitHubSandBox\materie\materie_dataTrans"/>
 		</fullpath>
 	</FileTransferTempPath>
@@ -110,5 +108,4 @@
 	<startup>
 		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8"/>
 	</startup>
-	
 </configuration>

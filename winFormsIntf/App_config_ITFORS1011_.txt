@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <!-- 
     Note: ......
 -->
@@ -85,13 +85,12 @@
 		<logger_application>
 			<!-- each application logs on its own table -->
 			<add key="table_name" value="materie_log"/>
-			<!-- <add key="table_name" value="winForms_materie_Kronecker"/> -->
+			<!-- -->
 			<add key="semaphore" value="on"/>
 			<add key="verbosity" value="0"/>
 		</logger_application>
 		<!-- -->
 	</LogSinkDb>
-
 
 	<FileTransferTempPath>
 		<fullpath>
@@ -111,5 +110,5 @@
 	<startup>
 		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8"/>
 	</startup>
-
+	
 </configuration>

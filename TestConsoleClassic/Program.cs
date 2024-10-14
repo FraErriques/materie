@@ -10,6 +10,10 @@ namespace TestConsoleClassic
     {
         static void Main(string[] args)
         {
+            string connectionStringContent = DbLayer.ConnectionManager.notifyConnectionStringContent(
+            "ProxyGeneratorConnections/strings"
+            , "materie");
+
             System.Data.DataTable dt =
                 Entity_materie.Proxies.usp_utente_LOADSINGLE_SERVICE.usp_utente_LOADSINGLE("admin");
             string str_thePwd = null;

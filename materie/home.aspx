@@ -27,6 +27,7 @@
                     </td>
                 </tr>
                 <tr align="center">
+
                     <td align="center">
                         
                         
@@ -36,6 +37,14 @@
                         
                         
                     </td>
+                    <tr>
+                    <td align="center">
+                        <br /><br />
+                        <asp:Label id="lblWebHost" runat="server"></asp:Label>
+                        <br />
+                        <asp:Label id="lblDbHost" runat="server"></asp:Label>
+                    </td>
+                    </tr>
                 </tr>
             </table>
     </form>
