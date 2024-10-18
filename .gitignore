@@ -26,3 +26,4 @@ materie_dataTrans/
 *.targets
 mintty.exe.stackdump
 *.log
+*.config
