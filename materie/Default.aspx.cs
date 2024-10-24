@@ -49,6 +49,22 @@ public partial class _Default : System.Web.UI.Page
             , this.IsPostBack
             , this.Session
         );
+        //
+        //string url = HttpContext.Current.Request.Url.AbsoluteUri;
+        //// i.e. complete url_like http://localhost:1302/TESTERS/Default6.aspx
+        //string path = HttpContext.Current.Request.Url.AbsolutePath;
+        //// /TESTERS/Default6.aspx
+        string host = HttpContext.Current.Request.Url.Host; // web server hostname
+        string connectionStringContent = DbLayer.ConnectionManager.notifyConnectionStringContent(
+        "ProxyGeneratorConnections/strings"
+        , "materie");
+        string[] dbConnectionToken = connectionStringContent.Split(new char[] { '=', ';' });
+        this.lblWebHost.Text = "Web Server hostname = " + host;
+        this.lblWebHost.BackColor = System.Drawing.Color.LimeGreen;
+        this.lblDbHost.Text = "DB Server hostname  = " + dbConnectionToken[3];
+        this.lblDbHost.BackColor = System.Drawing.Color.Beige;
+
+
         //----------------------------------------------- END  page state check.-----------------
         LogSinkFs.Wrappers.LogWrappers.SectionOpen("materie::_Default,Page_Load", 0);
         LogSinkDb.Wrappers.LogWrappers.SectionOpen("materie::_Default,Page_Load", 0);

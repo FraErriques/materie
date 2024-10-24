@@ -1,0 +1,23 @@
+USE [materie]
+GO
+/****** Object:  Table [dbo].[lCrash]    Script Date: 10/13/2024 8:13:14 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[lCrash](
+	[id] [int] NOT NULL,
+	[card] [int] NOT NULL,
+ CONSTRAINT [pk_lCrash] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[lCrash] ADD  DEFAULT ((0)) FOR [card]
+GO
+ALTER TABLE [dbo].[lCrash]  WITH CHECK ADD  CONSTRAINT [fk_lCrash] FOREIGN KEY([id])
+REFERENCES [dbo].[utente] ([id])
+GO
+ALTER TABLE [dbo].[lCrash] CHECK CONSTRAINT [fk_lCrash]
+GO

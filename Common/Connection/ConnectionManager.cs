@@ -75,7 +75,18 @@ namespace DbLayer
                 );
         }// end connectWithCustomSingleXpath
 
-
+        public static string notifyConnectionStringContent(
+            string xpath,// the path inside the file.config, where the connecyion string is stored.
+            string connectionStringName // the specific keyName inside the config section.
+          )
+        {
+            string desiredConnectionString =
+                DbLayer.DbCredentials2008.get_DatabaseSingleCredential(
+                    xpath,
+                    connectionStringName
+                );
+            return desiredConnectionString;
+        }// end notifyConnectionStringContent
 
         public static System.Data.SqlClient.SqlConnection getConnection(
            string db_name,

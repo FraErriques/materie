@@ -270,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_config_ITFORS1011_.txt" />
+    <Content Include="App_config_Kronecker_.txt" />
     <Content Include="img\btnAddDoc.bmp" />
     <Content Include="img\btnLogin.bmp" />
     <Content Include="img\btnMailRead.bmp" />

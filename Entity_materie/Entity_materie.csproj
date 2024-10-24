@@ -123,10 +123,67 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="db_currentScript\appuser.User.sql" />
+    <Content Include="db_currentScript\dbo.autore.Table.sql" />
+    <Content Include="db_currentScript\dbo.docMulti.Table.sql" />
+    <Content Include="db_currentScript\dbo.lCrash.Table.sql" />
+    <Content Include="db_currentScript\dbo.LogViewer_web_materie.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.LogViewer_win_materie.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.materia_LOOKUP.Table.sql" />
+    <Content Include="db_currentScript\dbo.permesso_LOOKUP.Table.sql" />
+    <Content Include="db_currentScript\dbo.recordLayout_AutNom.View.sql" />
+    <Content Include="db_currentScript\dbo.RecordLayout_AutOnMateria_due.View.sql" />
+    <Content Include="db_currentScript\dbo.recordLayout_Doc.View.sql" />
+    <Content Include="db_currentScript\dbo.usp_autore_INSERT.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_autore_LOAD.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_autore_LOAD_nominativo.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_autore_LOAD_search.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_autore_LOAD_whoWroteOnMateria.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_autore_note_LOAD.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_autore_note_UPDATE.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_chiaveDoppia_LOAD.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_docMulti_abstract_LOAD.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_docMulti_abstract_UPDATE.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_docMulti_dataMining.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_docMulti_getBlobAtId.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_docMulti_getDobleKey_at_DocId.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_docMulti_getId_at_refAutoreId.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_docMulti_get_sourceName.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_docMulti_INSERT.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_docMulti_LOAD_AutoreMateria.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_docMulti_SEARCH_CandidateDocuments.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_lCrash_CheckLine.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_lCrash_INSERT.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_lCrash_LOADSINGLE.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_lCrash_UPDATE.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_materia_LOOKUP_INSERT.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_materia_LOOKUP_LOAD.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_materia_LOOKUP_LOADWHERE.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_permesso_LOADSINGLE.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_utente_ChangePwd.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_utente_INSERT.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_utente_LOADDECODEDSINGLE.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_utente_LOADSINGLE.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_ViewCacher_generic_DROP.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_ViewCacher_generic_LOAD_interval.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_ViewCacher_generic_LOAD_length.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_ViewCacher_specific_CREATE_autOnMat_due.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_ViewCacher_specific_CREATE_autOnMat_uno.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_ViewCacher_specific_CREATE_autore.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_ViewCacher_specific_CREATE_documento.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_ViewCacher_specific_CREATE_logLocalhost.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_ViewCacher_specific_CREATE_Primes.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_ViewGetChunk.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_zPrototipo.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.usp_zzProtoDoc.StoredProcedure.sql" />
+    <Content Include="db_currentScript\dbo.utente.Table.sql" />
+    <Content Include="db_currentScript\db_Logging_2024#10#13_.sql" />
+    <Content Include="db_currentScript\db_materie_2024#10#13_.sql" />
+    <Content Include="db_currentScript\db_PrimeData_2024#10#13_.sql" />
+    <Content Include="db_currentScript\manual_Logging_trace_.txt" />
+    <Content Include="db_currentScript\materieUser.User.sql" />
     <Content Include="db_currentScript\query_RowNumber_.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="db_currentScript\db_materie_2019#12#22_.txt" />
+    <Content Include="db_currentScript\TODO_usp_ViewCacher_specific_CREATE_logLocalhost_.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

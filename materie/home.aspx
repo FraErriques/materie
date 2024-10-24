@@ -6,8 +6,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Base dati delle candidature a posizioni lavorative in BBT SE</title>
+<head id="Head1" runat="server">
+    <title>Base dati di documenti, censiti per Materia e per Autore</title>
         <script language="javascript" type="text/javascript" src="codiceClient/scripts.js"></script>
         <script language="javascript" type="text/javascript" src="codiceClient/date.js"></script>
         <script language="javascript" type="text/javascript" src="codiceClient/LoginSquareClient.js"></script>
@@ -36,7 +36,16 @@
                         
                         
                     </td>
+                    <tr>
+                    <td align="center">
+                        <br /><br />
+                        <asp:Label id="lblWebHost" runat="server"></asp:Label>
+                        <br />
+                        <asp:Label id="lblDbHost" runat="server"></asp:Label>
+                    </td>
+                    </tr>
                 </tr>
+
             </table>
     </form>
 </body>

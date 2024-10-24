@@ -138,8 +138,10 @@ namespace winFormsIntf
         {
             bool isPageChangeFeasibleUntilNow = false;
             //
-            if (null == this.pagingManager) { return; }
-                try
+            if (null == this.pagingManager)
+            	{ return; }
+
+            try
             {
                 if (int.Parse(this.txtChunkSize.Text) == pagingManager.pagingCalculator.actual_rowXchunk
                     && int.Parse(this.txtGoToPage.Text) == pagingManager.pagingCalculator.actual_currentPage)
