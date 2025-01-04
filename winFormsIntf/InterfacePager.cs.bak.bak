@@ -139,7 +139,11 @@ namespace winFormsIntf
             bool isPageChangeFeasibleUntilNow = false;
             //
             if (null == this.pagingManager) { return; }
+<<<<<<< HEAD
+                try
+=======
             try
+>>>>>>> refs/remotes/origin/master
             {
                 if (int.Parse(this.txtChunkSize.Text) == pagingManager.pagingCalculator.actual_rowXchunk
                     && int.Parse(this.txtGoToPage.Text) == pagingManager.pagingCalculator.actual_currentPage)
